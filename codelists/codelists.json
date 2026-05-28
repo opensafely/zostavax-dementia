@@ -1,3 +1,28 @@
 {
-  "files": {}
+  "files": {
+    "nhsd-primary-care-domain-refsets-dem_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/dem_cod/20250912",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/dem_cod/20250912/",
+      "downloaded_at": "2026-05-28 16:25:55.963219Z",
+      "sha": "9f1b5666e0162c11068e492d44de4e08d5ee9484"
+    },
+    "user-anschaf-dementia-icd-10.csv": {
+      "id": "user/anschaf/dementia-icd-10/02b60460",
+      "url": "https://www.opencodelists.org/codelist/user/anschaf/dementia-icd-10/02b60460/",
+      "downloaded_at": "2026-05-28 16:26:43.116552Z",
+      "sha": "4203df0628f003c1e1168deb3450b28a68809032"
+    },
+    "opensafely-ethnicity-snomed-0removed.csv": {
+      "id": "opensafely/ethnicity-snomed-0removed/22911876",
+      "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876/",
+      "downloaded_at": "2026-05-28 16:38:28.108715Z",
+      "sha": "d95a2f826299563aa57f6fa99009e6e13a65151b"
+    },
+    "opensafely-pharmacy-first-shingles-condition.csv": {
+      "id": "opensafely/pharmacy-first-shingles-condition/2ab2c155",
+      "url": "https://www.opencodelists.org/codelist/opensafely/pharmacy-first-shingles-condition/2ab2c155/",
+      "downloaded_at": "2026-05-28 16:42:24.072534Z",
+      "sha": "8ac7bbe07caf0cf2505024cb219544d95c9a8bbe"
+    }
+  }
 }
