@@ -1,8 +1,36 @@
 version: '5.0'
 
 actions:
-  generate_dataset:
-    run: ehrql:v1 generate-dataset analysis/dataset_definition.py --output output/dataset.csv.gz
+  generate_dataset_shingrix:
+    run: ehrql:v1 generate-dataset analysis/dataset_definition_shingrix.py 
+      --output output/shingrix/dataset_shingrix.csv.gz
+      -- 
+      --index_date "2013-01-01"
     outputs:
       highly_sensitive:
-        dataset: output/dataset.csv.gz
+        dataset: output/shingrix/dataset_shingrix.csv.gz
+
+  # first sensitivity analysis - 3 years before
+  generate_dataset_shingrix_sens_1:
+    run: ehrql:v1 generate-dataset analysis/dataset_definition_shingrix.py 
+      --output output/shingrix/dataset_shingrix_sens_1.csv.gz
+      -- 
+      --index_date "2011-01-01"
+    outputs:
+      highly_sensitive:
+        dataset: output/shingrix/dataset_shingrix_sens_1.csv.gz
+
+  generate_dataset_shingrix_sens_2:
+    run: ehrql:v1 generate-dataset analysis/dataset_definition_shingrix.py 
+      --output output/shingrix/dataset_shingrix_sens_2.csv.gz
+      -- 
+      --index_date "2016-01-01"
+    outputs:
+      highly_sensitive:
+        dataset: output/shingrix/dataset_shingrix_sens_2.csv.gz
+
+  # generate_dataset_zostavax:
+  #   run: ehrql:v1 generate-dataset analysis/dataset_definition_zostavax.py --output output/zostavax/dataset_zostavax.csv
+  #   outputs:
+  #     highly_sensitive:
+  #       dataset: output/zostavax/dataset_zostavax.csv.gz
