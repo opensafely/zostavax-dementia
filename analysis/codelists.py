@@ -15,11 +15,24 @@ dementia_icd10 = codelist_from_csv(
 # Ethnicity - 6 categories
 ethnicity_codes_6 = codelist_from_csv(
     "codelists/opensafely-ethnicity-snomed-0removed.csv",
-    column = "snomedcode",
+    column = "code",
     category_column = "Grouping_6",
 )
 
 shingles_snomed = codelist_from_csv(
-    "/workspaces/shingles-vax/codelists/opensafely-pharmacy-first-shingles-condition.csv",
+    "codelists/opensafely-pharmacy-first-shingles-condition.csv",
+    column = "code"
+)
+shingles_icd10 = codelist_from_csv(
+    "codelists/user-anschaf-shingles-icd-10.csv",
+    column = "code"
+)
+
+neuralgia_snomed = codelist_from_csv(
+    "codelists/user-anschaf-post-herpetic-neuralgia-snomed.csv",
+    column = "code"
+)
+neuralgia_icd10 = codelist_from_csv(
+    "codelists/user-anschaf-postherpetic-neuralgia-icd-10.csv",
     column = "code"
 )

@@ -1,5 +1,11 @@
 {
   "files": {
+    "user-anschaf-shingles-icd-10.csv": {
+      "id": "user/anschaf/shingles-icd-10/160abb5d",
+      "url": "https://www.opencodelists.org/codelist/user/anschaf/shingles-icd-10/160abb5d/",
+      "downloaded_at": "2026-05-28 18:01:16.689880Z",
+      "sha": "f5d3b8d435dd057dfe7f188bb8d36287a5d87bfe"
+    },
     "nhsd-primary-care-domain-refsets-dem_cod.csv": {
       "id": "nhsd-primary-care-domain-refsets/dem_cod/20250912",
       "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/dem_cod/20250912/",
@@ -23,6 +29,18 @@
       "url": "https://www.opencodelists.org/codelist/opensafely/pharmacy-first-shingles-condition/2ab2c155/",
       "downloaded_at": "2026-05-28 16:42:24.072534Z",
       "sha": "8ac7bbe07caf0cf2505024cb219544d95c9a8bbe"
+    },
+    "user-anschaf-post-herpetic-neuralgia-snomed.csv": {
+      "id": "user/anschaf/post-herpetic-neuralgia-snomed/4fd06a66",
+      "url": "https://www.opencodelists.org/codelist/user/anschaf/post-herpetic-neuralgia-snomed/4fd06a66/",
+      "downloaded_at": "2026-05-28 17:57:23.641392Z",
+      "sha": "13c6b32f456e3ea6c99ca508fb493d7038aae897"
+    },
+    "user-anschaf-postherpetic-neuralgia-icd-10.csv": {
+      "id": "user/anschaf/postherpetic-neuralgia-icd-10/7cfb4827",
+      "url": "https://www.opencodelists.org/codelist/user/anschaf/postherpetic-neuralgia-icd-10/7cfb4827/",
+      "downloaded_at": "2026-05-28 17:59:35.250940Z",
+      "sha": "6025ea5c041e713b147e051bd5eee795190bd806"
     }
   }
 }
