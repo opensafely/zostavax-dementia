@@ -28,7 +28,6 @@ def demographics(index_date):
         .last_for_patient()
         .snomedct_code.to_category(codelists.ethnicity_codes_6)
     )
-
     dataset.ethnicity6 = case(
         when(ethnicity6 == "1").then("White"),
         when(ethnicity6 == "2").then("Mixed"),
@@ -103,15 +102,52 @@ def secondary_care_events(index_date):
     
     ## Exclusion criteria
     # Dementia diagnosis before index date
-    dataset.dementia_exclude_hosp = apcs.where(
-        apcs.all_diagnoses.contains_any_of(codelists.dementia_icd10)
-        & apcs.all_diagnoses.admission_date.is_before(index_date)
-    ).exists_for_patient()
+    dataset.dementia_exclude_hosp = (
+        apcs
+        .where(apcs.all_diagnoses.contains_any_of(codelists.dementia_icd10)
+               & apcs.admission_date.is_before(index_date))
+        .exists_for_patient()
+    )
 
     # Unresolved shingles before index date
-    dataset.shingles_exclude_hosp = apcs.where(
-        apcs.all_diagnoses.contains_any_of(codelists.shingles_icd10)
-        & apcs.all_diagnoses.admission_date.is_on_or_between(index_date - days(90), index_date)
-    ).exists_for_patient()
+    dataset.shingles_exclude_hosp = (
+        apcs
+        .where(apcs.all_diagnoses.contains_any_of(codelists.shingles_icd10)
+               & apcs.admission_date.is_on_or_between(index_date - days(90), index_date))
+        .exists_for_patient()
+    )
+
+    dataset.dementia_outcome_hosp_date = (
+        apcs
+        .where(apcs.primary_diagnosis.is_in(codelists.dementia_icd10)
+              & apcs.admission_date.is_after(index_date))
+        .sort_by(apcs.admission_date)
+        .first_for_patient()
+        .admission_date
+    )
+
+    dataset.shingles_outcome_hosp_date = (
+        apcs
+        .where(apcs.primary_diagnosis.is_in(codelists.shingles_icd10)
+              & apcs.admission_date.is_after(index_date))
+        .sort_by(apcs.admission_date)
+        .first_for_patient()
+        .admission_date
+    )
+
+    dataset.neuralgia_outcome_hosp_date = (
+        apcs
+        .where(apcs.primary_diagnosis.is_in(codelists.neuralgia_icd10)
+              & apcs.admission_date.is_after(index_date))
+        .sort_by(apcs.admission_date)
+        .first_for_patient()
+        .admission_date
+    )
+
+    dataset.dementia_outcome_ons_date = (
+        ons_deaths
+        .where(ons_deaths.cause_of_death_is_in(codelists.dementia_icd10)
+            & ons_deaths.date.is_after(index_date))
+    )
 
     return dataset
