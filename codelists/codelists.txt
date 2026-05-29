@@ -5,3 +5,10 @@ opensafely/pharmacy-first-shingles-condition/2ab2c155/
 user/anschaf/post-herpetic-neuralgia-snomed/4fd06a66/
 user/anschaf/postherpetic-neuralgia-icd-10/7cfb4827/
 user/anschaf/shingles-icd-10/160abb5d/
+opensafely/ischaemic-heart-disease/10a53b71/
+opensafely/cerebrovascular-disease/2a7b6235/
+nhsd-primary-care-domain-refsets/hyp_cod/20250912/
+nhs-drug-refsets/antihyp_cod/20250912/
+nhs-drug-refsets/stat_cod/20250912/
+nhsd-primary-care-domain-refsets/dmtype2_cod/20250912/
+nhsd-primary-care-domain-refsets/copd_cod/20250912/

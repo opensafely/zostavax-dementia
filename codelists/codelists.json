@@ -1,5 +1,47 @@
 {
   "files": {
+    "nhsd-primary-care-domain-refsets-copd_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/copd_cod/20250912",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/copd_cod/20250912/",
+      "downloaded_at": "2026-05-29 10:35:46.260829Z",
+      "sha": "57431dbda7129d9c915a404dff0348cfcc9cd6f6"
+    },
+    "nhsd-primary-care-domain-refsets-dmtype2_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/dmtype2_cod/20250912",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/dmtype2_cod/20250912/",
+      "downloaded_at": "2026-05-29 10:33:58.298835Z",
+      "sha": "d0150e2030c8452c247a41852853453a165a04d9"
+    },
+    "nhs-drug-refsets-stat_cod.csv": {
+      "id": "nhs-drug-refsets/stat_cod/20250912",
+      "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/stat_cod/20250912/",
+      "downloaded_at": "2026-05-29 10:31:39.675065Z",
+      "sha": "18497a0c7f757ac46d0633070a6db3472352aaeb"
+    },
+    "nhs-drug-refsets-antihyp_cod.csv": {
+      "id": "nhs-drug-refsets/antihyp_cod/20250912",
+      "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/antihyp_cod/20250912/",
+      "downloaded_at": "2026-05-29 10:17:46.237734Z",
+      "sha": "1bf4d25c0245b4badcb971625adc123f631a163c"
+    },
+    "nhsd-primary-care-domain-refsets-hyp_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/hyp_cod/20250912",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/hyp_cod/20250912/",
+      "downloaded_at": "2026-05-29 10:05:06.890963Z",
+      "sha": "f94870510a3550ff79710b2d88b551812bb2fb3b"
+    },
+    "opensafely-cerebrovascular-disease.csv": {
+      "id": "opensafely/cerebrovascular-disease/2a7b6235",
+      "url": "https://www.opencodelists.org/codelist/opensafely/cerebrovascular-disease/2a7b6235/",
+      "downloaded_at": "2026-05-29 10:03:08.385141Z",
+      "sha": "772c965ffbc3f95669418dc6f5bd192af8c6b377"
+    },
+    "opensafely-ischaemic-heart-disease.csv": {
+      "id": "opensafely/ischaemic-heart-disease/10a53b71",
+      "url": "https://www.opencodelists.org/codelist/opensafely/ischaemic-heart-disease/10a53b71/",
+      "downloaded_at": "2026-05-29 09:58:02.510880Z",
+      "sha": "ffc00dbf1ba6852e23130689247ae117cb691206"
+    },
     "user-anschaf-shingles-icd-10.csv": {
       "id": "user/anschaf/shingles-icd-10/160abb5d",
       "url": "https://www.opencodelists.org/codelist/user/anschaf/shingles-icd-10/160abb5d/",
