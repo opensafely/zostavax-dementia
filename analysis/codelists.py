@@ -36,3 +36,33 @@ neuralgia_icd10 = codelist_from_csv(
     "codelists/user-anschaf-postherpetic-neuralgia-icd-10.csv",
     column = "code"
 )
+
+# assumptions
+ihd_snomed = codelist_from_csv(
+    "codelists/opensafely-ischaemic-heart-disease.csv",
+    column = "code"
+)
+stroke_snomed = codelist_from_csv(
+    "codelists/opensafely-cerebrovascular-disease.csv",
+    column = "code"
+)
+hypertension_snomed = codelist_from_csv(
+    "codelists/nhsd-primary-care-domain-refsets-hyp_cod.csv",
+    column = "code"
+)
+t2dm_snomed = codelist_from_csv(
+    "codelists/nhsd-primary-care-domain-refsets-dmtype2_cod.csv",
+    column = "code"
+)
+copd_snomed = codelist_from_csv(
+    "codelists/nhsd-primary-care-domain-refsets-copd_cod.csv",
+    column = "code"
+)
+antihypertensives_dmd = codelist_from_csv(
+    "codelists/nhs-drug-refsets-antihyp_cod.csv",
+    column = "code"
+)
+statins_dmd = codelist_from_csv(
+    "codelists/nhs-drug-refsets-stat_cod.csv",
+    column = "code"
+)
