@@ -1,0 +1,27 @@
+code,term
+1092031000000108,Ex-smoker amount unknown
+1092041000000104,Ex-very heavy smoker (40+/day)
+1092071000000105,Ex-heavy smoker (20-39/day)
+1092091000000109,Ex-moderate smoker (10-19/day)
+1092111000000104,Ex-light smoker (1-9/day)
+1092131000000107,Ex-trivial smoker (<1/day)
+160617001,Stopped smoking
+160620009,Ex-pipe smoker
+160621008,Ex-cigar smoker
+160625004,Date ceased smoking
+228486009,Time since stopped smoking
+266921000,Ex-trivial cigarette smoker (<1/day)
+266922007,Ex-light cigarette smoker (1-9/day)
+266923002,Ex-moderate cigarette smoker (10-19/day)
+266924008,Ex-heavy cigarette smoker (20-39/day)
+266925009,Ex-very heavy cigarette smoker (40+/day)
+266928006,Ex-cigarette smoker amount unknown
+281018007,Ex-cigarette smoker
+360890004,Intolerant ex-smoker
+360900008,Aggressive ex-smoker
+48031000119106,Ex-smoker for more than 1 year
+492191000000103,Ex roll-up cigarette smoker
+53896009,Tolerant ex-smoker
+735112005,Date ceased using moist tobacco
+735128000,Ex-smoker for less than 1 year
+8517006,Ex-smoker

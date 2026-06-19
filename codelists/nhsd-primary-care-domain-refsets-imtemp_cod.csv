@@ -1,0 +1,111 @@
+code,term
+1003473002,B cell lymphocyte aplasia caused by drug
+103077004,Immunodeficiency secondary to neoplasm
+103078009,Immunodeficiency secondary to trauma
+103079001,Immunodeficiency caused by corticosteroid
+103080003,Immunodeficiency due to radiotherapy
+103081004,Immunodeficiency secondary to chemotherapy
+106511000119106,Long-term current use of mycophenolate
+106581000119100,Long-term current use of cyclosporine
+106631000119102,Long-term current use of infliximab
+10746341000119109,Acquired immune deficiency syndrome complicating childbirth
+10838971000119103,Immunodeficiency caused by long term therapeutic use of drug
+113531000119106,Long term current use of abatacept
+113541000119102,Long-term current use of rituximab
+1144907001,Late acute graft-versus-host disease
+1148692008,Radiation therapy following chemotherapy
+1162505005,Agranulocytosis caused by antithyroid agent
+1179409000,Viral warts due to and following immunosuppressive therapy
+118640001,Radioimmunotherapy
+118791000119106,Aplastic anemia caused by antineoplastic agent
+12246211000119101,Infection due to and following bone marrow transplantation
+1234854000,Dermatosis caused by immunosuppressant
+1264007008,Adenovirus infection in immunocompromised person
+1269349006,Transplantation of stem cell
+1279827005,Neoadjuvant antineoplastic therapy procedure prior to surgery
+129771000119107,Neoplasm following transplantation of bone marrow
+133896000,Care of immunosuppressed patient
+140561000119102,Long-term current use of azathioprine
+161669001,History of bone tissue recipient
+16370261000119105,Disorder due to and following transplantation of stem cell
+16623961000119100,Pancytopenia caused by immunosuppressant
+16772161000119102,Long-term current use of vedolizumab
+168520004,Radiotherapy for immunosuppression
+169335009,External beam radiotherapy with surgery and chemotherapy
+169336005,External beam radiation therapy with chemotherapy
+169397004,Radiochemotherapy by local infiltration
+169398009,Radiochemotherapy: to stop spread
+169399001,Radiochemotherapy via oral route
+169400008,Radiochemotherapy via intravenous route
+169402000,Intraarterial radiochemotherapy
+169403005,Intracavitary radiochemotherapy
+174241000112100,Transplantation of allogeneic hematopoietic stem cell
+174251000112102,History of transplantation of allogeneic hematopoietic stem cell
+191008001,Immunodeficiency following hereditary defective response to Epstein-Barr virus
+232417611000119100,Thrombotic microangiopathy following hemopoietic stem cell transplant
+234336002,Hemopoietic stem cell transplant
+234642007,Age-related immunodeficiency
+234643002,Transient immunodeficiency of infancy
+234645009,Drug-induced immunodeficiency
+236854007,Septic splenitis
+23833000,Poisoning caused by antineoplastic AND/OR immunosuppressive drug
+240486003,Parvoviral aplastic crisis
+275828002,Preventing infection of immunocompromised patient
+276628009,Chloramphenicol-induced neutropenia
+278257006,Peripheral blood stem cell transplantation
+290578000,Antineoplastic poisoning
+290773007,Immunosuppressant poisoning
+292196008,Antineoplastic adverse reaction
+292207000,Melphalan adverse reaction
+292255000,Immunosuppressant adverse reaction
+292256004,Cyclosporin adverse reaction
+292257008,Azathioprine adverse reaction
+292699000,Auranofin adverse reaction
+293146004,Prednisone adverse reaction
+293166008,Dexamethasone adverse reaction
+293170000,Prednisolone adverse reaction
+295597003,Antineoplastic overdose
+295799003,Immunosuppressant overdose
+328301000119102,Pancytopenia due to antineoplastic chemotherapy
+328321000119106,Pancytopenia caused by colchicine
+328331000119109,Pancytopenia caused by non-steroidal anti-inflammatory agent
+328371000119107,Pancytopenia caused by antithyroid drug
+328381000119105,Pancytopenia caused by anticonvulsant
+33286000,Secondary immune deficiency disorder
+350691000119103,Agranulocytosis due to and following administration of antineoplastic agent
+367141000000103,Leflunomide adverse reaction
+370388006,Patient immunocompromised
+370391006,Patient immunosuppressed
+38013005,Immunosuppression
+394934009,Combined preoperative chemotherapy and radiotherapy
+394935005,Combined postoperative chemotherapy and radiotherapy
+396780003,Chemotherapy AND/OR radiation therapy prior to lymphadenectomy
+398271008,Predominantly T-cell defect
+402355000,Acute graft-versus-host disease
+402751007,Dermatosis resulting from immunosuppressive therapy
+416702871000119106,Long-term current use of sarilumab
+420614009,Organic dementia with acquired immunodeficiency syndrome
+420774007,Organic brain syndrome with acquired immunodeficiency syndrome
+425229001,Chemotherapy-induced neutropenia
+425843001,Allogeneic peripheral blood stem cell transplant
+425983008,Autologous peripheral blood stem cell transplant
+42852008,Infectious lymphocytosis
+441858005,Adverse reaction caused by trastuzumab administered by infusion
+442108004,Adverse reaction caused by rituximab administered by infusion
+53523003,Poisoning caused by cactinomycin
+61251000119108,Long-term current use of tacrolimus
+61261000119105,Long-term current use of sirolimus
+62479008,Acquired immune deficiency syndrome
+672611000119100,Long-term current use of telaprevir
+698075004,Syngeneic peripheral blood stem cell transplantation
+703423002,Combined chemotherapy and radiation therapy
+709115004,Transplantation of autologous hematopoietic stem cell
+710159007,Long-term current use of immunosuppressive drug
+721239009,Infection of spleen
+721912451000119106,Long-term current use of risankizumab
+736024007,Pancytopenia caused by medication
+767658000,Neutropenia due to and following chemotherapy
+782708002,Everolimus therapy
+782711001,Secukinumab therapy
+866151004,Lymphocytopenia due to severe acute respiratory syndrome coronavirus 2
+88714009,Transient hypogammaglobulinemia of infancy

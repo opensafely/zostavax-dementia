@@ -1,0 +1,864 @@
+code,term
+1010620002,Infection of lung caused by Mycobacterium malmoense
+1010622005,Infection of lung caused by Mycobacterium xenopi
+1010634002,Pneumonia caused by Acinetobacter
+1010662009,Infection of lung caused by Mycobacterium kansasii
+102453009,Peritonsillar cellulitis
+1033051000000101,Influenza due to zoonotic influenza virus
+1033071000000105,Influenza due to pandemic influenza virus
+1033091000000109,Influenza due to seasonal influenza virus
+1033111000000104,Influenza with pneumonia due to seasonal influenza virus
+10345003,Primary syphilis of tonsils
+10351008,Suppurative tonsillitis
+103781000119103,Allergic bronchopulmonary mycosis
+104041000119108,Fungal sinusitis
+10446001,Aspergilloma
+10509002,Acute bronchitis
+106001000119101,Chronic obstructive pulmonary disease with acute bronchitis
+10624911000119107,Otitis media caused by Influenza A virus subtype H1N1
+10624951000119108,Otitis media caused by influenza virus
+10624991000119103,Bronchopneumonia caused by Achromobacter
+10625031000119102,Bronchopneumonia caused by anaerobic bacteria
+10625071000119104,Bronchopneumonia caused by bacteria
+10625111000119106,Bronchopneumonia caused by Escherichia coli
+10625151000119107,Bronchopneumonia caused by Group A Streptococcus
+10625191000119102,Bronchopneumonia caused by Group B Streptococcus
+10625231000119106,Bronchopneumonia caused by Haemophilus influenzae
+10625271000119109,Bronchopneumonia caused by Human metapneumovirus
+10625311000119109,Bronchopneumonia caused by Klebsiella pneumoniae
+10625351000119105,Bronchopneumonia caused by methicillin resistant Staphylococcus aureus
+10625391000119100,Bronchopneumonia caused by methicillin susceptible Staphylococcus aureus
+10625431000119105,Bronchopneumonia caused by Mycoplasma pneumoniae
+10625471000119108,Bronchopneumonia caused by Proteus mirabilis
+10625511000119104,Bronchopneumonia caused by Pseudomonas
+10625551000119103,Bronchopneumonia caused by respiratory syncytial virus
+10625591000119108,Bronchopneumonia caused by Staphylococcus
+10625631000119108,Bronchopneumonia caused by Staphylococcus aureus
+10625671000119106,Bronchopneumonia caused by Streptococcus
+10625711000119105,Bronchopneumonia caused by Streptococcus pneumoniae
+10625751000119106,Bronchopneumonia due to virus
+10628871000119101,Gastroenteritis caused by influenza virus
+10628911000119103,Gastroenteritis caused by Influenza A virus
+10629191000119100,Bronchiolitis caused by influenza virus
+10629231000119109,Recurrent acute streptococcal tonsillitis
+10629351000119108,Myocarditis caused by Influenza A virus
+10674911000119108,Otitis media caused by Influenza A virus
+10685111000119102,Upper respiratory tract infection caused by influenza virus
+10809006,Parainfluenza virus laryngotracheitis
+1082561000119104,Recurrent acute suppurative otitis media with spontaneous rupture of ear drum
+1082721000119101,Pneumonia caused by Ascaris
+1083421000119103,Chronic serosanguineous otitis media of bilateral middle ears
+1087061000119106,Gonococcal pneumonia
+1088901000119105,Hemorrhagic otitis externa of left external auditory canal
+1090001000119105,Otitis media due to scarlet fever
+1090211000119102,Pharyngeal diphtheria
+1091511000119109,Hemorrhagic otitis externa of right external auditory canal
+1092361000119109,Rubella pneumonia
+1092951000119106,Pneumonia caused by Bordetella parapertussis
+109362006,Cellulitis of parapharyngeal space
+109802000,Abscess of uvula of palate
+111274000,Acute abscess of nasal sinus
+111275004,Abscess of nasal septum
+11134001,Acute suppuration of sphenoidal sinus
+111816002,Pneumococcal tonsillitis
+111849006,Adenoviral bronchitis
+111856000,Herpes simplex otitis externa
+111898002,Chronic mycotic otitis externa
+111900000,Pneumonia in aspergillosis
+11389007,Inhalational anthrax
+11461005,Staphylococcal tonsillitis
+1187256004,Viral pneumonia due to infectious mononucleosis caused by human herpesvirus 4
+120639003,Hantavirus pulmonary syndrome
+123587001,Acute bronchopneumonia
+123588006,Confluent bronchopneumonia with abscess formation
+123589003,Necrotizing bronchopneumonia
+1240521000000100,Otitis media due to disease caused by severe acute respiratory syndrome coronavirus 2
+1240541000000107,Infection of upper respiratory tract caused by severe acute respiratory syndrome coronavirus 2
+1240551000000105,Pneumonia caused by severe acute respiratory syndrome coronavirus 2
+124691000119101,Pneumonia caused by methicillin resistant Staphylococcus aureus
+12571000132104,Pneumonia caused by Herpes zoster
+126664009,Exudative pharyngitis
+128601007,Infectious disease of lung
+128711000119106,Pneumonia caused by methicillin susceptible Staphylococcus aureus
+128940004,Parasitic infection of lung
+13089009,Adenoviral bronchiolitis
+13177009,Cellulitis of nasopharynx
+13266007,Sphenoidal sinusitis
+133171000119105,Chronic pharyngolaryngitis
+13420004,Post measles otitis media
+13617004,Tracheobronchitis
+140004,Chronic pharyngitis
+142921000119103,Upper respiratory tract infection caused by avian influenza
+142931000119100,Pneumonia caused by Influenza A virus subtype H1N1
+142941000119109,Upper respiratory tract infection caused by Influenza A virus subtype H1N1
+142951000119106,Myocarditis caused by Influenza A virus subtype H1N1
+142961000119108,Gastroenteritis caused by Influenza A virus subtype H1N1
+142981000119104,Myocarditis caused by avian influenza
+142991000119101,Gastroenteritis caused by avian influenza
+14310000,Purulent nasal discharge
+143111000119103,Pneumonia caused by avian influenza
+14465002,Ulcerative tonsillitis
+14527007,Tuberculous empyema
+14852000,Myringitis
+14948001,Acute suppurative otitis media without spontaneous rupture of ear drum
+14969004,Catarrhal laryngitis
+15033003,Peritonsillar abscess
+15199004,Acute bronchiolitis with bronchospasm
+1532007,Viral pharyngitis
+154283005,Pulmonary tuberculosis
+15682004,Anterior nasal diphtheria
+15805002,Acute sinusitis
+16036000,Acute empyema of frontal sinus
+16146001,Viral bronchitis
+16311000119108,Pneumonia caused by influenza virus
+164215009,On examination - purulent ear discharge
+164256007,On examination - follicular tonsillitis
+164260005,On examination - granular pharyngitis
+16664009,Malignant otitis media
+16681000,Candidal otitis externa
+1731000119106,Atypical mycobacterial infection of lung
+17357005,Acute suppuration of frontal sinus
+17741008,Acute tonsillitis
+17866004,Acute allergic sanguineous otitis media
+18099001,Retropharyngeal abscess
+181007,Hemorrhagic bronchopneumonia
+184431000119108,Acute pneumonia caused by coccidioidomycosis
+185086009,Chronic obstructive bronchitis
+186172004,Tuberculous pleurisy in primary progressive tuberculosis
+186175002,Infiltrative lung tuberculosis
+186177005,Tuberculosis of lung with cavitation
+186178000,Tuberculosis of bronchus
+186182003,Tuberculosis of pleura
+186193001,"Tuberculosis of lung, confirmed by sputum microscopy with or without culture"
+186194007,"Tuberculosis of lung, confirmed by culture only"
+186195008,"Tuberculosis of lung, confirmed histologically"
+186200004,"Tuberculous pleurisy, confirmed bacteriologically and histologically"
+186204008,"Tuberculosis of lung, bacteriological and histological examination not done"
+186269001,Tuberculosis of ear
+186342000,Pulmonary Mycobacterium avium complex infection
+18643000,Ethmoidal sinusitis
+186659004,Herpangina
+186675001,Viral pharyngoconjunctivitis
+186963008,Vincent's angina - pharyngitis
+187027001,Acute pulmonary coccidioidomycosis
+187052004,Pulmonary African histoplasmosis
+187054003,Pulmonary histoplasmosis
+187066009,Primary pulmonary blastomycosis
+187069002,Acute pulmonary blastomycosis
+187084006,Tonsillar aspergillosis
+187100003,Rhinocerebral mucormycosis
+187196002,Pneumonia caused by Toxoplasma
+187222000,Infestation of nasopharynx caused by fly larvae
+18953001,Acute contact otitis externa
+18988001,Septic pleurisy
+19021002,Haemophilus influenzae otitis media
+192650000,Meningitis caused by Bordetella pertussis
+19399000,Acute exudative otitis media
+194207002,Chronic otitis externa due to aspergillosis
+194208007,Chronic otitis externa due to moniliasis
+194217007,Acute radiation otitis externa
+194237006,Non-suppurative otitis media with eustachian tube disorder
+194240006,Acute non-suppurative serous otitis media
+194248004,Bilateral chronic serous otitis
+194268005,Acute eustachian tube salpingitis
+194269002,Chronic eustachian tube salpingitis
+194281003,Acute suppurative otitis media
+194282005,Acute suppurative otitis media due to another disease
+194286008,Bilateral suppurative otitis media
+194287004,Recurrent acute otitis media
+194288009,Acute left otitis media
+194289001,Acute right otitis media
+194290005,Acute bilateral otitis media
+194311006,Acute myringitis without otitis media
+194946005,Acute myocarditis - influenzal
+195655000,Acute gangrenous pharyngitis
+195656004,Acute phlegmonous pharyngitis
+195657008,Acute ulcerative pharyngitis
+195658003,Acute bacterial pharyngitis
+195659006,Acute pneumococcal pharyngitis
+195660001,Acute staphylococcal pharyngitis
+195662009,Acute viral pharyngitis
+195666007,Acute erythematous tonsillitis
+195667003,Acute follicular tonsillitis
+195668008,Acute ulcerative tonsillitis
+195669000,Acute catarrhal tonsillitis
+195670004,Acute gangrenous tonsillitis
+195671000,Acute bacterial tonsillitis
+195672007,Acute pneumococcal tonsillitis
+195673002,Acute staphylococcal tonsillitis
+195676005,Acute viral tonsillitis
+195677001,Recurrent acute tonsillitis
+195681001,Acute ulcerative laryngitis
+195682008,Acute catarrhal laryngitis
+195683003,Acute phlegmonous laryngitis
+195684009,Acute laryngitis caused by Haemophilus influenzae
+195685005,Acute pneumococcal laryngitis
+195686006,Acute suppurative laryngitis
+195708003,Recurrent upper respiratory tract infection
+195709006,Pharyngolaryngitis
+195714005,Acute fibrinous bronchitis
+195717003,Acute purulent bronchitis
+195719000,Acute pneumococcal bronchitis
+195720006,Acute streptococcal bronchitis
+195721005,Acute bronchitis caused by Haemophilus influenzae
+195722003,Acute Moraxella catarrhalis bronchitis
+195725001,Acute coxsackievirus bronchitis
+195726000,Acute parainfluenza virus bronchitis
+195727009,Acute respiratory syncytial virus bronchitis
+195728004,Acute bronchitis caused by rhinovirus
+195729007,Acute echovirus bronchitis
+195737004,Acute exudative bronchiolitis
+195739001,Acute bronchiolitis caused by respiratory syncytial virus
+195742007,Acute lower respiratory tract infection
+195756009,Woakes' ethmoiditis
+195770009,Chronic infective rhinitis
+195779005,Pharyngitis keratosa
+195780008,Pharyngitis sicca
+195782000,Chronic follicular pharyngitis
+195788001,Recurrent sinusitis
+195790000,Pansinusitis
+195798007,Chronic adenotonsillitis
+195803003,Caseous tonsillitis
+195804009,Lingular tonsillitis
+195810009,Chronic laryngitis and laryngotracheitis
+195811008,Chronic simple laryngitis
+195812001,Chronic catarrhal laryngitis
+195836002,Pharynx or nasopharynx abscess
+195854003,Fibrinous chorditis
+195855002,Chorditis vocalis inferior
+195878008,Pneumonia and influenza
+195881003,Pneumonia caused by respiratory syncytial virus
+195886008,Group B streptococcal pneumonia
+195888009,Proteus pneumonia
+195889001,Legionella pneumonia
+195896004,Pneumonia caused by pleuropneumonia-like organism
+195900001,Pneumonia due to measles
+195902009,Anthrax pneumonia
+195904005,Pneumonia with coccidioidomycosis
+195908008,Actinomycotic pneumonia
+195909000,Nocardial pneumonia
+195911009,Chickenpox pneumonia
+195923003,Influenza with laryngitis
+195924009,Influenza with pharyngitis
+195929004,Influenza with gastrointestinal tract involvement
+195953005,Mixed simple and mucopurulent chronic bronchitis
+196001008,Chronic obstructive pulmonary disease with acute lower respiratory infection
+196020005,Acute bronchitis caused by chemical fumes
+196067009,Loculated empyema
+196107009,Abscess of lung and mediastinum
+196108004,Single lung abscess
+196109007,Multiple lung abscesses
+196112005,Abscess of lung with pneumonia
+1980003,Seromucinous otitis media
+206283000,Congenital staphylococcal pneumonia
+206284006,Congenital group A hemolytic streptococcal pneumonia
+206285007,Congenital group B hemolytic streptococcal pneumonia
+206286008,Congenital Escherichia coli pneumonia
+206287004,Congenital pseudomonal pneumonia
+206289001,Congenital chlamydial pneumonia
+206359006,Neonatal candidiasis of lung
+2087000,Pulmonary nocardiosis
+20916007,Adhesive middle ear disease with adhesions of drum head to stapes
+20953001,Pulmonary cryptococcosis
+21060003,Acute bacterial epiglottitis
+21186006,Chronic otitis media
+21846001,Pulmonary actinomycosis
+222008,Acute epiglottitis with obstruction
+22754005,Staphylococcal pneumonia
+22951000119104,Spasmodic croup
+23022004,Tuberculous bronchiectasis
+23166004,Cellulitis of pharynx
+232222008,Acute viral otitis externa
+232223003,Acute fungal otitis externa
+232224009,Chronic infective otitis externa
+232225005,Chronic bacterial otitis externa
+232226006,Chronic viral otitis externa
+232228007,Necrotizing otitis externa
+232229004,Granulomatous otitis externa
+232230009,Malignant otitis externa caused by Pseudomonas aeruginosa
+232231008,Non-infective otitis externa
+232232001,Acute non-infective otitis externa
+232233006,Acute irritant otitis externa
+232234000,Acute allergic otitis externa
+232235004,Acute traumatic otitis externa
+232236003,Chronic non-infective otitis externa
+232237007,Chronic radiation otitis externa
+232239005,Chronic irritant otitis externa
+232240007,Chronic allergic otitis externa
+232241006,Chronic traumatic otitis externa
+232243009,Seborrheic otitis externa
+232245002,Granular myringitis
+232251007,Recurrent acute suppurative otitis media
+232252000,Recurrent acute non-suppurative otitis media
+232254004,Chronic non-suppurative otitis media
+232256002,Otitis media with sanguineous effusion
+232257006,Chronic non-suppurative otitis media without effusion
+232258001,Atelectasis of tympanic membrane
+232363000,Abscess of nasal cavity
+232367004,Nasal syphilis
+232390009,Suppurative sinusitis with complications
+232391008,Recurrent acute sinusitis
+232393006,Chronic anterior ethmoidal sinusitis
+232394000,Chronic posterior ethmoidal sinusitis
+232395004,Chronic panethmoidal sinusitis
+232396003,Chronic osteomeatal disease
+232397007,Chronic frontoethmoidal sinusitis
+232399005,Acute herpes simplex pharyngitis
+232400003,Acute herpes zoster pharyngitis
+232401004,Glandular fever pharyngitis
+232402006,Meningococcal pharyngitis
+232403001,Chlamydial pharyngitis
+232404007,Acute pharyngeal candidiasis
+232405008,Chronic ulcerative pharyngitis
+232406009,Chronic pharyngeal candidiasis
+232417005,Vincent's tonsillitis
+232418000,Acute infection of tonsillar remnant
+232420002,Chronic adenoiditis
+232426008,Acute simple laryngitis
+232427004,Vincent's laryngitis
+232428009,Acute membranous laryngitis
+232429001,Acute subglottic laryngitis
+232430006,Recurrent allergic croup
+232432003,Pediatric acute epiglottitis and supraglottitis
+232433008,Adult acute epiglottitis and supraglottitis
+232434002,Chronic fungal laryngitis
+233598009,Acute bacterial bronchitis
+233599001,Acute mycoplasmal bronchitis
+233600003,Acute chlamydial bronchitis
+233601004,Acute viral bronchitis
+233602006,Acute viral bronchiolitis
+233603001,Acute bronchiolitis caused by adenovirus
+233604007,Pneumonia
+233606009,Atypical pneumonia
+233607000,Pneumococcal pneumonia
+233608005,Meningococcal pneumonia
+233609002,Pneumonia caused by Chlamydiaceae
+233610007,Neonatal chlamydial pneumonia
+233613009,Fungal pneumonia
+233614003,Pulmonary mucormycosis
+233615002,Chronic pulmonary coccidioidomycosis
+233616001,Pulmonary blastomycosis
+233618000,Mycobacterial pneumonia
+233619008,Neonatal pneumonia
+233620002,Pneumonia due to parasitic infestation
+233621003,Rickettsial pneumonia
+233622005,Infectious mononucleosis pneumonia
+233623000,Mononuclear interstitial pneumonitis
+233624006,Herpes simplex pneumonia
+233625007,Giant cell pneumonia
+233649005,Tuberculous chylothorax
+233672007,Byssinosis grade 3
+233785003,Infectious disorder of trachea
+233794009,Tuberculous bronchopleural fistula
+233795005,Infectious disorder of bronchus
+233797002,Infected bronchogenic cyst
+233799004,Acute toxic tracheobronchitis
+234528007,Nasopharyngeal sarcoidosis
+2365002,Chronic granular pharyngitis
+23698009,Staphylococcal pleurisy with effusion
+23884004,Acute suppuration of maxillary sinus
+240387006,Pulmonary glanders
+240391001,Pulmonary melioidosis
+240422004,Tracheobronchial diphtheria
+240444009,Fusobacterial necrotizing tonsillitis
+240547000,Lymphonodular coxsackie pharyngitis
+240629003,Malarial shock lung
+240635003,Pneumonia caused by Leishmania
+240702004,Chronic necrotizing pulmonary aspergillosis
+240704003,Pharyngeal candidiasis
+240735009,Classical histoplasmosis nasal ulceration
+240741002,Acute pulmonary African histoplasmosis
+240742009,Chronic pulmonary African histoplasmosis
+240747003,Chronic pulmonary blastomycosis
+24078009,Gangosa of yaws
+240871004,Capillaria aerophila chest infection
+24235005,Tuberculous hydrothorax
+24302002,Pneumococcal pleurisy with effusion
+24347001,Cellulitis of vocal cords
+243981000119109,Pulmonary filariasis
+24662006,Influenza caused by Influenza B virus
+249458000,Supraglottic abscess
+249463001,Subglottic abscess
+2523007,Salmonella pneumonia
+25764005,Acute abscess of frontal sinus
+25831001,Tuberculosis of nasal septum
+2585002,Pneumococcal pleurisy
+26169004,Allergic otitis media
+26427008,Chronic pulmonary histoplasmosis
+26484003,Bordetellosis
+266337001,Acute epiglottitis (non-streptococcal)
+266350000,Pneumococcal lobar pneumonia
+26650005,Acute tracheitis
+267665002,Acute infective otitis externa
+267759006,Chronic atticoantral disease
+270490007,Acute otitis media with effusion
+270491006,Eustachian tube salpingitis
+271503005,Pleural empyema with fistula
+271504004,Pleural empyema with no fistula
+271567008,Whooping cough-like syndrome
+27278006,Acute empyema of sphenoidal sinus
+27475006,Parainfluenza virus bronchitis
+275376007,Congenital syphilitic chronic coryza
+275481002,Non-suppurative otitis media
+275495004,Acute fibrinous laryngotracheobronchitis
+275497007,Infection of lower respiratory tract and mediastinum
+275499005,Acute wheezy bronchitis
+276443001,Acute laryngitis and/or tracheitis
+276692000,Congenital viral pneumonia
+276693005,Congenital bacterial pneumonia
+276700005,Congenital syphilitic rhinitis
+27757009,Encysted pleurisy
+277869007,Non-tuberculous mycobacterial pneumonia
+27836007,Pertussis
+278484009,Tropical pulmonary eosinophilia
+278516003,Lobar pneumonia
+27878001,Follicular tonsillitis
+280221000009107,Otitis externa caused by bacteria
+28085001,Empyema with bronchopleural fistula
+281794004,Viral upper respiratory tract infection
+28371001,Cholesterol granuloma of middle ear
+285381006,Acute infective exacerbation of chronic obstructive pulmonary disease
+28709001,Cellulitis of larynx
+28791000119105,Chronic coccidioidomycotic pneumonia
+28795002,Subacute exudative otitis media
+293241000119100,Acute exacerbation of chronic obstructive bronchitis
+29350000,Catarrhal otitis media
+29591002,Purulent bronchitis
+29608009,Acute epiglottitis
+297009,Acute myringitis
+29731002,Tuberculous pneumothorax
+29951006,Chronic laryngitis
+300932000,Uvulitis
+300999006,Basal pneumonia
+301000005,Left lower zone pneumonia
+301001009,Right lower zone pneumonia
+301002002,Left upper zone pneumonia
+301003007,Right middle zone pneumonia
+301004001,Right upper zone pneumonia
+301824001,Acute viral laryngotracheitis
+30239003,Acute abscess of sphenoidal sinus
+30250000,Acute otitis externa
+302905001,Aspergillus otomycosis
+302911003,Acute lingual tonsillitis
+30352005,Allergic-infective asthma
+30437004,Empyema with bronchocutaneous fistula
+308906005,Secondary bacterial pneumonia
+309789002,Encephalitis caused by influenza virus
+309806000,Encephalitis caused by influenza-virus identified
+3110003,Acute otitis media
+312118003,Bacterial upper respiratory infection
+312119006,Bacterial lower respiratory infection
+312134000,Viral lower respiratory infection
+312218008,Infective otitis media
+312342009,Infective pneumonia
+312371005,Acute infective bronchitis
+312400008,Acute infective tracheobronchitis
+312422001,Infective pharyngitis
+312423006,Infective laryngitis
+31309002,Respiratory syncytial virus pharyngitis
+313251006,Encephalitis caused by influenza-specific virus not identified
+3135009,Otitis externa
+314042000,Infective pleurisy
+314043005,Viral pleurisy
+3144005,Staphylococcal pleurisy
+314978007,Postoperative pneumonia
+31561003,Hypostatic bronchopneumonia
+315642008,Influenza-like symptoms
+31700001,Adhesive middle ear disease with adhesions of drum head to incus
+31920006,Hemorrhagic pneumonia caused by varicella
+3214003,Invasive pulmonary aspergillosis
+32179007,Furuncle of nasal septum
+32204007,Pulmonary actinobacillosis
+32286006,Pneumonia in Q fever
+32398004,Bronchitis
+32760002,Exudative otitis media
+328531000119104,Upper respiratory tract infection caused by Influenza A virus
+32904004,Pneumococcal laryngitis
+33261009,Abscess of tonsil
+33528003,Bullous myringitis
+33631007,Pyopneumothorax
+33924006,Abscess of larynx
+33934002,Hemorrhagic otitis externa
+34020007,Pneumonia caused by Streptococcus
+3419005,Faucial diphtheria
+34286007,Empyema with hepatopleural fistula
+34290009,Pulmonary nematodiasis
+34723002,Diffuse otitis externa
+34790005,Chronic tubotympanic disease with anterior perforation of ear drum
+3487004,Candidiasis of lung
+35037009,Primary atypical interstitial pneumonia
+35168006,Acute empyema of ethmoidal sinus
+35183001,Acute transudative otitis media
+35301006,Acute tracheobronchitis
+35339003,Primary pneumonic plague
+35377009,Parainfluenza virus laryngotracheobronchitis
+35923002,Chronic maxillary sinusitis
+359609001,Acute non-suppurative otitis media
+360470001,Chronic mucus hypersecretion
+360595002,Acute necrotizing otitis media
+363746003,Acute pharyngitis
+36426008,Subacute bronchitis
+36971009,Sinusitis
+371103000,Granulomatous epiglottitis
+371127003,Obstructive sinusitis
+373435003,Battey disease
+37426002,Ulcerative laryngitis
+37948003,Acute laryngotracheitis without obstruction
+38394007,Chronic purulent otitis media
+385093006,Community acquired pneumonia
+385479009,Follicular bronchiolitis
+38596008,Chronic tubotympanic catarrh
+38699009,Pneumonia caused by Histoplasma capsulatum
+38961000,Chronic sphenoidal sinusitis
+38976008,Pneumonic plague
+39172002,Pneumonia caused by Proteus mirabilis
+39222009,Adhesive middle ear disease with adhesions of drum head to promontorium
+39271004,Ulcerative pharyngitis
+39288006,Purulent otitis media
+396285007,Bronchopneumonia
+396286008,Bilateral bronchopneumonia
+398447004,Severe acute respiratory syndrome
+40055000,Chronic sinusitis
+402207002,Acute seborrheic otitis externa
+405737000,Pharyngitis
+405821001,Allergic otitis externa
+40600002,Pneumococcal bronchitis
+40766000,Enteroviral lymphonodular pharyngitis
+407671000,Bilateral pneumonia
+408669002,Acute laryngitis with obstruction
+408679000,Healthcare associated pneumonia
+408680002,Healthcare associated bacterial pneumonia
+408681003,Healthcare associated legionnaire's disease
+408682005,Healthcare associated pertussis
+408687004,Healthcare associated influenza disease
+408688009,Healthcare associated severe acute respiratory syndrome
+409664000,Pneumonia caused by anaerobic bacteria
+409665004,Pneumonia caused by aerobic bacteria
+41048006,Haemophilus influenzae laryngitis
+4120002,Bronchiolitis
+41207000,Adenoviral pneumonia
+41269000,Influenzal bronchopneumonia
+41381004,Pneumonia caused by Pseudomonas
+414304001,Furuncle of nasal cavity
+415125002,Pneumocystosis jirovecii pneumonia
+415724006,Tonsillitis caused by Gram negative bacteria
+41582007,Streptococcal tonsillitis
+417018008,Pulmonary coccidioidomycosis
+417688002,Chronic progressive coccidioidal pneumonia
+418122003,Bronchomoniliasis
+41931000119102,Sinusitis co-occurrent with nasal polyps
+41954005,Chronic atticoantral suppurative otitis media
+420544002,Bacterial pneumonia with acquired immunodeficiency syndrome
+420706008,Nasopharyngeal fascioliasis
+420787001,Pneumococcal pneumonia with acquired immunodeficiency syndrome
+421047005,Candidiasis of lung with acquired immunodeficiency syndrome
+421508002,Viral pneumonia with acquired immunodeficiency syndrome
+4225003,Tuberculosis of nose
+42402006,Kartagener syndrome
+424327005,Tonsillar actinomycosis
+425464007,Nosocomial pneumonia
+425748003,Acute exacerbation of chronic bronchitis
+425996009,Bilateral basal pneumonia
+426696003,Lingular pneumonia
+427873006,"Influenza caused by influenza virus type A, avian, H5N1 strain"
+427909005,Chronic recurrent sinusitis
+428697002,Inactive tuberculosis of lung
+429427008,Invasive fungal sinusitis
+429767005,Chronic otitis media after insertion of tympanic ventilation tube
+430395005,Pneumonia caused by Gram negative bacteria
+430476004,Diffuse panbronchiolitis
+431231008,Acute rhinosinusitis
+432381000,Human papillomavirus infection of vocal cord
+43275000,Otitis
+43561008,Chronic exudative otitis media
+43692000,Influenzal acute upper respiratory infection
+43878008,Streptococcal sore throat
+441551009,Inflammation of larynx caused by virus
+441590008,Pneumonia caused by Severe acute respiratory syndrome coronavirus
+441658007,Pneumonia caused by Staphylococcus aureus
+441942006,Pneumonia caused by Streptococcus pyogenes
+442094008,Pneumonia caused by Histoplasma
+442438000,Influenza caused by Influenza A virus
+442696006,Influenza caused by Influenza A virus subtype H1N1
+443378001,Lady Windermere syndrome
+444745000,Infection of mucous cyst of nasal sinus
+444814009,Viral sinusitis
+445058002,Inflammation of bronchus caused by Aspergillus
+445096001,Pneumonia caused by Human metapneumovirus
+445102008,Inflammation of bronchiole caused by Human metapneumovirus
+445130008,Acute infective adenoiditis
+446543007,Tuberculous abscess of lung
+446594000,Infection of pharynx caused by Chlamydia trachomatis
+446753005,Tuberculosis of oropharynx
+446946005,Reinfection pulmonary tuberculosis
+446986002,Tuberculous pleural effusion
+447006007,Relapse pulmonary tuberculosis
+448719004,Postoperative lower respiratory tract infection
+448739000,Recurrent lower respiratory tract infection
+449839003,Chronic otitis media with sanguineous effusion
+450715004,Influenza caused by Influenza A virus subtype H7
+450716003,Influenza caused by Influenza A virus subtype H9
+45263007,Pulmonary sporotrichosis
+45312009,Pneumonia in typhoid fever
+45556008,Pulmonary tularemia
+45629003,Abscess of nasopharynx
+45913009,Laryngitis
+46207001,Pneumonitis due to acquired disseminated toxoplasmosis
+46970008,Pneumonia caused by Mycoplasma pneumoniae
+47082005,Congenital pneumonia caused by rubella
+47841006,Chronic nasopharyngitis
+49691004,Occupational bronchitis
+49908003,Acute epiglottitis without obstruction
+50211006,Catarrhal tracheitis
+50215002,Laryngeal diphtheria
+5028002,Acute pansinusitis
+50417007,Lower respiratory tract infection
+50694005,Empyema with mediastinal fistula
+50997000,Pulmonary dirofilariasis
+51152000,Abscess of vocal cords
+51209006,Viral tonsillitis
+51476001,Nasopharyngitis
+51530003,Pneumonia caused by Escherichia coli
+51960003,Secondary syphilis of pharynx
+52353000,Acute mucoid otitis media
+52409006,Bronchiolitis exudativa
+52571006,Chronic tracheobronchitis
+52721006,Tuberculosis of nasal sinus
+53084003,Bacterial pneumonia
+53295002,Chronic otitis externa
+53316003,Otomycosis
+53926002,Plastic bronchitis
+54150009,Upper respiratory infection
+54398005,Acute upper respiratory infection
+5505005,Acute bronchiolitis
+55130001,Laryngotracheitis
+55355000,Acute laryngopharyngitis
+55419007,Tuberculosis of glottis
+55604004,Avian influenza
+55679008,Peribronchial pneumonia
+56498009,Tuberculosis of nasopharynx
+57089007,Respiratory syncytial virus bronchiolitis
+57713008,Inflammation of vocal cord
+58031004,Suppurative pharyngitis
+58194007,Chronic seromucinous otitis media
+58217006,Infection caused by Bordetella bronchiseptica
+58524006,Acute pulmonary histoplasmosis
+58554001,Empyema of pleura
+58576005,Haemophilus influenzae epiglottitis
+5875001,Acute bronchitis with obstruction
+58763001,Acute empyema of nasal sinus
+58890000,Adenoviral bronchopneumonia
+59221008,Parainfluenza virus rhinopharyngitis
+59275002,Acute allergic serous otitis media
+59475000,Pneumonia in pertussis
+59707005,Abscess of pharynx
+59903001,Acute obliterating bronchiolitis
+59967003,Acute laryngotracheitis with obstruction
+60130002,Chronic frontal sinusitis
+6042001,Pulmonary aspergillosis
+60485005,Pleurobronchopneumonia
+60916008,Cardiopulmonary schistosomiasis
+6142004,Influenza
+61700007,Influenza with non-respiratory manifestation
+61711004,Acute abscess of ethmoidal sinus
+61884008,Achromobacter pneumonia
+61937009,Simple chronic bronchitis
+62994001,Tracheitis
+63140003,Acute suppuration of ethmoidal sinus
+63480004,Chronic bronchitis
+63741006,Fungal infection of lung
+63866002,Atrophic pharyngitis
+64369009,Acute tracheitis without obstruction
+64375000,Acute laryngotracheitis
+64479007,Pneumonia caused by Klebsiella pneumoniae
+64667001,Interstitial pneumonia
+64703005,Terminal bronchopneumonia
+6485001,Mucosanguinous chronic otitis media
+64880000,Parainfluenza virus bronchopneumonia
+64917006,Parainfluenza virus pneumonia
+65095005,Amebic lung abscess
+65102004,Adiaspiromycosis caused by Emmonsia parva
+652005,Gangrenous tonsillitis
+65363002,Otitis media
+65878001,Septic bronchitis
+66011008,Viral tracheitis
+66429007,Unresolved lobar pneumonia
+6655004,Acute laryngitis
+67525007,Secondary pneumonic plague
+67832005,Acute ethmoidal sinusitis
+68272006,Acute maxillary sinusitis
+6965008,Subacute nonsuppurative otitis media
+70020005,Adenoiditis
+700220003,Acute bacterial otitis externa
+700273003,Isolated tracheobronchial tuberculosis
+70036007,Haemophilus influenzae pneumonia
+70341005,Tuberculous laryngitis
+703468005,Bacterial tonsillitis
+703469002,Bacterial otitis media
+703470001,Bacterial sinusitis
+70385007,Adenoviral pharyngoconjunctivitis
+704345008,Chronic interstitial pneumonitis
+7063008,Gangrenous pneumonia
+707448003,Influenza caused by Influenza A virus subtype H7N9
+707503004,Pneumonia caused by Schistosoma mansoni
+707507003,Pneumonia caused by Schistosoma japonicum
+707508008,Pneumonia caused by Schistosoma haematobium
+707509000,Tracheobronchitis caused by Aspergillus
+708025003,Pyopneumothorax following infection by Coccidioides
+709663002,Supraglottitis
+7097001,Streptococcal pleurisy with effusion
+70976000,Viral epiglottitis
+711128004,"Influenza caused by influenza virus type A, avian, H3N2 strain"
+71186008,Croup
+71255007,Adenoviral laryngotracheobronchitis
+713083002,Influenza caused by Influenza A virus subtype H5
+713084008,Pneumonia caused by Human coronavirus
+713175006,Postoperative bronchitis
+713525001,Recurrent bacterial pneumonia
+713526000,Recurrent bacterial pneumonia co-occurrent with human immunodeficiency virus infection
+713544008,Bacterial pneumonia co-occurrent with human immunodeficiency virus infection
+714203003,Acute bronchitis co-occurrent with bronchiectasis
+715593000,Infection of nasal cavity caused by Candida
+715882005,Severe acute respiratory syndrome of upper respiratory tract
+716673006,Infection of upper respiratory tract caused by fungus
+717231003,Periodic fever and aphthous stomatitis with pharyngitis and cervical lymphadenitis syndrome
+718004,Acute bronchiolitis with obstruction
+71926009,Infective pneumonia acquired prenatally
+719522009,Infection of upper respiratory tract caused by Candida co-occurrent with human immunodeficiency virus infection
+71958004,Chronic allergic otitis media
+719590007,Influenza caused by seasonal influenza virus
+719865001,Influenza caused by pandemic influenza virus
+721586007,Pharyngotonsillitis caused by Human herpes simplex virus
+721741006,Sinusitis caused by Streptococcus pneumoniae
+721742004,Otitis media caused by Streptococcus pneumoniae
+721755003,Sinusitis caused by Haemophilus influenzae
+721804002,Infection of lung caused by Pneumocystis
+72204002,Respiratory syncytial virus laryngotracheobronchitis
+723880004,Abscess of upper respiratory tract
+72409005,Rhinoscleroma
+72430001,Gangrenous pharyngitis
+724498004,Pneumonia caused by Chlamydia pneumoniae
+725916003,Acute sinusitis caused by fungus
+725917007,Acute sinusitis caused by virus
+7271000119107,Acute bilateral otitis media with effusion
+73198007,Bacterial pleurisy
+73237007,Chronic ethmoidal sinusitis
+733051000,Pneumonia caused by Gram positive bacteria
+733170007,Chronic aspergillosis of paranasal sinus
+733171006,Chronic pulmonary aspergillosis
+733497009,Chronic suppuration of bronchus
+73414003,Haemophilus influenzae laryngotracheobronchitis
+73452002,Abscess of lung
+735463000,Perichondritis of trachea
+735464006,Acute noninfective bronchitis
+735465007,Protracted bronchitis caused by bacterium
+735532001,Infection of lung caused by Echinococcus
+735740009,Infection causing tracheitis in neonate
+737180005,Chronic bronchiolitis
+73995006,Pulmonary paracoccidioidomycosis
+74372003,Gonorrhea of pharynx
+74417001,Mucopurulent chronic bronchitis
+7457009,Chronic tracheitis
+74644004,Influenza with encephalopathy
+75388006,Echinococcus granulosus infection of lung
+7548000,Rheumatic pneumonitis
+75498004,Acute bacterial sinusitis
+75570004,Viral pneumonia
+75589004,Nasopharyngeal diphtheria
+76090006,Pittsburgh pneumonia
+763888005,Necrotizing pneumonia caused by Panton-Valentine leukocidin producing Staphylococcus aureus
+76490001,Otomycosis externa caused by Fusarium
+765152004,Chronic serous otitis media of left ear
+765153009,Chronic serous otitis media of right ear
+76630008,Fibrinopurulent pleurisy
+76651006,Pneumococcal pharyngitis
+76653009,Acute empyema of maxillary sinus
+7678002,Cytomegaloviral pneumonia
+7699004,Adhesive middle ear disease
+77116006,Infection caused by Bordetella parapertussis
+772810003,Influenza caused by Influenza A virus subtype H3N2
+772828001,Influenza caused by Influenza A virus subtype H5N1
+772839003,Pneumonia caused by Influenza A virus
+77478005,Acute sanguineous otitis media
+77668003,Isolated tracheal tuberculosis
+77919000,Acute sphenoidal sinusitis
+78046005,Myocarditis caused by influenza virus
+782761005,Subacute invasive pulmonary aspergillosis
+78337007,Acute upper respiratory infection of multiple sites
+78430008,Adenoviral pharyngitis
+785744001,Bronchitis co-occurrent with acute wheeze
+785745000,Acute bronchitis co-occurrent with wheeze
+78737005,Frontal sinusitis
+78868004,Chronic mucoid otitis media
+78887005,Seropurulent pleurisy
+78895009,Congenital pneumonia
+78911000,Parainfluenza virus pharyngitis
+79150005,Acute chemical otitis externa
+79479005,Respiratory syncytial virus bronchitis
+79972006,Circumscribed otitis externa
+80003002,Tuberculous pneumonia
+80010008,Isolated bronchial tuberculosis
+80257001,Acute bronchitis with bronchospasm
+80327007,Serous otitis media
+80384002,Epiglottitis
+80600003,Acute suppuration of nasal sinus
+80602006,Nodular tuberculosis of lung
+81164001,Ornithosis with pneumonia
+81339006,Secondary syphilis of tonsil
+81524006,Influenza caused by Influenza C virus
+81554001,Tuberculosis of lung with involvement of bronchus
+81564005,Chronic serous otitis media
+82228008,Staphylococcal pharyngitis
+82272006,Common cold
+82454002,Carbuncle of nasal septum
+82670009,Whooping cough caused by organism other than Bordetella pertussis
+82690000,Suppurative laryngitis
+8304007,Acute seromucinous otitis media
+8326008,Acute allergic mucoid otitis media
+83271005,Chronic laryngotracheitis
+84261000119106,Acute persistent otitis media
+84353005,Pulmonary disease caused by Mycobacteria
+84409004,Fetid chronic bronchitis
+8442000,Purulent rhinitis
+84753008,Pneumonia in systemic mycosis
+84889008,Parapharyngeal abscess
+849571000000102,Acute bacterial laryngitis
+85083002,Streptococcal laryngitis
+85108007,Acute tubotympanic catarrh
+8519009,Acute tracheitis with obstruction
+85420008,Streptococcal pleurisy
+85426002,Bacterial pleurisy with effusion
+8555001,Syphilis of lung
+85832003,Parainfluenza virus laryngitis
+85915003,Laryngotracheobronchitis
+85940005,Tuberculous otitis media
+86279000,Acute suppurative otitis media with spontaneous rupture of ear drum
+86359006,Subacute transudative otitis media
+86850004,Serosanguineous chronic otitis media
+86981007,Infective otitis externa
+87665008,Chronic tubotympanic suppurative otitis media
+87695000,Necrotizing bronchiolitis
+878818001,Pharyngotonsillitis
+878820003,Rhinoconjunctivitis
+88036000,Primary pulmonary coccidioidomycosis
+88171000119100,Acute adenoiditis
+88348008,Maxillary sinusitis
+88850006,Chronic pansinusitis
+89145009,Subacute tubotympanic catarrh
+89194009,Acute abscess of maxillary sinus
+89549007,Catarrhal bronchitis
+89723004,Chronic tympanitis
+897656009,Rhinosinusitis
+90117007,Tuberculous fibrosis of lung
+90176007,Tonsillitis
+9095002,Adiaspiromycosis caused by Emmonsia crescens
+90979004,Chronic tonsillitis
+91038008,Acute frontal sinusitis
+9228003,Pulmonary schistosomiasis
+9312005,Necrotic rhinitis
+94146005,Malignant otitis externa
+9505000,Infestation caused by Pneumonyssus simicola
+95804005,Purulent drainage from external ear canal
+95885008,Mycoplasmal pharyngitis
+95886009,Mycoplasmal tracheobronchitis
+95891005,Influenza-like illness

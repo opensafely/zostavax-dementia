@@ -1,0 +1,142 @@
+code,term
+106531000119101,Long-term current use of penicillamine
+1141994004,"Rituximab, cyclophosphamide, etoposide, vincristine, prednisone antineoplastic chemotherapy regimen"
+1148692008,Radiation therapy following chemotherapy
+1149431000000106,Intraoperative electron radiotherapy
+1156505006,External beam radiation therapy using carbon ions
+1156506007,External beam radiation therapy using photons
+1156524009,Intensity modulated external beam neutron radiation therapy
+1156525005,Mixed beam external beam radiation therapy
+1156528007,External beam radiation therapy using particle spot scanning technique
+1156529004,External beam radiation therapy using particle passive scattering technique
+1156667005,Penicillamine therapy
+1156961008,Chimeric antigen receptor T-cell immunotherapy
+1167481000000105,Intra-arterial injection of antineoplastic agent into bilateral ophthalmic arteries using fluoroscopic guidance with contrast
+1172516002,High-dose chemotherapy with stem cell transplant
+1179723002,Administration of tocilizumab
+1179729003,Administration of sarilumab
+12149006,"Chemotherapy administration, subcutaneous, with local anesthesia"
+1217525002,Injection of antineoplastic agent into neoplasm of brain tissue
+12240661000119103,Long term systemic steroid user
+1254741007,Intensification antineoplastic therapy regimen
+1254742000,Delayed intensification antineoplastic therapy regimen
+1255831008,Chemotherapy for malignant neoplastic disease using targeted agent
+1255834000,Administration of antineoplastic chemotherapy into peritoneal cavity
+1255853005,Injection of immunotherapeutic agent
+1255904006,Administration of palliative antineoplastic agent
+1259200004,Neoadjuvant antineoplastic chemotherapy
+1264382006,Follow-up for combined therapy of radiation therapy and chemotherapy
+1264383001,Follow-up for combined therapy of surgery and chemotherapy
+1264385008,"Follow-up for combined therapy of surgery, radiation therapy, and chemotherapy"
+1269418000,Upadacitinib therapy
+1269441008,Ixekizumab therapy
+1269442001,Baricitinib therapy
+1269443006,Belantamab mafodotin therapy
+1269444000,Belatacept therapy
+1269445004,Guselkumab therapy
+1287649000,Cellular immunotherapy
+1287683007,Risankizumab therapy
+1287737006,Sarilumab therapy
+1287761004,Arsenic therapy
+1287762006,Arsenic compound therapy
+1290226008,Administration of antineoplastic agent via intravenous route
+1290228009,Administration of antineoplastic agent via subcutaneous route
+15625411000119109,Long-term current use of apremilast
+15625451000119105,Long-term current use of tofacitinib
+16890821000119107,Long-term current use of ixekizumab
+169335009,External beam radiotherapy with surgery and chemotherapy
+169336005,External beam radiation therapy with chemotherapy
+169343004,Bone marrow suppression using irradiation
+169396008,Radiomimetic chemotherapy
+169397004,Radiochemotherapy by local infiltration
+169398009,Radiochemotherapy: to stop spread
+169399001,Radiochemotherapy via oral route
+169400008,Radiochemotherapy via intravenous route
+169402000,Intraarterial radiochemotherapy
+169403005,Intracavitary radiochemotherapy
+171765004,Intrathecal injection of chemotherapeutic agent
+174236121000119109,Long-term current use of baricitinib
+183023001,Transplant immunosuppression
+183651009,Chemotherapy follow-up
+22733003,Chemotherapy for non-malignant neoplasm
+230857009,Injection of chemotherapeutic substance into subcutaneous reservoir
+232681000000103,Chemotherapy delivery
+235331000000103,Delivery of oral chemotherapy for neoplasm
+235391000000102,Delivery of chemotherapy for neoplasm
+238831000000103,Delivery of exclusively oral chemotherapy for neoplasm
+238841000000107,Delivery of complex chemotherapy for neoplasm including prolonged infusional treatment at first attendance
+238851000000105,Delivery of complex parenteral chemotherapy for neoplasm at first attendance
+238861000000108,Delivery of simple parenteral chemotherapy for neoplasm at first attendance
+239071000000100,Delivery of subsequent element of cycle of chemotherapy for neoplasm
+265760000,Intravenous chemotherapy
+265761001,Intramuscular chemotherapy
+265762008,Subcutaneous chemotherapy
+266719004,Oral chemotherapy
+268500004,Administration of prophylactic chemotherapy
+275830000,Reverse barrier nursing
+29391003,Chemotherapy administration into peritoneal cavity requiring paracentesis
+315601005,Ambulatory chemotherapy
+31652009,Intracavitary chemotherapy for malignant neoplasm
+328331000119109,Pancytopenia caused by non-steroidal anti-inflammatory agent
+363688001,Administration of antineoplastic agent
+367336001,Chemotherapy
+38216008,Infusion chemotherapy for malignant neoplasm
+394894008,Pre-operative chemotherapy
+394895009,Postoperative chemotherapy
+394934009,Combined preoperative chemotherapy and radiotherapy
+394935005,Combined postoperative chemotherapy and radiotherapy
+399042005,Chemotherapy cycle
+405165221000119107,Long-term current use of belantamab mafodotin
+4114003,Parenteral chemotherapy for malignant neoplasm
+428501000000108,[V]Chemotherapy session for neoplasm
+450827009,Induction chemotherapy
+483574341000119108,Long-term current use of upadacitinib
+50050141000188100,Anthracycline therapy
+51534007,Oral chemotherapy for malignant neoplasm
+584833311000119102,Long-term current use of guselkumab
+68619000,Chemotherapy for non-neoplastic disease
+6872008,Perfusion chemotherapy for malignant neoplasm
+700496000,Postoperative administration of antineoplastic agent into peritoneal cavity
+703423002,Combined chemotherapy and radiation therapy
+70446004,Chemotherapy administration into pleural cavity requiring thoracentesis
+707311008,Immunosuppressant drug therapy
+713517003,Infliximab therapy
+713518008,Mycophenolate therapy
+713551004,Azathioprine therapy
+716872004,Antineoplastic chemotherapy regimen
+720379009,Hepatic arterial infusion chemotherapy
+721912451000119106,Long-term current use of risankizumab
+722189006,Abatacept therapy
+722472009,"Rituximab, ifosfamide, carboplatin and etoposide chemotherapy regimen"
+722482005,"Doxorubicin, bleomycin, vinblastine and dacarbazine chemotherapy regimen"
+722491009,"Rituximab, cyclophosphamide, doxorubicin, vincristine and prednisone chemotherapy regimen"
+723945004,Cyclosporine therapy
+724159000,Rituximab therapy
+724160005,Tacrolimus therapy
+724165000,Tofacitinib therapy
+726599006,Sirolimus therapy
+726603006,Apremilast therapy
+7447008,Immunosuppressive therapy for transplant
+762315004,Therapy related acute myeloid leukemia due to and following administration of antineoplastic agent
+782708002,Everolimus therapy
+782710000,Natalizumab therapy
+782711001,Secukinumab therapy
+782712008,Vedolizumab therapy
+816151001,Administration of consolidation antineoplastic agent
+824522871000119100,History of chimeric antigen receptor T-cell immunotherapy
+829591000000101,Neoadjuvant chemotherapy
+830155008,Administration of hyperthermic antineoplastic agent into peritoneal cavity
+830156009,Administration of hyperthermic antineoplastic agent into thoracic cavity
+836671891000119108,Long-term current use of belatacept
+843671000000104,Electrochemotherapy
+860788002,Ocrelizumab therapy
+862921000000106,Intravesical electrochemotherapy
+86553008,Immunosuppressive therapy
+870249004,"Folinic acid, fluorouracil and irinotecan antineoplastic chemotherapy regimen"
+870250004,"Fluorouracil, leucovorin, irinotecan and oxaliplatin antineoplastic chemotherapy regimen"
+870253002,Myeloablative conditioning regimen
+87776000,Intra-arterial infusion of antineoplastic agent
+890093004,Administration of multiple antineoplastic agents
+897713009,Antineoplastic chemoimmunotherapy
+950410381000119107,Immunodeficiency caused by long term therapeutic use of immunosuppressant
+968171000000104,Provision of high dose inhaled corticosteroid safety card
