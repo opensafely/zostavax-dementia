@@ -1,53 +1,35 @@
-from ehrql import create_dataset, days, get_parameter
-from ehrql.tables.tpp import vaccinations
-from analysis.functions import *
-
-
-### THIS DATASET DEF IS STILL A WORK IN PROGRESS ###
+from ehrql import create_dataset, days, get_parameter, years
+from analysis.variable_functions import *
+from analysis.helper_functions import *
 
 dataset = create_dataset()
 dataset.configure_dummy_data(population_size=100000)
 
 index_date = get_parameter("index_date")
 
+# demographics and main outcomes
 dataset = demographics(index_date)
-dataset = primary_care_outcomes(index_date)
-dataset = primary_care_controls(index_date)
-dataset = secondary_care_outcomes(index_date)
+dataset = primary_care_main_outcomes(index_date)
+dataset = secondary_care_main_outcomes(index_date)
+dataset = primary_care_exclusions(index_date)
 
-## Vaccinations
-# Note - will exclude anyone whose first vaccination date is BEFORE 1 Sep 2023
-dataset.zostavax_date_1 = (
-    vaccinations
-    .where(vaccinations.product_name.is_in(["Zostavax",
-        "Shingles (Herpes Zoster) vaccine (live) powder and solvent for suspension for injection 0.65ml pfs"]))
-    .sort_by(vaccinations.date)
-    .first_for_patient()
-    .date
-)
-dataset.shingrix_date_1 = (
-    vaccinations
-    .where(vaccinations.product_name.is_in(["Shingrix",
-      "Shingles (Herpes Zoster) adjuvanted rcmb vacc powder and suspension for suspension inj 0.5ml vials"]))
-    .sort_by(vaccinations.date)
-    .first_for_patient()
-    .date
-)
-dataset.shingrix_date_2 = (
-    vaccinations
-    .where(vaccinations.product_name.is_in(["Shingrix",
-        "Shingles (Herpes Zoster) adjuvanted rcmb vacc powder and suspension for suspension inj 0.5ml vials"])
-        & vaccinations.date.is_after(dataset.shingrix_date_1))
-    .sort_by(vaccinations.date)
-    .first_for_patient()
-    .date
-)
+# only extract negative controls / variables for testing assumptions for main analysis
+if index_date == "2014-02-01":
+    dataset = primary_care_control_outcomes(index_date)
+    dataset = primary_care_assumptions(index_date)
 
-# NEED TO UDPATE
+zostavax_products = ["Zostavax","Shingles (Herpes Zoster) vaccine (live) powder and solvent for suspension for injection 0.65ml pfs"]
+dataset.zostavax_date_1  = first_vax_event_after(index_date, product_name=zostavax_products).date
+
 dataset.define_population(
     # registered for at least 90 days
     (dataset.reg_start_date.is_on_or_before(index_date - days(90)))
-  #  & (dataset.dob.is_on_or_between("1931-09-02", "1936-09-01"))
+    # age 77-<82 years on index date
+    & (dataset.dob.is_on_or_between(index_date - years(82), index_date - years(77)))
     # m/f sex only due to disclosure risk of non m/f sexes
     & ((dataset.sex == "male") | (dataset.sex == "female"))
+    # non-missing IMD
+    & (dataset.imd_decile.is_not_null())
+    # alive on index_date
+    & (dataset.dod.is_after(index_date) | (dataset.dod.is_null()))
 )
