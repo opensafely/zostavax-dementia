@@ -1,17 +1,16 @@
-from ehrql import create_dataset, days, get_parameter, years
+from ehrql import create_dataset, days, get_parameter
 from analysis.variable_functions import *
-from analysis.helper_functions import *
 
 dataset = create_dataset()
 
 threshold_date = get_parameter("threshold_date")
 
 dataset = demographics(threshold_date)
-dataset = vaccinations()
 dataset = primary_care_main_outcomes(threshold_date)
 dataset = secondary_care_main_outcomes(threshold_date)
 dataset = primary_care_exclusions(threshold_date)
 dataset = primary_care_controls_assumptions(threshold_date)
+dataset = vaccinations()
 
 dataset.configure_dummy_data(population_size=100000,
                              additional_population_constraint=(

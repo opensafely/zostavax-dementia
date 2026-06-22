@@ -32,12 +32,12 @@ actions:
         dataset: output/zostavax/dataset_zostavax_sens_2.csv.gz
 
   # Shingrix analysis
-  #generate_dataset_shingrix_main:
-  #  run: ehrql:v1 generate-dataset analysis/dataset_definition_shingrix.py 
-  #    --output output/shingrix/dataset_shingrix_main.csv.gz
-  #    --
-  #    --threshold_date "2023-09-01"
-  #  outputs:
-  #    highly_sensitive:
-  #      dataset: output/shingrix/dataset_shingrix_main.csv.gz
+  generate_dataset_shingrix_main:
+    run: ehrql:v1 generate-dataset analysis/dataset_definition_shingrix.py 
+      --output output/shingrix/dataset_shingrix_main.csv.gz
+      --
+      --threshold_date "2023-09-01"
+    outputs:
+      highly_sensitive:
+        dataset: output/shingrix/dataset_shingrix_main.csv.gz
   
