@@ -1,35 +1,34 @@
 from ehrql import create_dataset, days, get_parameter, years
 from analysis.variable_functions import *
-from analysis.helper_functions import *
 
 dataset = create_dataset()
-dataset.configure_dummy_data(population_size=100000)
 
-index_date = get_parameter("index_date")
+threshold_date = get_parameter("threshold_date")
 
-# demographics and main outcomes
-dataset = demographics(index_date)
-dataset = primary_care_main_outcomes(index_date)
-dataset = secondary_care_main_outcomes(index_date)
-dataset = primary_care_exclusions(index_date)
+# demographics, main outcomes, exclusions
+dataset = demographics(threshold_date)
+dataset = primary_care_main_outcomes(threshold_date)
+dataset = secondary_care_main_outcomes(threshold_date)
+dataset = primary_care_exclusions(threshold_date)
 
+# only need vaccination dates for main analysis (not sensitivity analyses)
 # only extract negative controls / variables for testing assumptions for main analysis
-if index_date == "2014-02-01":
-    dataset = primary_care_control_outcomes(index_date)
-    dataset = primary_care_assumptions(index_date)
+if threshold_date == "2013-09-01":
+    dataset = vaccinations()
+    dataset = primary_care_controls_assumptions(threshold_date)
 
-zostavax_products = ["Zostavax","Shingles (Herpes Zoster) vaccine (live) powder and solvent for suspension for injection 0.65ml pfs"]
-dataset.zostavax_date_1  = first_vax_event_after(index_date, product_name=zostavax_products).date
+dataset.configure_dummy_data(population_size=100000,
+                             additional_population_constraint=(
+                                 dataset.zostavax_date_1.is_on_or_between("2013-09-01","2014-02-01")
+                             ))
 
 dataset.define_population(
     # registered for at least 90 days
-    (dataset.reg_start_date.is_on_or_before(index_date - days(90)))
+    (dataset.reg_start_date.is_on_or_before(threshold_date - days(90)))
     # age 77-<82 years on index date
-    & (dataset.dob.is_on_or_between(index_date - years(82), index_date - years(77)))
+    & (dataset.date_of_birth.is_on_or_between(threshold_date - years(82), threshold_date - years(77)))
     # m/f sex only due to disclosure risk of non m/f sexes
     & ((dataset.sex == "male") | (dataset.sex == "female"))
-    # non-missing IMD
-    & (dataset.imd_decile.is_not_null())
-    # alive on index_date
-    & (dataset.dod.is_after(index_date) | (dataset.dod.is_null()))
+    # alive on threshold_date
+    & (dataset.date_of_death.is_after(threshold_date) | (dataset.date_of_death.is_null()))
 )
