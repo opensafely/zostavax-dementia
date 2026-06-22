@@ -84,9 +84,9 @@ imtrtatrisk_dmd = codelist_from_csv(
     "codelists/nhs-drug-refsets-imtrtatriskdrug_cod.csv",
     column = "code"
 )
-immunosuppression_snomed_2yrs = (autograft_snomed + allograft_snomed)
-immunosuppression_snomed_anytime = (gvhd_snomed + hiv_snomed + aids_snomed + imatrisk1_snomed + lymphoproldis_snomed + epphaemcan_snomed)
-immunosuppression_snomed_6mos = (imtrtatrisk1_snomed + imtemp_snomed + radiotherap_snomed + dmards_snomed)
+immunosupp_snomed_2yrs = (autograft_snomed + allograft_snomed)
+immunosupp_snomed_anytime = (gvhd_snomed + hiv_snomed + aids_snomed + imatrisk1_snomed + lymphoproldis_snomed + epphaemcan_snomed)
+immunosupp_snomed_6mos = (imtrtatrisk1_snomed + imtemp_snomed + radiotherap_snomed + dmards_snomed)
 
 lrti_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-c19flurti_cod.csv",
@@ -206,5 +206,9 @@ antihypertensives_dmd = codelist_from_csv(
 )
 statins_dmd = codelist_from_csv(
     "codelists/nhs-drug-refsets-stat_cod.csv",
+    column = "code"
+)
+bmi_snomed = codelist_from_csv(
+    "codelists/nhsd-primary-care-domain-refsets-bmival_cod.csv",
     column = "code"
 )
