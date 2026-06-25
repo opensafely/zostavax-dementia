@@ -72,6 +72,7 @@ def primary_care_exclusions(reference_date):
 
     dataset.shingles_gp_last_date_before = last_gp_event_before(reference_date, codelists.shingles_snomed).date
 
+    # immunosuppression def based on business rules
     immunosupp_anytime = last_gp_event_before(reference_date, codelists.immunosupp_snomed_anytime).exists_for_patient()
     immunosupp_2yrs = last_gp_event_between(reference_date - years(2), reference_date, codelists.immunosupp_snomed_2yrs).exists_for_patient()
     immunosupp_6mos = last_gp_event_between(reference_date - months(6), reference_date, codelists.immunosupp_snomed_6mos).exists_for_patient()
@@ -83,47 +84,30 @@ def primary_care_exclusions(reference_date):
 
 def primary_care_controls_assumptions(reference_date):
 
-    # Get first date EVER
-    conditions = {
-        "ihd": codelists.ihd_snomed,
-        "stroke": codelists.stroke_snomed,
-        "hypertension": codelists.hypertension_snomed,
-        "t2dm": codelists.t2dm_snomed,
-        "copd": codelists.copd_snomed,
+    # note - these will also be used to assess balance at baseline
+    negative_controls = {        
         "asthma": codelists.asthma_snomed,
         "afib": codelists.afib_snomed,
+        "chd": codelists.chd_snomed,
         "ckd": codelists.ckd_snomed,
+        "copd": codelists.copd_snomed,
+        "depression": codelists.depression_snomed,
+        "t2dm": codelists.t2dm_snomed,
         "epilepsy": codelists.epilepsy_snomed,
         "hf": codelists.hf_snomed,
         "hypothyroid": codelists.hypothyroid_snomed,
-        "smi": codelists.smi_snomed,
         "osteoporosis": codelists.osteoporosis_snomed,
-        "obese": codelists.obese_snomed,
         "pad": codelists.pad_snomed,
         "ra": codelists.ra_snomed,
-        "chd": codelists.chd_snomed,
-        "depression": codelists.depression_snomed,
+        "stroke": codelists.stroke_snomed,
     }
 
-    for name, codelist in conditions.items():
+    for name, codelist in negative_controls.items():
         setattr(
             dataset,
             f"{name}_gp_first_date_ever",
             first_gp_event_ever(codelist).date,
         )
-
-    # LRTI is recurrent - so get separate dates before / after
-    dataset.lrti_gp_first_date_after = first_gp_event_after(reference_date, codelists.lrti_snomed).date
-    dataset.lrti_gp_last_date_before = last_gp_event_before(reference_date, codelists.lrti_snomed).date
-
-    dataset.antihypertensives_rx_last_date_before = last_rx_event_before(reference_date, codelists.antihypertensives_dmd).date
-    dataset.statins_rx_last_date_before = last_rx_event_before(reference_date, codelists.statins_dmd).date
-    
-    dataset.fluvax_last_date_before = last_vax_event_before(reference_date, target_disease=["INFLUENZA"]).date
-    dataset.pneumovax_last_date_before = last_vax_event_before(reference_date, target_disease=["PNEUMOCOCCAL"]).date
-
-    dataset.smoker_last_date_before =  last_gp_event_before(reference_date, codelists.current_smoker_snomed).date
-    dataset.past_smoker_last_date_before = last_gp_event_before(reference_date, codelists.past_smoker_snomed).date
 
     # obesity - set upper limit of 60 to account for incorrect entries (same as Samuel PLOS Medicine paper)
     obese_bmi_date = (
@@ -131,11 +115,30 @@ def primary_care_controls_assumptions(reference_date):
         .where(clinical_events.snomedct_code.is_in(codelists.bmi_snomed))
         .where((clinical_events.numeric_value >= 30) & (clinical_events.numeric_value <= 60))
         .sort_by(clinical_events.date)
-        .last_for_patient()
+        .first_for_patient()
         .date
     )
-    obese_coded_date = last_gp_event_before(reference_date, codelists.obese_snomed).date
-    dataset.obese_gp_last_date_before = maximum_of(obese_bmi_date, obese_coded_date)
+    obese_coded_date = first_gp_event_ever(codelists.obese_snomed).date
+    dataset.obese_gp_first_date_ever = minimum_of(obese_bmi_date, obese_coded_date)
+
+    covariate_balance = {
+        "lrti": codelists.lrti_snomed,
+        "smoker": codelists.current_smoker_snomed,
+        "past_smoker": codelists.past_smoker_snomed,
+    }
+
+    for name, codelist in covariate_balance.items():
+        setattr(
+            dataset,
+            f"{name}_gp_last_date_before",
+            first_gp_event_ever(codelist).date,
+        )
+
+    dataset.antihypertensives_rx_last_date_before = last_rx_event_before(reference_date, codelists.antihypertensives_dmd).date
+    dataset.statins_rx_last_date_before = last_rx_event_before(reference_date, codelists.statins_dmd).date
+    
+    dataset.fluvax_last_date_before = last_vax_event_before(reference_date, target_disease=["INFLUENZA"]).date
+    dataset.pneumovax_last_date_before = last_vax_event_before(reference_date, target_disease=["PNEUMOCOCCAL"]).date
    
     return dataset
 
@@ -145,7 +148,7 @@ def secondary_care_main_outcomes(reference_date):
     dataset.neuralgia_hosp_first_date_ever = first_hosp_event_ever(codelists.neuralgia_icd10).admission_date
 
     dataset.shingles_hosp_first_date_after = first_hosp_event_after(reference_date, codelists.shingles_icd10).admission_date
-    dataset.shingles_hosp_last_date_4wks = last_hosp_event_before(reference_date, codelists.shingles_icd10).admission_date
+    dataset.shingles_hosp_last_date_before = last_hosp_event_before(reference_date, codelists.shingles_icd10).admission_date
 
     dataset.dementia_ons_date = case(
         when(ons_deaths.cause_of_death_is_in(codelists.dementia_icd10)).then(ons_deaths.date),

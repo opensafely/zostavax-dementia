@@ -1,5 +1,9 @@
 from ehrql.tables.tpp import (clinical_events, apcs, medications, vaccinations)
 
+clinical_events = (
+    clinical_events.where(clinical_events.date.is_on_or_after("2010-01-01"))
+)
+
 def first_vax_event_after(reference_date, product_name=None, target_disease=None):
     
     if product_name is not None:
@@ -130,7 +134,6 @@ def first_hosp_event_ever(codelist):
         .sort_by(apcs.admission_date)
         .first_for_patient()
     )
-
 
 def first_hosp_event_after(reference_date, codelist):
     
