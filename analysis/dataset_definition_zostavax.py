@@ -10,14 +10,13 @@ dataset = demographics(threshold_date)
 dataset = primary_care_main_outcomes(threshold_date)
 dataset = secondary_care_main_outcomes(threshold_date)
 dataset = primary_care_exclusions(threshold_date)
+dataset = vaccinations()
 
-# only need vaccination dates for main analysis (not sensitivity analyses)
 # only extract negative controls / variables for testing assumptions for main analysis
 if threshold_date == "2013-09-01":
-    dataset = vaccinations()
     dataset = primary_care_controls_assumptions(threshold_date)
 
-dataset.configure_dummy_data(population_size=100000,
+dataset.configure_dummy_data(population_size=100000, timeout=300,
                              additional_population_constraint=(
                                  dataset.zostavax_date_1.is_on_or_between("2013-09-01","2014-02-01")
                              ))

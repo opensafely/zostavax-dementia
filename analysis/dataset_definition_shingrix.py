@@ -12,7 +12,7 @@ dataset = primary_care_exclusions(threshold_date)
 dataset = primary_care_controls_assumptions(threshold_date)
 dataset = vaccinations()
 
-dataset.configure_dummy_data(population_size=100000,
+dataset.configure_dummy_data(population_size=100000, timeout=300,
                              additional_population_constraint=(
                                  dataset.shingrix_date_1.is_on_or_between("2023-09-01","2024-02-01")
                                  & dataset.shingrix_date_2.is_on_or_after(dataset.shingrix_date_1))
