@@ -4,12 +4,13 @@ actions:
   # Zostavax primary analysis based around threshold date of 2013-09-01
   generate_dataset_zostavax_main:
     run: ehrql:v1 generate-dataset analysis/dataset_definition_zostavax.py 
-      --output output/zostavax/dataset_zostavax_main.csv.gz
+      --output output/zostavax/dataset_zostavax_main.arrow
+      --dummy-data-file analysis/dummy_data/dummy_dataset_zostavax.arrow
       --
       --threshold_date "2013-09-01"
     outputs:
       highly_sensitive:
-        dataset: output/zostavax/dataset_zostavax_main.csv.gz
+        dataset: output/zostavax/dataset_zostavax_main.arrow
 
   # Zostavax sensitivity analysis with threshold 3 years earlier
   generate_dataset_zostavax_sens_1:
