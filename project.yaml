@@ -3,41 +3,89 @@ version: '5.0'
 actions:
   # Zostavax primary analysis based around threshold date of 2013-09-01
   generate_dataset_zostavax_main:
-    run: ehrql:v1 generate-dataset analysis/dataset_definition_zostavax.py 
+    run: ehrql:v1 generate-dataset analysis/zostavax/dataset_definition_zostavax.py 
       --output output/zostavax/dataset_zostavax_main.arrow
       --dummy-data-file analysis/dummy_data/dummy_dataset_zostavax.arrow
       --
       --threshold_date "2013-09-01"
+      --index_date "2014-02-01"
     outputs:
       highly_sensitive:
         dataset: output/zostavax/dataset_zostavax_main.arrow
 
-  # Zostavax sensitivity analysis with threshold 3 years earlier
-  generate_dataset_zostavax_sens_1:
-    run: ehrql:v1 generate-dataset analysis/dataset_definition_zostavax.py 
-      --output output/zostavax/dataset_zostavax_sens_1.csv.gz
+  # Zostavax sensitivity analysis 
+  generate_dataset_zostavax_2010:
+    run: ehrql:v1 generate-dataset analysis/zostavax/dataset_definition_zostavax.py 
+      --output output/zostavax/dataset_zostavax_2010.arrow
       --
       --threshold_date "2010-09-01"
+      --index_date "2011-02-01"
     outputs:
       highly_sensitive:
-        dataset: output/zostavax/dataset_zostavax_sens_1.csv.gz
+        dataset: output/zostavax/dataset_zostavax_2010.arrow
 
-  # Zostavax sensitivity analysis with threshold 3 years later
-  generate_dataset_zostavax_sens_2:
-    run: ehrql:v1 generate-dataset analysis/dataset_definition_zostavax.py 
-      --output output/zostavax/dataset_zostavax_sens_2.csv.gz
+  # Zostavax sensitivity analysis 
+  generate_dataset_zostavax_2011:
+    run: ehrql:v1 generate-dataset analysis/zostavax/dataset_definition_zostavax.py 
+      --output output/zostavax/dataset_zostavax_2011.arrow
+      --
+      --threshold_date "2011-09-01"
+      --index_date "2012-02-01"
+    outputs:
+      highly_sensitive:
+        dataset: output/zostavax/dataset_zostavax_2011.arrow
+
+  # Zostavax sensitivity analysis 
+  generate_dataset_zostavax_2012:
+    run: ehrql:v1 generate-dataset analysis/zostavax/dataset_definition_zostavax.py 
+      --output output/zostavax/dataset_zostavax_2012.arrow
+      --
+      --threshold_date "2012-09-01"
+      --index_date "2013-02-01"
+    outputs:
+      highly_sensitive:
+        dataset: output/zostavax/dataset_zostavax_2012.arrow
+
+  # Zostavax sensitivity analysis 
+  generate_dataset_zostavax_2014:
+    run: ehrql:v1 generate-dataset analysis/zostavax/dataset_definition_zostavax.py 
+      --output output/zostavax/dataset_zostavax_2014.arrow
+      --
+      --threshold_date "2014-09-01"
+      --index_date "2015-02-01"
+    outputs:
+      highly_sensitive:
+        dataset: output/zostavax/dataset_zostavax_2014.arrow
+
+  # Zostavax sensitivity analysis 
+  generate_dataset_zostavax_2015:
+    run: ehrql:v1 generate-dataset analysis/zostavax/dataset_definition_zostavax.py 
+      --output output/zostavax/dataset_zostavax_2015.arrow
+      --
+      --threshold_date "2015-09-01"
+      --index_date "2016-02-01"
+    outputs:
+      highly_sensitive:
+        dataset: output/zostavax/dataset_zostavax_2015.arrow
+
+  # Zostavax sensitivity analysis 
+  generate_dataset_zostavax_2016:
+    run: ehrql:v1 generate-dataset analysis/zostavax/dataset_definition_zostavax.py 
+      --output output/zostavax/dataset_zostavax_2016.arrow
       --
       --threshold_date "2016-09-01"
+      --index_date "2017-02-01"
     outputs:
       highly_sensitive:
-        dataset: output/zostavax/dataset_zostavax_sens_2.csv.gz
+        dataset: output/zostavax/dataset_zostavax_2016.arrow
 
   # Shingrix analysis
   generate_dataset_shingrix_main:
-    run: ehrql:v1 generate-dataset analysis/dataset_definition_shingrix.py 
+    run: ehrql:v1 generate-dataset analysis/shingrix/dataset_definition_shingrix.py 
       --output output/shingrix/dataset_shingrix_main.csv.gz
       --
       --threshold_date "2023-09-01"
+      --index_date "2014-02-01"
     outputs:
       highly_sensitive:
         dataset: output/shingrix/dataset_shingrix_main.csv.gz

@@ -6,6 +6,22 @@ dementia_snomed = codelist_from_csv(
   column = "code"
 )
 
+alzheimers_snomed = codelist_from_csv(
+  "codelists/nhsd-primary-care-domain-refsets-demalz_cod.csv",
+  column = "code"
+)
+
+vascular_snomed = codelist_from_csv(
+  "codelists/nhsd-primary-care-domain-refsets-demvasc_cod.csv",
+  column = "code"
+)
+
+# Dementia - for excluding history of dementia - SNOMED
+dementia_exclude_snomed = codelist_from_csv(
+  "codelists/nhsd-primary-care-domain-refsets-dem_cod.csv",
+  column = "code"
+)
+
 # Dementia - any type - ICD-10
 dementia_icd10 = codelist_from_csv(
   "codelists/user-anschaf-dementia-icd-10.csv",

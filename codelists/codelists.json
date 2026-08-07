@@ -1,5 +1,17 @@
 {
   "files": {
+    "nhsd-primary-care-domain-refsets-demvasc_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/demvasc_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/demvasc_cod/20260630/",
+      "downloaded_at": "2026-08-06 10:51:51.772451Z",
+      "sha": "99f1f18308bbb06f239a75951bc9cf41707b7138"
+    },
+    "nhsd-primary-care-domain-refsets-demalz_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/demalz_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/demalz_cod/20260630/",
+      "downloaded_at": "2026-08-06 10:50:57.112943Z",
+      "sha": "1364cbb94464d5e1213730c9235dcaf0bfecf016"
+    },
     "nhsd-primary-care-domain-refsets-bmival_cod.csv": {
       "id": "nhsd-primary-care-domain-refsets/bmival_cod/20250912",
       "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/bmival_cod/20250912/",

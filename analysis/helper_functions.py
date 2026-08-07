@@ -1,4 +1,5 @@
-from ehrql.tables.tpp import (clinical_events, apcs, medications, vaccinations)
+from ehrql.tables.tpp import (clinical_events, apcs, medications, vaccinations, ons_deaths)
+from ehrql import case, when
 
 clinical_events = (
     clinical_events.where(clinical_events.date.is_on_or_after("2010-01-01"))
@@ -130,7 +131,7 @@ def first_hosp_event_ever(codelist):
     
     return(
         apcs
-        .where(apcs.primary_diagnosis.is_in(codelist))
+        .where(apcs.all_diagnoses.contains_any_of(codelist))
         .sort_by(apcs.admission_date)
         .first_for_patient()
     )
@@ -139,7 +140,7 @@ def first_hosp_event_after(reference_date, codelist):
     
     return(
         apcs
-        .where(apcs.primary_diagnosis.is_in(codelist))
+        .where(apcs.all_diagnoses.contains_any_of(codelist))
         .where(apcs.admission_date.is_on_or_after(reference_date))
         .sort_by(apcs.admission_date)
         .first_for_patient()
@@ -149,7 +150,7 @@ def last_hosp_event_before(reference_date, codelist):
     
     return(
         apcs
-        .where(apcs.primary_diagnosis.is_in(codelist))
+        .where(apcs.all_diagnoses.contains_any_of(codelist))
         .where(apcs.admission_date.is_before(reference_date))
         .sort_by(apcs.admission_date)
         .last_for_patient()
@@ -159,10 +160,19 @@ def last_hosp_event_between(date1, date2, codelist):
     
     return(
         apcs
-        .where(apcs.primary_diagnosis.is_in(codelist))
+        .where(apcs.all_diagnoses.contains_any_of(codelist))
         .where(apcs.admission_date.is_between_but_not_on(date1, date2))
         .sort_by(apcs.admission_date)
         .last_for_patient()
     )
 
-    
+def ons_event_after(reference_date, codelist):
+
+    return(
+        case(
+            when(ons_deaths.cause_of_death_is_in(codelist))
+            & ons_deaths.date.is_on_or_after(reference_date)
+            .then(ons_deaths.date),
+            otherwise=None,
+        )
+    )

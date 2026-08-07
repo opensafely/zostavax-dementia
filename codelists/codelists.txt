@@ -44,3 +44,5 @@ nhsd-primary-care-domain-refsets/rarth_cod/20250912/
 nhsd-primary-care-domain-refsets/strk_cod/20250912/
 nhsd-primary-care-domain-refsets/chd_cod/20250912/
 nhsd-primary-care-domain-refsets/bmival_cod/20250912/
+nhsd-primary-care-domain-refsets/demalz_cod/20260630/
+nhsd-primary-care-domain-refsets/demvasc_cod/20260630/
