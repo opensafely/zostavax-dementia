@@ -6,7 +6,7 @@ library(arrow)
 index_date <- "2014-02-01"
 threshold_date <- "2013-09-01"
 
-# Currently the latest available copmplete SUS data is in November 2011
+# Currently the latest available complete SUS data is in November 2011
 last_data_collection_date <- as.Date("2025-11-01")
 
 

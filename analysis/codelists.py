@@ -5,12 +5,10 @@ dementia_snomed = codelist_from_csv(
   "codelists/nhsd-primary-care-domain-refsets-dem_cod.csv",
   column = "code"
 )
-
 alzheimers_snomed = codelist_from_csv(
   "codelists/nhsd-primary-care-domain-refsets-demalz_cod.csv",
   column = "code"
 )
-
 vascular_snomed = codelist_from_csv(
   "codelists/nhsd-primary-care-domain-refsets-demvasc_cod.csv",
   column = "code"
@@ -25,6 +23,18 @@ dementia_exclude_snomed = codelist_from_csv(
 # Dementia - any type - ICD-10
 dementia_icd10 = codelist_from_csv(
   "codelists/user-anschaf-dementia-icd-10.csv",
+  column = "code"
+)
+dementia_icd10 = codelist_from_csv(
+  "codelists/user-anschaf-dementia-icd-10.csv",
+  column = "code"
+)
+alzheimers_icd10 = codelist_from_csv(
+  "codelists/bristol-alzheimers-disease-icd10-v13.csv",
+  column = "code"
+)
+vascular_icd10 = codelist_from_csv(
+  "codelists/bristol-vascular-dementia-icd10-v13.csv",
   column = "code"
 )
 
@@ -45,7 +55,6 @@ past_smoker_snomed = codelist_from_csv(
     column = "code"
 )
 smoker_snomed = current_smoker_snomed + past_smoker_snomed
-
 
 # immunosuppression
 autograft_snomed = codelist_from_csv(
@@ -226,5 +235,9 @@ statins_dmd = codelist_from_csv(
 )
 bmi_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-bmival_cod.csv",
+    column = "code"
+)
+cognitive_impairment_snomed = codelist_from_csv(
+    "codelists/opensafely-symptoms-cognitive-impairment.csv",
     column = "code"
 )

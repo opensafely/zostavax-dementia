@@ -11,10 +11,6 @@ import codelists
 
 dataset = create_dataset()
 
-# Note - I am using "reference date" not "index date", as "index date" has 
-# a specific meaning in the protocol and we sometimes will be extracting information relative to
-# other dates (e.g. threshold date)
-
 def demographics(threshold_date):
 
     dataset.date_of_birth = patients.date_of_birth
@@ -49,7 +45,7 @@ def demographics(threshold_date):
 
     return dataset
 
-def vaccinations():
+def vaccinations(threshold_date):
 
     zostavax_products = ["Zostavax","Shingles (Herpes Zoster) vaccine (live) powder and solvent for suspension for injection 0.65ml pfs"]
     dataset.zostavax_date_1 = first_vax_event_ever(product_name=zostavax_products).date
@@ -68,17 +64,16 @@ def vaccinations():
         "VARILRIX live vaccine",
         "VARIVAX live vaccine"
     ]
-    dataset.varicella_first_date_ever = first_vax_event_ever(product_name=varicella_products)
-    dataset.varicella_first_date_after = first_vax_event_after(product_name=varicella_products)
+    dataset.varicella_first_date_after = first_vax_event_after(threshold_date, product_name=varicella_products).date
 
     return dataset
 
-def primary_care_outcomes(index_date):
+def primary_care_outcomes(threshold_date):
     
     dataset.dementia_gp_first_date_ever = first_gp_event_ever(codelists.dementia_snomed).date
     dataset.alzheimers_gp_first_date_ever = first_gp_event_ever(codelists.alzheimers_snomed).date
     dataset.vascular_gp_first_date_ever = first_gp_event_ever(codelists.vascular_snomed).date
-    dataset.shingles_gp_first_date_after = first_gp_event_after(index_date, codelists.shingles_snomed).date
+    dataset.shingles_gp_first_date_after = first_gp_event_after(threshold_date, codelists.shingles_snomed).date
     dataset.neuralgia_gp_first_date_ever = first_gp_event_ever(codelists.neuralgia_snomed).date
 
     return dataset
@@ -88,7 +83,7 @@ def primary_care_exclusions(threshold_date):
     dataset.dementia_exclude_gp_first_date_ever = first_gp_event_ever(codelists.dementia_exclude_snomed).date
     dataset.shingles_gp_last_date_before = last_gp_event_before(threshold_date, codelists.shingles_snomed).date
 
-    # immunosuppression def based on business rules
+    # immunosuppression def based on NHS business rules
     immunosupp_anytime = last_gp_event_before(threshold_date, codelists.immunosupp_snomed_anytime).exists_for_patient()
     immunosupp_2yrs = last_gp_event_between(threshold_date - years(2), threshold_date, codelists.immunosupp_snomed_2yrs).exists_for_patient()
     immunosupp_6mos = last_gp_event_between(threshold_date - months(6), threshold_date, codelists.immunosupp_snomed_6mos).exists_for_patient()
@@ -160,18 +155,18 @@ def primary_care_controls_assumptions(threshold_date):
    
     return dataset
 
-def secondary_care_outcomes(index_date):
+def secondary_care_outcomes(threshold_date):
 
     dataset.dementia_hosp_first_date_ever = first_hosp_event_ever(codelists.dementia_icd10).admission_date
     dataset.alzheimers_hosp_first_date_ever = first_hosp_event_ever(codelists.alzheimers_icd10).admission_date
     dataset.vascular_hosp_first_date_ever = first_hosp_event_ever(codelists.vascular_icd10).admission_date
     dataset.neuralgia_hosp_first_date_ever = first_hosp_event_ever(codelists.neuralgia_icd10).admission_date
 
-    dataset.shingles_hosp_first_date_after = first_hosp_event_after(index_date, codelists.shingles_icd10).admission_date
+    dataset.shingles_hosp_first_date_after = first_hosp_event_after(threshold_date, codelists.shingles_icd10).admission_date
 
-    dataset.dementia_ons_date = ons_event_after(index_date, codelists.dementia_icd10)
-    dataset.alzheimers_ons_date = ons_event_after(index_date, codelists.alzheimers_icd10)
-    dataset.vascular_ons_date = ons_event_after(index_date, codelists.vascular_icd10)
+    dataset.dementia_ons_date = ons_event_ever(codelists.dementia_icd10)
+    dataset.alzheimers_ons_date = ons_event_ever(codelists.alzheimers_icd10)
+    dataset.vascular_ons_date = ons_event_ever(codelists.vascular_icd10)
     
     return dataset
 

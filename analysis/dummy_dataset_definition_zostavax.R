@@ -46,12 +46,12 @@ runif_partial_date <- function(n, min_date, max_date, rate){
 dag <- empty_dag() +
   node("date_of_birth", type=dob_node, min = -bandwidth_days, max = bandwidth_days, origin_date = dob_threshold_date) +
   node("age", type="identity", formula = ~ round(as.numeric((threshold_date - date_of_birth))/365.25)) +
-  node("sex", type="rcategorical", prob=c(0.5,0.5), labels=c("female", "male"), output="factor") +
+  node("sex", type="rcategorical", prob=c(0.5,0.5), labels=c("female", "male"), output="rcategorical") +
   node(
-    "imd_decile", type="rcategorical", 
+    "imd_quintile", type="rcategorical", 
     prob = rep(1/11, 11), 
-    labels = c("1 (most deprived)", 2:9, "10 (least deprived)", "unknown"), 
-    output = "factor"
+    labels = c("1 (most deprived)", 2:4, "5 (least deprived)", "unknown"), 
+    output = "rcategorical"
   ) +
   node(
     "ethnicity6", type="rcategorical", 
@@ -65,11 +65,11 @@ dag <- empty_dag() +
       "Not stated",
       "Unknown"
     ), 
-    output="factor"
+    output="rcategorical"
   ) +
   node("date_of_death", type=dod_node, rate_per_day = 0.0001, max_date = latest_date, origin_date = threshold_date) +
   node("reg_start_date", type="identity", formula = ~ as.Date(-runif(n = N, max=365*15), origin = threshold_date))+
-  node("reg_end_date", type="identity", formula = ~ runif_partial_date(n = N, rate=0.3, min_date = threshold_date, max_date = now_date))+
+  node("reg_end_date", type="identity", formula = ~ runif_partial_date(n = N, rate=0.3, min_date = threshold_date, max_date = latest_date))+
   node(
     "region", type="rcategorical", 
     prob = c(0.2, 0.2, 0.3, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05),
@@ -84,18 +84,21 @@ dag <- empty_dag() +
       "South East",
       "South West"
     ), 
-    output="factor"
+    output="rcategorical"
   ) +
   node("dementia_gp_first_date_ever", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.01, min_date = date_of_birth + years(60), max_date = latest_date)) +
+  node("alzheimers_gp_first_date_ever", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.01, min_date = date_of_birth + years(60), max_date = latest_date)) +
+  node("vascular_gp_first_date_ever", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.01, min_date = date_of_birth + years(60), max_date = latest_date)) +
   node("neuralgia_gp_first_date_ever", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.01, min_date = date_of_birth + years(60), max_date = latest_date)) +
   node("shingles_gp_first_date_after", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.01, min_date = threshold_date, max_date = latest_date)) +
   node("dementia_hosp_first_date_ever", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.001, min_date = date_of_birth + years(60), max_date = latest_date)) +
+  node("alzheimers_hosp_first_date_ever", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.001, min_date = date_of_birth + years(60), max_date = latest_date)) +
+  node("vascular_hosp_first_date_ever", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.001, min_date = date_of_birth + years(60), max_date = latest_date)) +
   node("neuralgia_hosp_first_date_ever", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.001, min_date = date_of_birth + years(60), max_date = latest_date)) +
   node("shingles_hosp_first_date_after", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.001, min_date = threshold_date, max_date = latest_date)) +
   node("shingles_hosp_last_date_before", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.001, min_date = date_of_birth + years(60), max_date = threshold_date)) +
   
   node("dementia_ons_date", type="identity", formula = ~ if_else(runif(n = N)<0.1, date_of_death, as.Date(NA))) +
-
   node("shingles_gp_last_date_before", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.01, min_date = date_of_birth + years(60), max_date = threshold_date)) +
   
   node("immunosupp_gp_any_before", type="rbernoulli", p=0.05) +
@@ -103,7 +106,9 @@ dag <- empty_dag() +
   #node("zostavax_date_2", type="identity", formula = ~ runif_partial_date(n = N, rate = if_else(!is.na(zostavax_date_1), 0.1, 0), min_date = zostavax_date_1, max_date = zostavax_date_1 + years(2)))
   node("shingrix_date_1", type="identity", formula = ~ runif_partial_date(n = N, rate = if_else(age<80, 0.01, 0.5), min_date = threshold_date, max_date = threshold_date + years(2))) +
   node("shingrix_date_2", type="identity", formula = ~ runif_partial_date(n = N, rate = if_else(!is.na(shingrix_date_1), 0.1, 0), min_date = shingrix_date_1, max_date = shingrix_date_1 + years(2)))+
-  
+  node("varicella_first_date_after", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.001, min_date = threshold_date, max_date = threshold_date + years(2)))+
+
+  node("dementia_exclude_gp_first_date_ever", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.001, min_date = date_of_birth + years(60), max_date = latest_date)) +
   node("asthma_gp_first_date_ever", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.001, min_date = date_of_birth + years(60), max_date = latest_date)) +
   node("afib_gp_first_date_ever", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.001, min_date = date_of_birth + years(60), max_date = latest_date)) +
   node("chd_gp_first_date_ever", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.001, min_date = date_of_birth + years(60), max_date = latest_date)) +
@@ -117,6 +122,7 @@ dag <- empty_dag() +
   node("osteoporosis_gp_first_date_ever", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.001, min_date = date_of_birth + years(60), max_date = latest_date)) +
   node("pad_gp_first_date_ever", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.001, min_date = date_of_birth + years(60), max_date = latest_date)) +
   node("ra_gp_first_date_ever", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.001, min_date = date_of_birth + years(60), max_date = latest_date)) +
+  node("smi_gp_first_date_ever", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.001, min_date = date_of_birth + years(60), max_date = latest_date)) +
   node("stroke_gp_first_date_ever", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.001, min_date = date_of_birth + years(60), max_date = latest_date)) +
   node("obese_gp_first_date_ever", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.001, min_date = date_of_birth + years(60), max_date = latest_date)) +
   
@@ -126,9 +132,11 @@ dag <- empty_dag() +
   node("antihypertensives_rx_last_date_before", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.01, min_date = date_of_birth + years(60), max_date = threshold_date)) +
   node("statins_rx_last_date_before", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.01, min_date = date_of_birth + years(60), max_date = threshold_date)) +
   node("fluvax_last_date_before", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.01, min_date = date_of_birth + years(60), max_date = threshold_date)) +
-  node("pneumovax_last_date_before", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.01, min_date = date_of_birth + years(60), max_date = threshold_date))
-  
-  
+  node("pneumovax_last_date_before", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.01, min_date = date_of_birth + years(60), max_date = threshold_date)) +
+  node("impairment_gp_last_date_before", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.001, min_date = date_of_birth + years(60), max_date = threshold_date)) +
+  node("alzheimers_ons_date", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.001, min_date = threshold_date, max_date = latest_date)) +
+  node("vascular_ons_date", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.001, min_date = threshold_date, max_date = latest_date)) 
+
 plot(dag)
 dag2matrix(dag)
 

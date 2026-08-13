@@ -46,3 +46,8 @@ nhsd-primary-care-domain-refsets/chd_cod/20250912/
 nhsd-primary-care-domain-refsets/bmival_cod/20250912/
 nhsd-primary-care-domain-refsets/demalz_cod/20260630/
 nhsd-primary-care-domain-refsets/demvasc_cod/20260630/
+opensafely/symptoms-cognitive-impairment/7af0d32d/
+
+bristol/alzheimers-disease-icd10-v13/290893d9/
+bristol/vascular-dementia-icd10-v13/3f654718/
+bristol/vascular-dementia-icd10-v13/3f654718/

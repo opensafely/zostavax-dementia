@@ -1,22 +1,16 @@
 {
   "files": {
-    "nhsd-primary-care-domain-refsets-demvasc_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/demvasc_cod/20260630",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/demvasc_cod/20260630/",
-      "downloaded_at": "2026-08-06 10:51:51.772451Z",
-      "sha": "99f1f18308bbb06f239a75951bc9cf41707b7138"
+    "bristol-vascular-dementia-icd10-v13.csv": {
+      "id": "bristol/vascular-dementia-icd10-v13/3f654718",
+      "url": "https://www.opencodelists.org/codelist/bristol/vascular-dementia-icd10-v13/3f654718/",
+      "downloaded_at": "2026-08-07 16:54:38.086137+00:00Z",
+      "sha": "540cf7e1e81754c05ba8705959b41e9e0221008d"
     },
-    "nhsd-primary-care-domain-refsets-demalz_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/demalz_cod/20260630",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/demalz_cod/20260630/",
-      "downloaded_at": "2026-08-06 10:50:57.112943Z",
-      "sha": "1364cbb94464d5e1213730c9235dcaf0bfecf016"
-    },
-    "nhsd-primary-care-domain-refsets-bmival_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/bmival_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/bmival_cod/20250912/",
-      "downloaded_at": "2026-06-20 18:08:36.654350Z",
-      "sha": "2fc9695c0029388d5d4741e821688e0c4a1b19ee"
+    "bristol-alzheimers-disease-icd10-v13.csv": {
+      "id": "bristol/alzheimers-disease-icd10-v13/290893d9",
+      "url": "https://www.opencodelists.org/codelist/bristol/alzheimers-disease-icd10-v13/290893d9/",
+      "downloaded_at": "2026-08-07 16:53:48.840827+00:00Z",
+      "sha": "1fb3254a36aba8d6355f78baac8c3c032fb01c3c"
     },
     "nhsd-primary-care-domain-refsets-dem_cod.csv": {
       "id": "nhsd-primary-care-domain-refsets/dem_cod/20250912",
@@ -287,6 +281,30 @@
       "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/chd_cod/20250912/",
       "downloaded_at": "2026-06-18 14:59:28.773537Z",
       "sha": "b79cfc6a5928d04c790f708908368e488e900efd"
+    },
+    "nhsd-primary-care-domain-refsets-bmival_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/bmival_cod/20250912",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/bmival_cod/20250912/",
+      "downloaded_at": "2026-06-20 18:08:36.654350Z",
+      "sha": "2fc9695c0029388d5d4741e821688e0c4a1b19ee"
+    },
+    "nhsd-primary-care-domain-refsets-demalz_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/demalz_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/demalz_cod/20260630/",
+      "downloaded_at": "2026-08-06 10:50:57.112943Z",
+      "sha": "1364cbb94464d5e1213730c9235dcaf0bfecf016"
+    },
+    "nhsd-primary-care-domain-refsets-demvasc_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/demvasc_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/demvasc_cod/20260630/",
+      "downloaded_at": "2026-08-06 10:51:51.772451Z",
+      "sha": "99f1f18308bbb06f239a75951bc9cf41707b7138"
+    },
+    "opensafely-symptoms-cognitive-impairment.csv": {
+      "id": "opensafely/symptoms-cognitive-impairment/7af0d32d",
+      "url": "https://www.opencodelists.org/codelist/opensafely/symptoms-cognitive-impairment/7af0d32d/",
+      "downloaded_at": "2026-08-07 16:48:57.649187+00:00Z",
+      "sha": "1fac3375ebc596e1ee2de2270f8d3b55090b4849"
     }
   }
 }
