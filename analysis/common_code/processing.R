@@ -120,7 +120,7 @@ processing <- function(df, threshold_date, index_date, vaccine_name, analysis) {
         antihypertensives_rx_last_date_before >= threshold_date - 1825
         & antihypertensives_rx_last_date_before <= threshold_date,
         FALSE
-      ),
+      )
     ) %>%
     select(-c(immunosupp_gp_any_before,antihypertensives_rx_last_date_before,
               statins_rx_last_date_before,fluvax_last_date_before,pneumovax_last_date_before))
@@ -129,17 +129,8 @@ processing <- function(df, threshold_date, index_date, vaccine_name, analysis) {
     processed_df,
     here::here(
       "output", vaccine_name, "processed",
-      paste0("dataset_", vaccine_name, "_", analysis, ".csv.gz")
+      paste0("dataset_processed_", vaccine_name, "_", analysis, ".csv.gz")
     )
   )
 }
 
-
-df_main <- read_feather(here::here("output","zostavax","dataset_zostavax_main.arrow"))
-processing(df_main, as.Date("2013-09-01"), as.Date("2014-02-01"), "zostavax","main")
-
-df_2010 <- read_feather(here::here("output","zostavax","dataset_zostavax_2010.arrow"))
-processing(df_2010, as.Date("2010-09-01"), as.Date("2011-02-01"), "zostavax","2010")
-
-df_2016 <- read_feather(here::here("output","zostavax","dataset_zostavax_2016.arrow"))
-processing(df_2016, as.Date("2016-09-01"), as.Date("2017-02-01"), "zostavax","2016")

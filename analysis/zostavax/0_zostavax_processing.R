@@ -2,46 +2,13 @@ library(tidyverse)
 library(lubridate)
 library(arrow)
 
+source(here::here("analysis", "common_code", "processing.R"))
 
-index_date <- "2014-02-01"
-threshold_date <- "2013-09-01"
+df_main <- read_feather(here::here("output","zostavax","dataset_zostavax_main.arrow"))
+processing(df_main, as.Date("2013-09-01"), as.Date("2014-02-01"), "zostavax","main")
 
-# Currently the latest available complete SUS data is in November 2011
-last_data_collection_date <- as.Date("2025-11-01")
+df_2010 <- read_feather(here::here("output","zostavax","dataset_zostavax_2010.arrow"))
+processing(df_2010, as.Date("2010-09-01"), as.Date("2011-02-01"), "zostavax","2010")
 
-
-exclusions <- function(df, threshold_date, index_date){
-  
-  df <- mutate(
-    prior_zostavax = (zostavax_date_1 < index_date),
-    immunosupp_exclude = immunosupp_gp_any_before,
-    neuralgia_gp_first_date_ever
-  )
-    
-}
-
-
-
-zostavax_main <- read_feather(here::here("output/zostavax/dataset_zostavax_main.arrow")) %>%
-  mutate(across(contains("date"), ymd)) %>% # convert all dates to date 
-  mutate(last_date = min(date_of_death, reg_end_date, last_data_collection_date),
-         
-         
-         
-         dementia_any = (
-           (dementia_gp_first_date_ever > index_date &
-            dementia_gp_first_date_ever <= last_date) |
-           (dementia_hosp_first_date_ever > index_date &
-              dementia_hosp_first_date_ever <= last_date)
-         ),
-         
-  )
-  
-
-
-
-
-# date of first dementia diagnosis (after index date)
-# date of first shingles vax (after index date)
-# prior history of dementia
-# 
+df_2016 <- read_feather(here::here("output","zostavax","dataset_zostavax_2016.arrow"))
+processing(df_2016, as.Date("2016-09-01"), as.Date("2017-02-01"), "zostavax","2016")
