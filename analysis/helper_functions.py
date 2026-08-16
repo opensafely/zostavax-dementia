@@ -169,9 +169,5 @@ def last_hosp_event_between(date1, date2, codelist):
 def ons_event_ever(codelist):
 
     return(
-        case(
-            when(ons_deaths.cause_of_death_is_in(codelist)
-            .then(ons_deaths.date),
-            otherwise=None,
-            )
-    ))
+        when(ons_deaths.cause_of_death_is_in(codelist)).then(ons_deaths.date).otherwise(None)
+    )

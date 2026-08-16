@@ -1,17 +1,5 @@
 {
   "files": {
-    "bristol-vascular-dementia-icd10-v13.csv": {
-      "id": "bristol/vascular-dementia-icd10-v13/3f654718",
-      "url": "https://www.opencodelists.org/codelist/bristol/vascular-dementia-icd10-v13/3f654718/",
-      "downloaded_at": "2026-08-07 16:54:38.086137+00:00Z",
-      "sha": "540cf7e1e81754c05ba8705959b41e9e0221008d"
-    },
-    "bristol-alzheimers-disease-icd10-v13.csv": {
-      "id": "bristol/alzheimers-disease-icd10-v13/290893d9",
-      "url": "https://www.opencodelists.org/codelist/bristol/alzheimers-disease-icd10-v13/290893d9/",
-      "downloaded_at": "2026-08-07 16:53:48.840827+00:00Z",
-      "sha": "1fb3254a36aba8d6355f78baac8c3c032fb01c3c"
-    },
     "nhsd-primary-care-domain-refsets-dem_cod.csv": {
       "id": "nhsd-primary-care-domain-refsets/dem_cod/20250912",
       "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/dem_cod/20250912/",
@@ -305,6 +293,18 @@
       "url": "https://www.opencodelists.org/codelist/opensafely/symptoms-cognitive-impairment/7af0d32d/",
       "downloaded_at": "2026-08-07 16:48:57.649187+00:00Z",
       "sha": "1fac3375ebc596e1ee2de2270f8d3b55090b4849"
+    },
+    "bristol-alzheimers-disease-icd10-v13.csv": {
+      "id": "bristol/alzheimers-disease-icd10-v13/290893d9",
+      "url": "https://www.opencodelists.org/codelist/bristol/alzheimers-disease-icd10-v13/290893d9/",
+      "downloaded_at": "2026-08-07 16:53:48.840827+00:00Z",
+      "sha": "1fb3254a36aba8d6355f78baac8c3c032fb01c3c"
+    },
+    "bristol-vascular-dementia-icd10-v13.csv": {
+      "id": "bristol/vascular-dementia-icd10-v13/3f654718",
+      "url": "https://www.opencodelists.org/codelist/bristol/vascular-dementia-icd10-v13/3f654718/",
+      "downloaded_at": "2026-08-07 16:54:38.086137+00:00Z",
+      "sha": "540cf7e1e81754c05ba8705959b41e9e0221008d"
     }
   }
 }

@@ -47,7 +47,7 @@ actions:
   # Shingrix analysis based around threshold date of 2023-09-01
   generate_dataset_shingrix_main:
     run: ehrql:v1 generate-dataset analysis/dataset_definition.py 
-      --output output/shingrix/dataset_shingrix_main.csv.gz
+      --output output/shingrix/dataset_shingrix_main.arrow
       --
       --threshold_date "2023-09-01"
       --index_date "2014-02-01"
@@ -56,5 +56,5 @@ actions:
       --vaccine_name "shingrix"
     outputs:
       highly_sensitive:
-        dataset: output/shingrix/dataset_shingrix_main.csv.gz
+        dataset: output/shingrix/dataset_shingrix_main.arrow
   
