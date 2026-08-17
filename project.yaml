@@ -49,23 +49,33 @@ actions:
     needs: [generate_dataset_zostavax_main, generate_dataset_zostavax_2010, generate_dataset_zostavax_2016]
     outputs:
       highly_sensitive:
-        data1: output/zostavax/processed/dataset_processed_zostavax_main.csv.gz
-        data2: output/zostavax/processed/dataset_processed_zostavax_2010.csv.gz
-        data3: output/zostavax/processed/dataset_processed_zostavax_2016.csv.gz
+        data1: output/zostavax/processed/dataset_processed_zostavax_main.arrow
+        data2: output/zostavax/processed/dataset_processed_zostavax_2010.arrow
+        data3: output/zostavax/processed/dataset_processed_zostavax_2016.arrow
+
+  flow_chart_zostavax:
+    run: r:v2 analysis/zostavax/1_zostavax_flow_chart.R
+    needs: [process_zostavax]
+    outputs:
+      moderately_sensitive:
+        data1: output/zostavax/processed/flow_chart_zostavax_main.csv
+        data2: output/zostavax/processed/flow_chart_zostavax_2010.csv
+        data3: output/zostavax/processed/flow_chart_zostavax_2016.csv
+
   
   ################################################################\
 
   # Shingrix analysis based around threshold date of 2023-09-01
-  generate_dataset_shingrix_main:
-    run: ehrql:v1 generate-dataset analysis/dataset_definition.py 
-      --output output/shingrix/dataset_shingrix_main.arrow
-      --
-      --threshold_date "2023-09-01"
-      --index_date "2014-02-01"
-      --min_dob "1948-09-01"
-      --max_dob "1968-09-01"
-      --vaccine_name "shingrix"
-    outputs:
-      highly_sensitive:
-        dataset: output/shingrix/dataset_shingrix_main.arrow
+  #generate_dataset_shingrix_main:
+  #  run: ehrql:v1 generate-dataset analysis/dataset_definition.py 
+  #    --output output/shingrix/dataset_shingrix_main.arrow
+  #    --
+  #    --threshold_date "2023-09-01"
+  #    --index_date "2014-02-01"
+  #    --min_dob "1948-09-01"
+  #    --max_dob "1968-09-01"
+  #    --vaccine_name "shingrix"
+  #  outputs:
+  #    highly_sensitive:
+  #      dataset: output/shingrix/dataset_shingrix_main.arrow
   
