@@ -75,11 +75,15 @@ processing <- function(df, threshold_date, index_date, vaccine_name, analysis) {
       ),
       
       # Outcomes before threshold
-      dementia_before_threshold = coalesce(
+      dementia_exclude_before_threshold = coalesce(
         dementia_exclude_gp_first_date_ever <= threshold_date,
         FALSE
       ),
-      dementia_bw_threshold_index = coalesce(
+      dementia_new_before_threshold = coalesce(
+        dementia_gp_first_date_ever <= threshold_date,
+        FALSE
+      ),
+      dementia_new_bw_threshold_index = coalesce(
         dementia_first_date_ever > threshold_date &
           dementia_first_date_ever <= index_date,
         FALSE
@@ -93,6 +97,16 @@ processing <- function(df, threshold_date, index_date, vaccine_name, analysis) {
         FALSE
       ),
       
+      common_exclusions_w_dementia = (
+        shingles_before_threshold | dementia_exclude_before_threshold |
+        exclude_immunosuppressed | exclude_missing_imd | exclude_missing_region |
+        exclude_not_mf_sex | exclude_past_vax
+      ),
+      common_exclusions_wo_dementia = (
+        shingles_before_threshold | exclude_immunosuppressed | exclude_missing_imd | 
+        exclude_missing_region | exclude_not_mf_sex | exclude_past_vax
+      ),
+
       # Control conditions before threshold
       across(
         all_of(control_date_cols),
