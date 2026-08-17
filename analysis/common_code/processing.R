@@ -132,5 +132,8 @@ processing <- function(df, threshold_date, index_date, vaccine_name, analysis) {
       paste0("dataset_processed_", vaccine_name, "_", analysis, ".csv.gz")
     )
   )
+  
+  return(processed_df)
+  
 }
 
