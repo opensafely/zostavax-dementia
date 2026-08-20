@@ -14,7 +14,10 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
     "smi", "obese", "osteoporosis",
     "pad", "ra", "stroke"
   )
-  control_date_cols <- paste0(control_conditions, "_gp_first_date_ever")
+  control_date_cols <- setNames(
+    paste0(control_conditions, "_gp_first_date_ever"),
+    control_conditions
+  )
   
   df <- read_feather(
     here::here("output","zostavax",paste0("dataset_",vaccine_name,"_",analysis,".arrow"))
@@ -66,7 +69,7 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
       
       # Missing data
       exclude_not_mf_sex = !sex %in% c("male", "female"),
-      exclude_missing_imd = imd_quintile == "unknown",
+      exclude_missing_imd = (imd_quintile == "unknown" | is.na(imd_quintile)),
       exclude_missing_region = is.na(region),
       
       # Previous immunosuppression / vaccination
@@ -156,11 +159,34 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
         antihypertensives_rx_last_date_before >= threshold_date - years(5)
         & antihypertensives_rx_last_date_before <= threshold_date,
         FALSE
+      ),
+      cognitive_impair_before_threshold = coalesce(
+        cognitive_impair_gp_last_date_before <= threshold_date ,
+        FALSE
+      ),
+      smoker_before_threshold = coalesce(
+        smoker_gp_last_date_before <= threshold_date |
+        past_smoker_gp_last_date_before <= threshold_date,
+        FALSE
+      ),
+      lrti_before_threshold = coalesce(
+        lrti_gp_last_date_before <= threshold_date,
+        FALSE
       )
+
     ) %>%
     select(-c(immunosupp_gp_any_before,antihypertensives_rx_last_date_before,
               statins_rx_last_date_before,fluvax_last_date_before,
-              pneumovax_last_date_before))
+              pneumovax_last_date_before,shingles_gp_last_date_before,
+              shingles_gp_first_date_after,alzheimers_gp_first_date_ever,
+              vascular_gp_first_date_ever, alzheimers_hosp_first_date_ever,
+              vascular_hosp_first_date_ever,dementia_exclude_gp_first_date_ever,
+              dementia_hosp_first_date_ever,neuralgia_hosp_first_date_ever,
+              neuralgia_gp_first_date_ever,shingles_hosp_first_date_after,
+              shingles_hosp_last_date_before,dementia_ons_date,alzheimers_ons_date,
+              vascular_ons_date,lrti_gp_last_date_before,smoker_gp_last_date_before,
+              past_smoker_gp_last_date_before,cognitive_impair_gp_last_date_before,
+              dementia_exclude_first_date_ever))
 
   arrow::write_feather(
     processed_df,
