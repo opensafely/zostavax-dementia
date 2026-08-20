@@ -5,7 +5,7 @@ library("simDAG")
 library("arrow")
 library("here")
 
-data_ehrql <- read_csv(here("output/zostavax/dataset_zostavax_main.csv.gz"))
+data_ehrql <- read_feather(here("output/zostavax/dataset_zostavax_main.arrow"))
 
 # select cohort size
 N <- 50000
@@ -133,7 +133,7 @@ dag <- empty_dag() +
   node("statins_rx_last_date_before", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.01, min_date = date_of_birth + years(60), max_date = threshold_date)) +
   node("fluvax_last_date_before", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.01, min_date = date_of_birth + years(60), max_date = threshold_date)) +
   node("pneumovax_last_date_before", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.01, min_date = date_of_birth + years(60), max_date = threshold_date)) +
-  node("impairment_gp_last_date_before", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.001, min_date = date_of_birth + years(60), max_date = threshold_date)) +
+  node("cognitive_impair_gp_last_date_before", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.001, min_date = date_of_birth + years(60), max_date = threshold_date)) +
   node("alzheimers_ons_date", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.001, min_date = threshold_date, max_date = latest_date)) +
   node("vascular_ons_date", type="identity", formula = ~ runif_partial_date(n = N, rate = 0.001, min_date = threshold_date, max_date = latest_date)) 
 

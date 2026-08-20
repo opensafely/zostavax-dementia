@@ -137,14 +137,14 @@ def primary_care_controls_assumptions(threshold_date):
         "lrti": codelists.lrti_snomed,
         "smoker": codelists.current_smoker_snomed,
         "past_smoker": codelists.past_smoker_snomed,
-        "impairment": codelists.cognitive_impairment_snomed,
+        "cognitive_impair": codelists.cognitive_impairment_snomed,
     }
 
     for name, codelist in covariate_balance.items():
         setattr(
             dataset,
             f"{name}_gp_last_date_before",
-            first_gp_event_ever(codelist).date,
+            last_gp_event_before(threshold_date, codelist).date,
         )
 
     dataset.antihypertensives_rx_last_date_before = last_rx_event_before(threshold_date, codelists.antihypertensives_dmd).date
