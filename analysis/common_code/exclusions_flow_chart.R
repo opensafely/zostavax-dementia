@@ -22,11 +22,7 @@ exclusion_flow_chart <- function(vaccine_name, analysis, exclude_cols){
        across(everything(), ~ replace_na(.x, 0)),
        # rounding and redaction
        across(everything(),
-         ~ case_when(
-          .x == 0 ~ 0,
-          .x > 7 ~ round(.x / 5) * 5
-           )
-         )
+         ~ sdc.rounding(.x, sdc.threshold)
        )
     
     write_csv(
