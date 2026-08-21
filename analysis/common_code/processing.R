@@ -27,6 +27,14 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
     mutate(
       across(contains("date"), as.Date),
       
+      # vaccine eligibility, according to date / age threshold
+      zostavax_eligibility_20130901 = between(date_of_birth, as.Date("1933-09-02"), as.Date("1934-09-01")) | between(date_of_birth, as.Date("1942-09-02"), as.Date("1943-09-01")) ,
+      zostavax_eligibility_20140901 = between(date_of_birth, as.Date("1934-09-02"), as.Date("1936-09-01")) | zostavax_eligibility_20130901,
+
+      zostavax_eligibility_main = zostavax_eligibility_20130901,
+      zostavax_eligibility_2010 = between(date_of_birth, as.Date("1933-09-02") + years(-3), as.Date("1934-09-01") + years(-3)) | between(date_of_birth, as.Date("1942-09-02") + years(-3), as.Date("1943-09-01") + years(-3)) ,
+      zostavax_eligibility_2016 = between(date_of_birth, as.Date("1933-09-02") + years(3), as.Date("1934-09-01") + years(3)) | between(date_of_birth, as.Date("1942-09-02") + years(3), as.Date("1943-09-01") + years(3)) ,
+
       # Earliest date of outcomes
       dementia_first_date_ever = pmin(
         dementia_gp_first_date_ever,
