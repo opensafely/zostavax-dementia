@@ -67,10 +67,10 @@ actions:
     needs: [process_zostavax]
     outputs:
       moderately_sensitive:
-        txt: output/zostavax/processed/descriptives/*.txt
-        csv: output/zostavax/processed/descriptives/*.csv
-        png: output/zostavax/processed/descriptives/*.png
-        
+        txt: output/zostavax/descriptives/main/*.txt
+        csv: output/zostavax/descriptives/main/*.csv
+        png: output/zostavax/descriptives/main/*.png
+
   ################################################################\
 
   # Shingrix analysis based around threshold date of 2023-09-01

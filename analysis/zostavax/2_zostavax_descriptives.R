@@ -33,7 +33,7 @@ source(here::here("analysis", "common_code", "descriptives.R"))
 
 
 # create output directory ----
-output_dir <- here("output", "descriptives", analysis, vaccine_name)
+output_dir <- here("output", vaccine_name, "descriptives", analysis)
 fs::dir_create(output_dir)
 
 # read and prepare data ----
