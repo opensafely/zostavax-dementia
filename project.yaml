@@ -9,7 +9,7 @@ actions:
       --
       --threshold_date "2013-09-01"
       --index_date "2014-02-01"
-      --min_dob "1920-09-01"
+      --min_dob "1920-09-01" 
       --max_dob "1948-09-01"
       --vaccine_name "zostavax"
     outputs:
@@ -62,7 +62,15 @@ actions:
         data2: output/zostavax/processed/flow_chart_zostavax_2010.csv
         data3: output/zostavax/processed/flow_chart_zostavax_2016.csv
 
-  
+  descriptives_main:
+    run: r:v2 analysis/zostavax/2_zostavax_descriptives.R
+    needs: [process_zostavax]
+    outputs:
+      moderately_sensitive:
+        txt: output/zostavax/processed/descriptives/*.txt
+        csv: output/zostavax/processed/descriptives/*.csv
+        png: output/zostavax/processed/descriptives/*.png
+        
   ################################################################\
 
   # Shingrix analysis based around threshold date of 2023-09-01
