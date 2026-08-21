@@ -187,7 +187,7 @@ ihd_snomed = codelist_from_csv(
 ##########################################################
 
 shingles_snomed = codelist_from_csv(
-    "codelists/opensafely-pharmacy-first-shingles-condition.csv",
+    "codelists/user-chriswood-shingles.csv",
     column = "code"
 )
 shingles_icd10 = codelist_from_csv(
@@ -207,10 +207,6 @@ neuralgia_icd10 = codelist_from_csv(
 # assumptions
 ihd_snomed = codelist_from_csv(
     "codelists/opensafely-ischaemic-heart-disease.csv",
-    column = "code"
-)
-stroke_snomed = codelist_from_csv(
-    "codelists/opensafely-cerebrovascular-disease.csv",
     column = "code"
 )
 hypertension_snomed = codelist_from_csv(
