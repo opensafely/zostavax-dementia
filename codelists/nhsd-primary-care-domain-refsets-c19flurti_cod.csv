@@ -76,7 +76,7 @@ code,term
 1240541000000107,Infection of upper respiratory tract caused by severe acute respiratory syndrome coronavirus 2
 1240551000000105,Pneumonia caused by severe acute respiratory syndrome coronavirus 2
 124691000119101,Pneumonia caused by methicillin resistant Staphylococcus aureus
-12571000132104,Pneumonia caused by Herpes zoster
+12571000132104,Pneumonia caused by reactivation of Varicellovirus humanalpha3
 126664009,Exudative pharyngitis
 128601007,Infectious disease of lung
 128711000119106,Pneumonia caused by methicillin susceptible Staphylococcus aureus
@@ -237,7 +237,7 @@ code,term
 195904005,Pneumonia with coccidioidomycosis
 195908008,Actinomycotic pneumonia
 195909000,Nocardial pneumonia
-195911009,Chickenpox pneumonia
+195911009,Pneumonia caused by Varicellovirus humanalpha3
 195923003,Influenza with laryngitis
 195924009,Influenza with pharyngitis
 195929004,Influenza with gastrointestinal tract involvement
@@ -304,7 +304,7 @@ code,term
 232396003,Chronic osteomeatal disease
 232397007,Chronic frontoethmoidal sinusitis
 232399005,Acute herpes simplex pharyngitis
-232400003,Acute herpes zoster pharyngitis
+232400003,Acute pharyngitis caused by reactivation of Varicellovirus humanalpha3
 232401004,Glandular fever pharyngitis
 232402006,Meningococcal pharyngitis
 232403001,Chlamydial pharyngitis
@@ -391,6 +391,7 @@ code,term
 26650005,Acute tracheitis
 267665002,Acute infective otitis externa
 267759006,Chronic atticoantral disease
+26808007,Polypoid sinus degeneration
 270490007,Acute otitis media with effusion
 270491006,Eustachian tube salpingitis
 271503005,Pleural empyema with fistula
@@ -677,7 +678,7 @@ code,term
 64880000,Parainfluenza virus bronchopneumonia
 64917006,Parainfluenza virus pneumonia
 65095005,Amebic lung abscess
-65102004,Adiaspiromycosis caused by Emmonsia parva
+65102004,Adiaspiromycosis caused by Blastomyces parvus
 652005,Gangrenous tonsillitis
 65363002,Otitis media
 65878001,Septic bronchitis
@@ -753,7 +754,7 @@ code,term
 735464006,Acute noninfective bronchitis
 735465007,Protracted bronchitis caused by bacterium
 735532001,Infection of lung caused by Echinococcus
-735740009,Infection causing tracheitis in neonate
+735740009,Neonatal inflammation of trachea caused by infection
 737180005,Chronic bronchiolitis
 73995006,Pulmonary paracoccidioidomycosis
 74372003,Gonorrhea of pharynx
@@ -831,7 +832,7 @@ code,term
 8555001,Syphilis of lung
 85832003,Parainfluenza virus laryngitis
 85915003,Laryngotracheobronchitis
-85940005,Tuberculous otitis media
+85940005,Tuberculosis of middle ear
 86279000,Acute suppurative otitis media with spontaneous rupture of ear drum
 86359006,Subacute transudative otitis media
 86850004,Serosanguineous chronic otitis media
