@@ -2,15 +2,19 @@ from ehrql import codelist_from_csv
 
 # Dementia - any type - SNOMED
 dementia_snomed = codelist_from_csv(
-  "codelists/nhsd-primary-care-domain-refsets-dem_cod.csv",
+  "codelists/opensafely-incident-dementia.csv",
+  column = "code"
+)
+dementia_charlson_snomed = codelist_from_csv(
+  "codelists/opensafely-incident-dementia-based-on-charlson.csv",
   column = "code"
 )
 alzheimers_snomed = codelist_from_csv(
-  "codelists/nhsd-primary-care-domain-refsets-demalz_cod.csv",
+  "codelists/opensafely-alzheimers-disease-dementia-codes.csv",
   column = "code"
 )
 vascular_snomed = codelist_from_csv(
-  "codelists/nhsd-primary-care-domain-refsets-demvasc_cod.csv",
+  "codelists/opensafely-vascular-dementia-incidence.csv",
   column = "code"
 )
 
@@ -22,11 +26,7 @@ dementia_exclude_snomed = codelist_from_csv(
 
 # Dementia - any type - ICD-10
 dementia_icd10 = codelist_from_csv(
-  "codelists/user-anschaf-dementia-icd-10.csv",
-  column = "code"
-)
-dementia_icd10 = codelist_from_csv(
-  "codelists/user-anschaf-dementia-icd-10.csv",
+  "codelists/opensafely-incident-dementia-icd-10.csv",
   column = "code"
 )
 alzheimers_icd10 = codelist_from_csv(
@@ -135,7 +135,7 @@ ckd345_snomed = codelist_from_csv(
 )
 ckd_snomed = ckd12_snomed + ckd345_snomed
 depression_snomed = codelist_from_csv(
-    "codelists/nhsd-primary-care-domain-refsets-depr_cod.csv",
+    "codelists/opensafely-incident-depression.csv",
     column = "code"
 )
 epilepsy_snomed = codelist_from_csv(
@@ -151,7 +151,7 @@ hypothyroid_snomed = codelist_from_csv(
     column = "code"
 )
 smi_snomed = codelist_from_csv(
-    "codelists/primis-covid19-vacc-uptake-sev_mental.csv",
+    "codelists/opensafely-severe-mental-illness.csv",
     column = "code"
 )
 osteoporosis_snomed = codelist_from_csv(
@@ -174,6 +174,10 @@ stroke_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-strk_cod.csv",
     column = "code"
 )
+tia_snomed = codelist_from_csv(
+    "codelists/nhsd-primary-care-domain-refsets-tia_cod.csv",
+    column = "code"
+)   
 chd_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-chd_cod.csv",
     column = "code"
@@ -187,32 +191,26 @@ ihd_snomed = codelist_from_csv(
 ##########################################################
 
 shingles_snomed = codelist_from_csv(
-    "codelists/opensafely-pharmacy-first-shingles-condition.csv",
+    "codelists/opensafely-shingles.csv",
     column = "code"
 )
 shingles_icd10 = codelist_from_csv(
-    "codelists/user-anschaf-shingles-icd-10.csv",
+    "codelists/opensafely-shingles-icd-10.csv",
     column = "code"
 )
 
 neuralgia_snomed = codelist_from_csv(
-    "codelists/user-anschaf-post-herpetic-neuralgia-snomed.csv",
+    "codelists/opensafely-post-herpetic-neuralgia.csv",
     column = "code"
 )
 neuralgia_icd10 = codelist_from_csv(
-    "codelists/user-anschaf-postherpetic-neuralgia-icd-10.csv",
+    "codelists/opensafely-post-herpetic-neuralgia-icd-10.csv",
     column = "code"
 )
 
-# assumptions
-ihd_snomed = codelist_from_csv(
-    "codelists/opensafely-ischaemic-heart-disease.csv",
-    column = "code"
-)
-stroke_snomed = codelist_from_csv(
-    "codelists/opensafely-cerebrovascular-disease.csv",
-    column = "code"
-)
+
+
+
 hypertension_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-hyp_cod.csv",
     column = "code"
@@ -238,6 +236,6 @@ bmi_snomed = codelist_from_csv(
     column = "code"
 )
 cognitive_impairment_snomed = codelist_from_csv(
-    "codelists/opensafely-symptoms-cognitive-impairment.csv",
+    "codelists/opensafely-cognitive-impairment.csv",
     column = "code"
 )

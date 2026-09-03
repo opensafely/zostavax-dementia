@@ -537,11 +537,11 @@ code,term
 191018006,Lymphocyte function antigen-1 defect
 191244003,Aplastic anemia due to chronic disease
 191246001,Aplastic anemia due to infection
-191247005,Aplastic anemia caused by radiation
+191247005,Aplastic anemia caused by ionizing radiation
 191248000,Aplastic anemia caused by toxic cause
 191256002,Idiopathic aplastic anemia
 191338000,Primary splenic neutropenia
-191345000,Acquired neutropenia in newborn
+191345000,Neonatal acquired neutropenia
 191347008,Cyclical neutropenia
 191358004,Hereditary eosinophilia
 191360002,Drug-induced eosinophilia
@@ -682,7 +682,7 @@ code,term
 234617003,Complement 9 deficiency
 234618008,Complement regulatory factor defect
 234619000,Hereditary C1 esterase inhibitor deficiency - deficient factor
-234621005,Factor I deficiency
+234621005,Complement factor I deficiency
 234622003,Factor H deficiency
 234623008,Complement 4 binding protein deficiency
 234624002,Decay accelerating factor deficiency
@@ -708,7 +708,7 @@ code,term
 235726002,Human immunodeficiency virus enteropathy
 236406007,Acquired immune deficiency syndrome-related nephropathy
 236512004,Leukemic infiltrate of kidney
-236513009,Lymphoma of kidney
+236513009,Malignant lymphoma of kidney
 236585005,De novo transplant disease
 23719005,Transplantation of bone marrow
 23761004,Hyposplenism
@@ -1620,7 +1620,7 @@ code,term
 765328000,Classic mycosis fungoides
 766045006,Acute myeloid leukemia and myelodysplastic syndrome related to alkylating agent
 766046007,Acute myeloid leukemia and myelodysplastic syndrome related to topoisomerase type 2 inhibitor
-766048008,Acute myeloid leukemia and myelodysplastic syndrome related to radiation
+766048008,Acute myeloid leukemia and myelodysplastic syndrome related to ionizing radiation
 766705006,Immunodeficiency due to ficolin 3 deficiency
 766752000,Neurolymphomatosis
 766879006,Combined immunodeficiency due to OX40 deficiency

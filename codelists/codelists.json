@@ -1,16 +1,154 @@
 {
   "files": {
-    "nhsd-primary-care-domain-refsets-dem_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/dem_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/dem_cod/20250912/",
-      "downloaded_at": "2026-05-28 16:25:55.963219Z",
-      "sha": "9f1b5666e0162c11068e492d44de4e08d5ee9484"
+    "opensafely-incident-dementia-based-on-charlson.csv": {
+      "id": "opensafely/incident-dementia-based-on-charlson/2af6cddc",
+      "url": "https://www.opencodelists.org/codelist/opensafely/incident-dementia-based-on-charlson/2af6cddc/",
+      "downloaded_at": "2026-09-03 14:48:49.073318+00:00Z",
+      "sha": "b21f23a5fcf38a9e69f0c88d3545694a6026f118"
     },
-    "user-anschaf-dementia-icd-10.csv": {
-      "id": "user/anschaf/dementia-icd-10/02b60460",
-      "url": "https://www.opencodelists.org/codelist/user/anschaf/dementia-icd-10/02b60460/",
-      "downloaded_at": "2026-05-28 16:26:43.116552Z",
-      "sha": "4203df0628f003c1e1168deb3450b28a68809032"
+    "opensafely-incident-dementia.csv": {
+      "id": "opensafely/incident-dementia/4153811b",
+      "url": "https://www.opencodelists.org/codelist/opensafely/incident-dementia/4153811b/",
+      "downloaded_at": "2026-09-03 14:48:49.217711+00:00Z",
+      "sha": "392b7a8d7b1ace0208b995176f191300b88c5691"
+    },
+    "opensafely-incident-dementia-icd-10.csv": {
+      "id": "opensafely/incident-dementia-icd-10/28440de6",
+      "url": "https://www.opencodelists.org/codelist/opensafely/incident-dementia-icd-10/28440de6/",
+      "downloaded_at": "2026-09-03 14:48:49.368090+00:00Z",
+      "sha": "eda9d1b2c1f1f87a3c758d67581a59995b1aa723"
+    },
+    "opensafely-shingles.csv": {
+      "id": "opensafely/shingles/127e75de",
+      "url": "https://www.opencodelists.org/codelist/opensafely/shingles/127e75de/",
+      "downloaded_at": "2026-09-03 14:48:49.537749+00:00Z",
+      "sha": "d5305a76933558f715e5d1307c19118e2611a0ba"
+    },
+    "opensafely-shingles-icd-10.csv": {
+      "id": "opensafely/shingles-icd-10/0f349ab1",
+      "url": "https://www.opencodelists.org/codelist/opensafely/shingles-icd-10/0f349ab1/",
+      "downloaded_at": "2026-09-03 14:48:49.664182+00:00Z",
+      "sha": "f5d3b8d435dd057dfe7f188bb8d36287a5d87bfe"
+    },
+    "opensafely-post-herpetic-neuralgia.csv": {
+      "id": "opensafely/post-herpetic-neuralgia/7625277b",
+      "url": "https://www.opencodelists.org/codelist/opensafely/post-herpetic-neuralgia/7625277b/",
+      "downloaded_at": "2026-09-03 14:48:49.801056+00:00Z",
+      "sha": "13c6b32f456e3ea6c99ca508fb493d7038aae897"
+    },
+    "opensafely-post-herpetic-neuralgia-icd-10.csv": {
+      "id": "opensafely/post-herpetic-neuralgia-icd-10/5d15b446",
+      "url": "https://www.opencodelists.org/codelist/opensafely/post-herpetic-neuralgia-icd-10/5d15b446/",
+      "downloaded_at": "2026-09-03 14:48:49.933453+00:00Z",
+      "sha": "6025ea5c041e713b147e051bd5eee795190bd806"
+    },
+    "opensafely-alzheimers-disease-dementia-codes.csv": {
+      "id": "opensafely/alzheimers-disease-dementia-codes/608f27cb",
+      "url": "https://www.opencodelists.org/codelist/opensafely/alzheimers-disease-dementia-codes/608f27cb/",
+      "downloaded_at": "2026-09-03 14:48:50.063288+00:00Z",
+      "sha": "771435b4f4f6f80766db618d58eca6e237c1c64d"
+    },
+    "bristol-alzheimers-disease-icd10-v13.csv": {
+      "id": "bristol/alzheimers-disease-icd10-v13/290893d9",
+      "url": "https://www.opencodelists.org/codelist/bristol/alzheimers-disease-icd10-v13/290893d9/",
+      "downloaded_at": "2026-08-07 16:53:48.840827+00:00Z",
+      "sha": "1fb3254a36aba8d6355f78baac8c3c032fb01c3c"
+    },
+    "opensafely-vascular-dementia-incidence.csv": {
+      "id": "opensafely/vascular-dementia-incidence/6b5a27a3",
+      "url": "https://www.opencodelists.org/codelist/opensafely/vascular-dementia-incidence/6b5a27a3/",
+      "downloaded_at": "2026-09-03 14:48:50.350281+00:00Z",
+      "sha": "1588c3408198152a602f87481c9f24c2dafc98f1"
+    },
+    "bristol-vascular-dementia-icd10-v13.csv": {
+      "id": "bristol/vascular-dementia-icd10-v13/3f654718",
+      "url": "https://www.opencodelists.org/codelist/bristol/vascular-dementia-icd10-v13/3f654718/",
+      "downloaded_at": "2026-08-07 16:54:38.086137+00:00Z",
+      "sha": "540cf7e1e81754c05ba8705959b41e9e0221008d"
+    },
+    "nhsd-primary-care-domain-refsets-dem_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/dem_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/dem_cod/20260630/",
+      "downloaded_at": "2026-09-03 14:48:50.628636+00:00Z",
+      "sha": "72828d8d3c61aa43d69ebccd510752a72cfbbaaa"
+    },
+    "nhsd-primary-care-domain-refsets-autotransp_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/autotransp_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/autotransp_cod/20260630/",
+      "downloaded_at": "2026-06-18 13:44:48.112154Z",
+      "sha": "b2bd816d0e76697f4df13026d31a8729f08c407c"
+    },
+    "nhsd-primary-care-domain-refsets-allotransp_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/allotransp_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/allotransp_cod/20260630/",
+      "downloaded_at": "2026-06-18 13:45:33.453975Z",
+      "sha": "cfdaaa107c47fc776e035b128b4b082bf959b0b5"
+    },
+    "nhsd-primary-care-domain-refsets-gvhd_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/gvhd_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/gvhd_cod/20260630/",
+      "downloaded_at": "2026-06-18 13:45:47.584804Z",
+      "sha": "28cab42c697e0d52db691b6a6c871fa09ee46616"
+    },
+    "nhsd-primary-care-domain-refsets-hiv_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/hiv_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/hiv_cod/20260630/",
+      "downloaded_at": "2026-06-18 13:46:01.912469Z",
+      "sha": "35066949d8ad9a393c9569ad5808b2e80ae4623b"
+    },
+    "nhsd-primary-care-domain-refsets-aids_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/aids_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/aids_cod/20260630/",
+      "downloaded_at": "2026-06-18 13:51:20.920468Z",
+      "sha": "de3a42d60ecb6311fe97fb7dae5f553fe01201f6"
+    },
+    "nhsd-primary-care-domain-refsets-dmards_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/dmards_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/dmards_cod/20260630/",
+      "downloaded_at": "2026-06-18 13:52:43.809915Z",
+      "sha": "dace7c9c1d301a83295639930a4a6cbdb98c3384"
+    },
+    "nhsd-primary-care-domain-refsets-epphaemcan_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/epphaemcan_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/epphaemcan_cod/20260630/",
+      "downloaded_at": "2026-09-03 14:48:51.624296+00:00Z",
+      "sha": "3911f63578d3dcf8ac5fdcc69fcd7176d8beea50"
+    },
+    "nhsd-primary-care-domain-refsets-lymphoproldis_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/lymphoproldis_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/lymphoproldis_cod/20260630/",
+      "downloaded_at": "2026-09-03 14:48:51.783023+00:00Z",
+      "sha": "0b79f321d131f49b6482a2eb948312a7d548e041"
+    },
+    "nhsd-primary-care-domain-refsets-radiotherap_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/radiotherap_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/radiotherap_cod/20260630/",
+      "downloaded_at": "2026-09-03 14:48:51.912679+00:00Z",
+      "sha": "df131a66b09a0b99bf0be3d9b4c0ac9ec4cf5095"
+    },
+    "nhsd-primary-care-domain-refsets-imatrisk1_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/imatrisk1_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/imatrisk1_cod/20260630/",
+      "downloaded_at": "2026-09-03 14:48:52.172806+00:00Z",
+      "sha": "f49c94f63741ea8ecea90e8d94fa3c27b617ad47"
+    },
+    "nhsd-primary-care-domain-refsets-imtemp_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/imtemp_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/imtemp_cod/20260630/",
+      "downloaded_at": "2026-06-18 13:51:50.836652Z",
+      "sha": "371fce6177d56b5655e9d633c40a721ce4b503ed"
+    },
+    "nhsd-primary-care-domain-refsets-imtrtatrisk1_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/imtrtatrisk1_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/imtrtatrisk1_cod/20260630/",
+      "downloaded_at": "2026-06-18 13:51:43.766069Z",
+      "sha": "9463813708adb160052abc12bf6df3b21bf3a2d7"
+    },
+    "nhs-drug-refsets-imtrtatriskdrug_cod.csv": {
+      "id": "nhs-drug-refsets/imtrtatriskdrug_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/imtrtatriskdrug_cod/20260630/",
+      "downloaded_at": "2026-09-03 14:48:52.694076+00:00Z",
+      "sha": "a1e00af183fc468817d51d2f7dd4ddf67e69c772"
     },
     "opensafely-ethnicity-snomed-0removed.csv": {
       "id": "opensafely/ethnicity-snomed-0removed/22911876",
@@ -18,41 +156,29 @@
       "downloaded_at": "2026-05-28 16:38:28.108715Z",
       "sha": "d95a2f826299563aa57f6fa99009e6e13a65151b"
     },
-    "opensafely-pharmacy-first-shingles-condition.csv": {
-      "id": "opensafely/pharmacy-first-shingles-condition/2ab2c155",
-      "url": "https://www.opencodelists.org/codelist/opensafely/pharmacy-first-shingles-condition/2ab2c155/",
-      "downloaded_at": "2026-05-28 16:42:24.072534Z",
-      "sha": "8ac7bbe07caf0cf2505024cb219544d95c9a8bbe"
-    },
-    "user-anschaf-post-herpetic-neuralgia-snomed.csv": {
-      "id": "user/anschaf/post-herpetic-neuralgia-snomed/4fd06a66",
-      "url": "https://www.opencodelists.org/codelist/user/anschaf/post-herpetic-neuralgia-snomed/4fd06a66/",
-      "downloaded_at": "2026-05-28 17:57:23.641392Z",
-      "sha": "13c6b32f456e3ea6c99ca508fb493d7038aae897"
-    },
-    "user-anschaf-postherpetic-neuralgia-icd-10.csv": {
-      "id": "user/anschaf/postherpetic-neuralgia-icd-10/7cfb4827",
-      "url": "https://www.opencodelists.org/codelist/user/anschaf/postherpetic-neuralgia-icd-10/7cfb4827/",
-      "downloaded_at": "2026-05-28 17:59:35.250940Z",
-      "sha": "6025ea5c041e713b147e051bd5eee795190bd806"
-    },
-    "user-anschaf-shingles-icd-10.csv": {
-      "id": "user/anschaf/shingles-icd-10/160abb5d",
-      "url": "https://www.opencodelists.org/codelist/user/anschaf/shingles-icd-10/160abb5d/",
-      "downloaded_at": "2026-05-28 18:01:16.689880Z",
-      "sha": "f5d3b8d435dd057dfe7f188bb8d36287a5d87bfe"
-    },
     "opensafely-ischaemic-heart-disease.csv": {
       "id": "opensafely/ischaemic-heart-disease/10a53b71",
       "url": "https://www.opencodelists.org/codelist/opensafely/ischaemic-heart-disease/10a53b71/",
       "downloaded_at": "2026-05-29 09:58:02.510880Z",
       "sha": "ffc00dbf1ba6852e23130689247ae117cb691206"
     },
-    "opensafely-cerebrovascular-disease.csv": {
-      "id": "opensafely/cerebrovascular-disease/2a7b6235",
-      "url": "https://www.opencodelists.org/codelist/opensafely/cerebrovascular-disease/2a7b6235/",
-      "downloaded_at": "2026-05-29 10:03:08.385141Z",
-      "sha": "772c965ffbc3f95669418dc6f5bd192af8c6b377"
+    "nhsd-primary-care-domain-refsets-copd_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/copd_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/copd_cod/20260630/",
+      "downloaded_at": "2026-05-29 10:35:46.260829Z",
+      "sha": "57431dbda7129d9c915a404dff0348cfcc9cd6f6"
+    },
+    "nhsd-primary-care-domain-refsets-dmtype2_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/dmtype2_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/dmtype2_cod/20260630/",
+      "downloaded_at": "2026-09-03 14:48:53.243949+00:00Z",
+      "sha": "9ae4e751ad57000010c2aa0122b778a2d1b6c6ba"
+    },
+    "reducehf-type-2-diabetes-icd10.csv": {
+      "id": "reducehf/type-2-diabetes-icd10/53c432c4",
+      "url": "https://www.opencodelists.org/codelist/reducehf/type-2-diabetes-icd10/53c432c4/",
+      "downloaded_at": "2026-09-03 14:48:53.365222+00:00Z",
+      "sha": "44b8f1f210c8af12a54d56a5ad2399849090e7af"
     },
     "nhsd-primary-care-domain-refsets-hyp_cod.csv": {
       "id": "nhsd-primary-care-domain-refsets/hyp_cod/20250912",
@@ -60,161 +186,83 @@
       "downloaded_at": "2026-05-29 10:05:06.890963Z",
       "sha": "f94870510a3550ff79710b2d88b551812bb2fb3b"
     },
+    "nhs-drug-refsets-stat_cod.csv": {
+      "id": "nhs-drug-refsets/stat_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/stat_cod/20260630/",
+      "downloaded_at": "2026-09-03 14:48:53.609374+00:00Z",
+      "sha": "f3f2e14257c2dd640247aef8da4b5be6e38093c1"
+    },
     "nhs-drug-refsets-antihyp_cod.csv": {
       "id": "nhs-drug-refsets/antihyp_cod/20250912",
       "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/antihyp_cod/20250912/",
       "downloaded_at": "2026-05-29 10:17:46.237734Z",
       "sha": "1bf4d25c0245b4badcb971625adc123f631a163c"
     },
-    "nhs-drug-refsets-stat_cod.csv": {
-      "id": "nhs-drug-refsets/stat_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/stat_cod/20250912/",
-      "downloaded_at": "2026-05-29 10:31:39.675065Z",
-      "sha": "18497a0c7f757ac46d0633070a6db3472352aaeb"
-    },
-    "nhsd-primary-care-domain-refsets-dmtype2_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/dmtype2_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/dmtype2_cod/20250912/",
-      "downloaded_at": "2026-05-29 10:33:58.298835Z",
-      "sha": "d0150e2030c8452c247a41852853453a165a04d9"
-    },
-    "nhsd-primary-care-domain-refsets-copd_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/copd_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/copd_cod/20250912/",
-      "downloaded_at": "2026-05-29 10:35:46.260829Z",
-      "sha": "57431dbda7129d9c915a404dff0348cfcc9cd6f6"
-    },
     "nhsd-primary-care-domain-refsets-lsmok_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/lsmok_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/lsmok_cod/20250912/",
+      "id": "nhsd-primary-care-domain-refsets/lsmok_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/lsmok_cod/20260630/",
       "downloaded_at": "2026-06-18 10:33:56.218366Z",
       "sha": "f8936a60cb33a59fc333c557259f7a76f57322b5"
     },
     "nhsd-primary-care-domain-refsets-exsmok_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/exsmok_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/exsmok_cod/20250912/",
+      "id": "nhsd-primary-care-domain-refsets/exsmok_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/exsmok_cod/20260630/",
       "downloaded_at": "2026-06-18 10:35:54.007120Z",
       "sha": "8cf4effa5b8ff31b2064fc52731558f822121d83"
     },
-    "nhsd-primary-care-domain-refsets-autotransp_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/autotransp_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/autotransp_cod/20250912/",
-      "downloaded_at": "2026-06-18 13:44:48.112154Z",
-      "sha": "b2bd816d0e76697f4df13026d31a8729f08c407c"
-    },
-    "nhsd-primary-care-domain-refsets-allotransp_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/allotransp_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/allotransp_cod/20250912/",
-      "downloaded_at": "2026-06-18 13:45:33.453975Z",
-      "sha": "cfdaaa107c47fc776e035b128b4b082bf959b0b5"
-    },
-    "nhsd-primary-care-domain-refsets-gvhd_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/gvhd_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/gvhd_cod/20250912/",
-      "downloaded_at": "2026-06-18 13:45:47.584804Z",
-      "sha": "28cab42c697e0d52db691b6a6c871fa09ee46616"
-    },
-    "nhsd-primary-care-domain-refsets-hiv_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/hiv_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/hiv_cod/20250912/",
-      "downloaded_at": "2026-06-18 13:46:01.912469Z",
-      "sha": "35066949d8ad9a393c9569ad5808b2e80ae4623b"
-    },
-    "nhs-drug-refsets-imtrtatriskdrug_cod.csv": {
-      "id": "nhs-drug-refsets/imtrtatriskdrug_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/imtrtatriskdrug_cod/20250912/",
-      "downloaded_at": "2026-06-18 13:51:31.666041Z",
-      "sha": "8eec85b34d73370e8b8aae87d3a7117a6b465b90"
-    },
-    "nhsd-primary-care-domain-refsets-imtrtatrisk1_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/imtrtatrisk1_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/imtrtatrisk1_cod/20250912/",
-      "downloaded_at": "2026-06-18 13:51:43.766069Z",
-      "sha": "9463813708adb160052abc12bf6df3b21bf3a2d7"
-    },
-    "nhsd-primary-care-domain-refsets-imtemp_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/imtemp_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/imtemp_cod/20250912/",
-      "downloaded_at": "2026-06-18 13:51:50.836652Z",
-      "sha": "371fce6177d56b5655e9d633c40a721ce4b503ed"
-    },
-    "nhsd-primary-care-domain-refsets-imatrisk1_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/imatrisk1_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/imatrisk1_cod/20250912/",
-      "downloaded_at": "2026-06-18 13:52:02.490847Z",
-      "sha": "0dd78a9e3c859c5893556bcdd49e3be515d952eb"
-    },
-    "nhsd-primary-care-domain-refsets-radiotherap_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/radiotherap_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/radiotherap_cod/20250912/",
-      "downloaded_at": "2026-06-18 13:52:11.684872Z",
-      "sha": "d16a66ee9cd04dcd2a046bf7dd8b6ef44561045f"
-    },
-    "nhsd-primary-care-domain-refsets-lymphoproldis_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/lymphoproldis_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/lymphoproldis_cod/20250912/",
-      "downloaded_at": "2026-06-18 13:52:19.388697Z",
-      "sha": "754f6e3819a4634f5d1bd41a3f79a1192dcef9a6"
-    },
-    "nhsd-primary-care-domain-refsets-epphaemcan_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/epphaemcan_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/epphaemcan_cod/20250912/",
-      "downloaded_at": "2026-06-18 13:52:34.013898Z",
-      "sha": "2325781bb0870cac35583633ac781782450353c2"
-    },
-    "nhsd-primary-care-domain-refsets-dmards_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/dmards_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/dmards_cod/20250912/",
-      "downloaded_at": "2026-06-18 13:52:43.809915Z",
-      "sha": "dace7c9c1d301a83295639930a4a6cbdb98c3384"
-    },
-    "nhsd-primary-care-domain-refsets-aids_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/aids_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/aids_cod/20250912/",
-      "downloaded_at": "2026-06-18 13:51:20.920468Z",
-      "sha": "de3a42d60ecb6311fe97fb7dae5f553fe01201f6"
-    },
     "nhsd-primary-care-domain-refsets-c19flurti_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/c19flurti_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/c19flurti_cod/20250912/",
-      "downloaded_at": "2026-06-18 14:28:28.433052Z",
-      "sha": "042830659e2cce9100152b0b586f38110e8b0008"
+      "id": "nhsd-primary-care-domain-refsets/c19flurti_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/c19flurti_cod/20260630/",
+      "downloaded_at": "2026-09-03 14:48:54.257812+00:00Z",
+      "sha": "eb5abec1f78e7c94bc51c2f6972d1f88da9b87f0"
     },
     "nhsd-primary-care-domain-refsets-ast_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/ast_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/ast_cod/20250912/",
+      "id": "nhsd-primary-care-domain-refsets/ast_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/ast_cod/20260630/",
       "downloaded_at": "2026-06-18 14:59:27.392276Z",
       "sha": "40b9e08f0468a0cb15af222d626da906d029911f"
     },
+    "bristol-asthma.csv": {
+      "id": "bristol/asthma/3a558edf",
+      "url": "https://www.opencodelists.org/codelist/bristol/asthma/3a558edf/",
+      "downloaded_at": "2026-09-03 14:48:54.496196+00:00Z",
+      "sha": "d71d9a3f40d36c4da740031d80a47d450cd50e5e"
+    },
     "nhsd-primary-care-domain-refsets-afib_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/afib_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/afib_cod/20250912/",
+      "id": "nhsd-primary-care-domain-refsets/afib_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/afib_cod/20260630/",
       "downloaded_at": "2026-06-18 14:59:27.482861Z",
       "sha": "f725c17fabdbc9afda40bca63fa773b6bd984f01"
     },
+    "reducehf-atrial-fibrillation-and-flutter-icd10.csv": {
+      "id": "reducehf/atrial-fibrillation-and-flutter-icd10/0cfc2f94",
+      "url": "https://www.opencodelists.org/codelist/reducehf/atrial-fibrillation-and-flutter-icd10/0cfc2f94/",
+      "downloaded_at": "2026-09-03 14:48:54.756395+00:00Z",
+      "sha": "deda1f4b7573e0590e97e996671f8acc0debca75"
+    },
     "nhsd-primary-care-domain-refsets-ckd1and2_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/ckd1and2_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/ckd1and2_cod/20250912/",
+      "id": "nhsd-primary-care-domain-refsets/ckd1and2_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/ckd1and2_cod/20260630/",
       "downloaded_at": "2026-06-18 14:59:27.586878Z",
       "sha": "24d9026bc73287f24b3fb09a23c69f4ce8238c06"
     },
     "nhsd-primary-care-domain-refsets-ckd_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/ckd_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/ckd_cod/20250912/",
+      "id": "nhsd-primary-care-domain-refsets/ckd_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/ckd_cod/20260630/",
       "downloaded_at": "2026-06-18 14:59:27.670375Z",
       "sha": "2e2e33d85817844bb8922fc6c87583c898f61ec5"
     },
-    "nhsd-primary-care-domain-refsets-depr_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/depr_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/depr_cod/20250912/",
-      "downloaded_at": "2026-06-18 14:59:27.757137Z",
-      "sha": "95686e18f893e004b9fe46284c758a928386f233"
+    "opensafely-incident-depression.csv": {
+      "id": "opensafely/incident-depression/7e3d675d",
+      "url": "https://www.opencodelists.org/codelist/opensafely/incident-depression/7e3d675d/",
+      "downloaded_at": "2026-09-03 14:48:55.099235+00:00Z",
+      "sha": "6a8e6b0535024fce6ed4cae6cb9ebe55ae8d32bd"
     },
     "nhsd-primary-care-domain-refsets-epil_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/epil_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/epil_cod/20250912/",
-      "downloaded_at": "2026-06-18 14:59:27.879745Z",
-      "sha": "97409659351510298f66968a5f9d38b46d91d403"
+      "id": "nhsd-primary-care-domain-refsets/epil_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/epil_cod/20260630/",
+      "downloaded_at": "2026-09-03 14:48:55.338492+00:00Z",
+      "sha": "61d301308ce075d6a5ccdece283f13dea4bb9c24"
     },
     "nhsd-primary-care-domain-refsets-hf_cod.csv": {
       "id": "nhsd-primary-care-domain-refsets/hf_cod/20250912",
@@ -223,88 +271,70 @@
       "sha": "b9f54bab19109253c8d5f7b771d83dec0a1f0dfb"
     },
     "nhsd-primary-care-domain-refsets-thy_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/thy_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/thy_cod/20250912/",
-      "downloaded_at": "2026-06-18 14:59:28.056054Z",
-      "sha": "3aff0c166a6bc58b0f2670fa33bd475b734dfbf8"
+      "id": "nhsd-primary-care-domain-refsets/thy_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/thy_cod/20260630/",
+      "downloaded_at": "2026-09-03 14:48:55.524355+00:00Z",
+      "sha": "a5e37690dcdf691a403791a19bd79b3e6677a7c8"
     },
-    "primis-covid19-vacc-uptake-sev_mental.csv": {
-      "id": "primis-covid19-vacc-uptake/sev_mental/v2.5",
-      "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/sev_mental/v2.5/",
-      "downloaded_at": "2026-06-18 14:59:28.159715Z",
-      "sha": "d07f3689babb1f2fb2d099f4041af204ce0a1e9d"
+    "opensafely-severe-mental-illness.csv": {
+      "id": "opensafely/severe-mental-illness/174cda93",
+      "url": "https://www.opencodelists.org/codelist/opensafely/severe-mental-illness/174cda93/",
+      "downloaded_at": "2026-09-03 14:48:55.733525+00:00Z",
+      "sha": "667550e3e49deddecd9e2b5b591a620a5d059484"
     },
     "nhsd-primary-care-domain-refsets-osteo_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/osteo_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/osteo_cod/20250912/",
+      "id": "nhsd-primary-care-domain-refsets/osteo_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/osteo_cod/20260630/",
       "downloaded_at": "2026-06-18 14:59:28.259195Z",
       "sha": "5ae9284e23ee3a1c070f41ea9a1d9a6781397d30"
     },
     "nhsd-primary-care-domain-refsets-bmiobese_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/bmiobese_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/bmiobese_cod/20250912/",
+      "id": "nhsd-primary-care-domain-refsets/bmiobese_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/bmiobese_cod/20260630/",
       "downloaded_at": "2026-06-18 14:59:28.350747Z",
       "sha": "5e48d42b92a238d6d5bbebbf9bc74cfa1341b750"
     },
     "nhsd-primary-care-domain-refsets-pad_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/pad_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/pad_cod/20250912/",
+      "id": "nhsd-primary-care-domain-refsets/pad_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/pad_cod/20260630/",
       "downloaded_at": "2026-06-18 14:59:28.442482Z",
       "sha": "f3a33d8792fcd458f728b4dbaed103e5cead9a0c"
     },
     "nhsd-primary-care-domain-refsets-rarth_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/rarth_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/rarth_cod/20250912/",
-      "downloaded_at": "2026-06-18 14:59:28.548538Z",
-      "sha": "a7cf1d46d72882c11eee5a04c00d47ab93b55a42"
+      "id": "nhsd-primary-care-domain-refsets/rarth_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/rarth_cod/20260630/",
+      "downloaded_at": "2026-09-03 14:48:56.141380+00:00Z",
+      "sha": "0a66ad781c8deff1f5a27c0ea6010651232995ca"
     },
     "nhsd-primary-care-domain-refsets-strk_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/strk_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/strk_cod/20250912/",
+      "id": "nhsd-primary-care-domain-refsets/strk_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/strk_cod/20260630/",
       "downloaded_at": "2026-06-18 14:59:28.657540Z",
       "sha": "14a9a227bebbe509459f1bbedd9ceb903a50d4d7"
     },
+    "nhsd-primary-care-domain-refsets-tia_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/tia_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/tia_cod/20260630/",
+      "downloaded_at": "2026-09-03 14:48:56.351081+00:00Z",
+      "sha": "582c570c9e3f0229587e15ae38a343042efce060"
+    },
     "nhsd-primary-care-domain-refsets-chd_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/chd_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/chd_cod/20250912/",
-      "downloaded_at": "2026-06-18 14:59:28.773537Z",
-      "sha": "b79cfc6a5928d04c790f708908368e488e900efd"
+      "id": "nhsd-primary-care-domain-refsets/chd_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/chd_cod/20260630/",
+      "downloaded_at": "2026-09-03 14:48:56.475659+00:00Z",
+      "sha": "f6d9ed905842cc16d1b9c30c77faa1c2135e57df"
+    },
+    "opensafely-cognitive-impairment.csv": {
+      "id": "opensafely/cognitive-impairment/3ac8a857",
+      "url": "https://www.opencodelists.org/codelist/opensafely/cognitive-impairment/3ac8a857/",
+      "downloaded_at": "2026-09-03 14:48:56.634553+00:00Z",
+      "sha": "135c210c98c0b36aa6846159b0ead8eed4ab5723"
     },
     "nhsd-primary-care-domain-refsets-bmival_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/bmival_cod/20250912",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/bmival_cod/20250912/",
-      "downloaded_at": "2026-06-20 18:08:36.654350Z",
+      "id": "nhsd-primary-care-domain-refsets/bmival_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/bmival_cod/20260630/",
+      "downloaded_at": "2026-09-03 15:22:03.412654+00:00Z",
       "sha": "2fc9695c0029388d5d4741e821688e0c4a1b19ee"
-    },
-    "nhsd-primary-care-domain-refsets-demalz_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/demalz_cod/20260630",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/demalz_cod/20260630/",
-      "downloaded_at": "2026-08-06 10:50:57.112943Z",
-      "sha": "1364cbb94464d5e1213730c9235dcaf0bfecf016"
-    },
-    "nhsd-primary-care-domain-refsets-demvasc_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/demvasc_cod/20260630",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/demvasc_cod/20260630/",
-      "downloaded_at": "2026-08-06 10:51:51.772451Z",
-      "sha": "99f1f18308bbb06f239a75951bc9cf41707b7138"
-    },
-    "opensafely-symptoms-cognitive-impairment.csv": {
-      "id": "opensafely/symptoms-cognitive-impairment/7af0d32d",
-      "url": "https://www.opencodelists.org/codelist/opensafely/symptoms-cognitive-impairment/7af0d32d/",
-      "downloaded_at": "2026-08-07 16:48:57.649187+00:00Z",
-      "sha": "1fac3375ebc596e1ee2de2270f8d3b55090b4849"
-    },
-    "bristol-alzheimers-disease-icd10-v13.csv": {
-      "id": "bristol/alzheimers-disease-icd10-v13/290893d9",
-      "url": "https://www.opencodelists.org/codelist/bristol/alzheimers-disease-icd10-v13/290893d9/",
-      "downloaded_at": "2026-08-07 16:53:48.840827+00:00Z",
-      "sha": "1fb3254a36aba8d6355f78baac8c3c032fb01c3c"
-    },
-    "bristol-vascular-dementia-icd10-v13.csv": {
-      "id": "bristol/vascular-dementia-icd10-v13/3f654718",
-      "url": "https://www.opencodelists.org/codelist/bristol/vascular-dementia-icd10-v13/3f654718/",
-      "downloaded_at": "2026-08-07 16:54:38.086137+00:00Z",
-      "sha": "540cf7e1e81754c05ba8705959b41e9e0221008d"
     }
   }
 }

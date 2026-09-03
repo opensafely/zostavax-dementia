@@ -461,7 +461,7 @@ code,term
 23132008,Amyloid light-chain amyloidosis
 232075002,Lymphoma of retina
 236512004,Leukemic infiltrate of kidney
-236513009,Lymphoma of kidney
+236513009,Malignant lymphoma of kidney
 237864008,AL amyloidosis
 237865009,Primary amyloidosis of light chain type
 239297008,Lymphomatoid granulomatosis of lung
@@ -1009,7 +1009,7 @@ code,term
 725390002,Acute myeloid leukemia with t(8;16)(p11;p13) translocation
 725437002,Chronic lymphocytic leukemia genetic mutation variant
 726721002,Nodal marginal zone B-cell lymphoma
-732963000,Secondary autoimmune hemolytic anemia co-occurrent and due to lymphoproliferative disorder
+732963000,Secondary autoimmune hemolytic anemia due to lymphoproliferative disorder
 733598001,Acute myeloid leukemia with t(6;9)(p23;q34) translocation
 733627006,Primary cutaneous gamma-delta-positive T-cell lymphoma
 734066005,Diffuse large B-cell lymphoma of central nervous system
@@ -1036,7 +1036,7 @@ code,term
 765328000,Classic mycosis fungoides
 766045006,Acute myeloid leukemia and myelodysplastic syndrome related to alkylating agent
 766046007,Acute myeloid leukemia and myelodysplastic syndrome related to topoisomerase type 2 inhibitor
-766048008,Acute myeloid leukemia and myelodysplastic syndrome related to radiation
+766048008,Acute myeloid leukemia and myelodysplastic syndrome related to ionizing radiation
 766752000,Neurolymphomatosis
 766935007,Primary bone lymphoma
 770402000,Aleukemic mast cell leukemia

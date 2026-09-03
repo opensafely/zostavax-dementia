@@ -2,7 +2,13 @@ code,term
 10760421000119102,Psychotic disorder in mother complicating childbirth
 10760461000119107,Psychotic disorder in mother complicating pregnancy
 1086471000000103,"Recurrent reactive depressive episodes, severe, with psychosis"
+1087451000000109,Late onset alcohol-induced psychosis
+1087461000000107,Late onset substance-induced psychosis
+1087481000000103,Late onset cocaine-induced psychosis
+1087491000000101,Late onset lysergic acid diethylamide-induced psychosis
 10875004,"Severe mixed bipolar I disorder with psychotic features, mood-incongruent"
+1087501000000107,Late onset cannabinoid-induced psychosis
+1087511000000109,Late onset amphetamine-induced psychosis
 1089481000000106,Cataleptic schizophrenia
 1089511000000100,Recurrent depression with current severe episode and psychotic features
 1089661000000104,Mania with mood-congruent psychotic features
@@ -11,27 +17,31 @@ code,term
 1089691000000105,Acute predominantly delusional psychotic disorder
 10981006,Severe mixed bipolar I disorder with psychotic features
 111482003,Subchronic schizophrenia with acute exacerbations
-111483008,Catatonic schizophrenia in remission
 111484002,Undifferentiated schizophrenia
-111485001,Mixed bipolar I disorder in full remission
 1127191000000108,First episode psychosis
 1196001,"Chronic bipolar II disorder, most recent episode major depressive"
 1204417003,Early onset schizophrenia
 1220650006,Delusion of emitting foul body odor
 1231503005,Psychotic disorder with insight present
-1259128002,Alzheimer disease with psychosis
+1231846001,Psychosis caused by ethanol
 12939007,Chronic disorganized schizophrenia
 129602009,Symbiotic infantile psychosis
-12969000,"Severe bipolar II disorder, most recent episode major depressive, in full remission"
+129604005,Delusion of heart disease syndrome
+1304290003,Psychotic disorder caused by amfetamine and/or amfetamine derivative
 133091000119105,Rapid cycling bipolar I disorder
 13313007,Mild bipolar disorder
+1343347009,"Bipolar I disorder, current episode hypomanic"
 13581000,"Severe bipolar I disorder, single manic episode with psychotic features, mood-congruent"
 13746004,Bipolar disorder
+1382055001,Delusion of impaired hair growth due to perceived material in skin
+14144000,Erotomanic delusion disorder
 14291003,Subchronic disorganized schizophrenia with acute exacerbations
 14495005,"Severe bipolar I disorder, single manic episode without psychotic features"
 1499003,"Bipolar I disorder, single manic episode with postpartum onset"
 15193003,"Severe recurrent major depression with psychotic features, mood-incongruent"
+15921731000119106,Psychotic disorder caused by methamphetamine
 162004,Severe manic bipolar I disorder without psychotic features
+162313000,Morbid jealousy
 16238741000119105,Bipolar disorder caused by drug
 16295005,"Bipolar II disorder, most recent episode major depressive"
 16506000,Mixed bipolar I disorder
@@ -39,7 +49,14 @@ code,term
 17262008,Non-alcoholic Korsakoff's psychosis
 17782008,"Bipolar I disorder, most recent episode manic with catatonic features"
 18260003,Postpartum psychosis
+18573003,Obsessional erotomania
 191447007,Organic psychotic condition
+191471000,Korsakov's alcoholic psychosis with peripheral neuritis
+191475009,Chronic alcoholic brain syndrome
+191478006,Paranoia caused by alcohol
+191483003,Psychotic disorder caused by drug
+191485005,Paranoid state caused by drug
+191486006,Hallucinosis caused by drug
 191499009,Transient organic psychoses
 191525009,Non-organic psychosis
 191526005,Schizophrenic disorders
@@ -55,13 +72,11 @@ code,term
 191562006,Chronic latent schizophrenia
 191563001,Acute exacerbation of subchronic latent schizophrenia
 191564007,Acute exacerbation of chronic latent schizophrenia
-191565008,Latent schizophrenia in remission
 191567000,Schizoaffective schizophrenia
 191569002,Subchronic schizoaffective schizophrenia
 191570001,Chronic schizoaffective schizophrenia
 191571002,Acute exacerbation of subchronic schizoaffective schizophrenia
 191572009,Acute exacerbation of chronic schizoaffective schizophrenia
-191574005,Schizoaffective schizophrenia in remission
 191577003,Cenesthopathic schizophrenia
 191583000,"Single manic episode, mild"
 191584006,"Single manic episode, moderate"
@@ -78,16 +93,13 @@ code,term
 191620005,"Bipolar affective disorder, currently manic, mild"
 191621009,"Bipolar affective disorder, currently manic, moderate"
 191623007,"Bipolar affective disorder, currently manic, severe, with psychosis"
-191625000,"Bipolar affective disorder, currently manic, in full remission"
 191627008,"Bipolar affective disorder, current episode depression"
 191629006,"Bipolar affective disorder, currently depressed, mild"
 191630001,"Bipolar affective disorder, currently depressed, moderate"
-191634005,"Bipolar affective disorder, currently depressed, in full remission"
 191636007,Mixed bipolar affective disorder
 191638008,"Mixed bipolar affective disorder, mild"
 191639000,"Mixed bipolar affective disorder, moderate"
 191641004,"Mixed bipolar affective disorder, severe, with psychosis"
-191643001,"Mixed bipolar affective disorder, in full remission"
 191658009,Atypical manic disorder
 191667009,Paranoid disorder
 191668004,Simple paranoid state
@@ -100,10 +112,13 @@ code,term
 191683009,Psychogenic stupor
 192362008,"Bipolar affective disorder, current episode mixed"
 19300006,"Severe bipolar II disorder, most recent episode major depressive with psychotic features, mood-congruent"
+19445006,Opioid-induced psychotic disorder with hallucinations
+1973000,"Sedative, hypnotic AND/OR anxiolytic-induced psychotic disorder with delusions"
 20250007,"Severe major depression, single episode, with psychotic features, mood-incongruent"
+20385005,Psychotic disorder with delusions caused by opioid
 20960007,"Severe bipolar II disorder, most recent episode major depressive with psychotic features, mood-incongruent"
+21831000119109,Psychotic disorder caused by phencyclidine
 21900002,"Bipolar I disorder, most recent episode depressed with catatonic features"
-22121000,Depressed bipolar I disorder in full remission
 22407005,"Bipolar II disorder, most recent episode major depressive with catatonic features"
 231437006,Reactive psychoses
 231438001,Presbyophrenic psychosis
@@ -131,6 +146,7 @@ code,term
 26203008,"Severe depressed bipolar I disorder with psychotic features, mood-incongruent"
 26472000,Paraphrenia
 26530004,"Severe bipolar disorder with psychotic features, mood-incongruent"
+26714005,Cannabis-induced psychotic disorder with hallucinations
 268612007,Senile and presenile organic psychotic conditions
 268617001,Acute schizophrenic episode
 268619003,"Manic disorder, single episode"
@@ -143,8 +159,10 @@ code,term
 274952002,Borderline schizophrenia
 274953007,Acute polymorphic psychotic disorder
 278506006,Involutional paranoid state
+278508007,Delusional dysmorphophobia
 278852008,Paranoid-hallucinatory epileptic psychosis
 278853003,Acute schizophrenia-like psychotic disorder
+280949006,Erotomania
 28475009,Severe recurrent major depression with psychotic features
 28663008,Severe manic bipolar I disorder with psychotic features
 288751000119101,"Reactive depressive psychosis, single episode"
@@ -152,37 +170,33 @@ code,term
 29599000,Chronic undifferentiated schizophrenia
 29929003,"Bipolar I disorder, most recent episode depressed with atypical features"
 30336007,Chronic residual schizophrenia with acute exacerbations
+30491001,Cocaine delusional disorder
 30520009,"Severe bipolar II disorder, most recent episode major depressive with psychotic features"
 30687003,"Bipolar II disorder, most recent episode major depressive with postpartum onset"
 307417003,Cycloid psychosis
 307504004,Oneirophrenia
-30935000,Manic bipolar I disorder in full remission
 31027006,Schizotypal personality disorder
-31373002,Disorganized schizophrenia in remission
 31446002,"Bipolar I disorder, most recent episode hypomanic"
 31658008,Chronic paranoid schizophrenia
+32358001,Amphetamine delusional disorder
+32552001,Organic delusional disorder caused by psychoactive substance
 33078009,"Severe recurrent major depression with psychotic features, mood-congruent"
 33323008,Somatic delusion disorder
 33380008,"Severe manic bipolar I disorder with psychotic features, mood-incongruent"
 33736005,"Severe major depression with psychotic features, mood-congruent"
+33871004,Phencyclidine-induced psychotic disorder with hallucinations
 34315001,"Bipolar II disorder, most recent episode major depressive with melancholic features"
 35218008,Chronic disorganized schizophrenia with acute exacerbation
 35252006,Disorganized schizophrenia
-3530005,"Bipolar I disorder, single manic episode, in full remission"
-35481005,Mixed bipolar I disorder in remission
-35722002,"Severe bipolar II disorder, most recent episode major depressive, in remission"
 357705009,Cotard's syndrome
 35846004,"Moderate bipolar II disorder, most recent episode major depressive"
 36158005,Schizophreniform disorder with good prognostic features
-36583000,Mixed bipolar I disorder in partial remission
-371026009,Senile dementia with psychosis
 371596008,Bipolar I disorder
 371599001,Severe bipolar I disorder
 371600003,Severe bipolar disorder
 371604007,Severe bipolar II disorder
 38295006,Involutional paraphrenia
 38368003,"Schizoaffective disorder, bipolar type"
-39610001,Undifferentiated schizophrenia in remission
 403595006,Pinocchio syndrome
 408858002,Infantile psychosis
 40926005,Moderate mixed bipolar I disorder
@@ -190,8 +204,8 @@ code,term
 416340002,Late onset schizophrenia
 417601000000102,"[X]Schizophrenia, schizotypal and delusional disorders"
 41832009,"Severe bipolar I disorder, single manic episode with psychotic features"
-41836007,Bipolar disorder in full remission
 41932008,Amok
+427975003,Delusional disorder caused by drug
 42868002,Subchronic catatonic schizophrenia
 430852001,"Severe major depression, single episode, with psychotic features"
 43568002,"Bipolar II disorder, most recent episode major depressive with atypical features"
@@ -199,48 +213,49 @@ code,term
 441704009,Affective psychosis
 441833000,Lethal catatonia
 4441000,Severe bipolar disorder with psychotic features
-45479006,Manic bipolar I disorder in remission
 46229002,Severe mixed bipolar I disorder without psychotic features
 473452003,Atypical psychosis
 47447001,Grandiose delusion disorder
+47664006,"Sedative, hypnotic AND/OR anxiolytic-induced psychotic disorder with hallucinations"
 48500005,Delusional disorder
 48937005,"Bipolar II disorder, most recent episode hypomanic"
-4926007,Schizophrenia in remission
 49468007,Depressed bipolar I disorder
-49512000,Depressed bipolar I disorder in partial remission
-51133006,Residual schizophrenia in remission
+50722006,Delusional disorder caused by phencyclidine
+50933003,Hallucinogen delusional disorder
+51443000,Amphetamine-induced psychotic disorder with hallucinations
 51637008,"Chronic bipolar I disorder, most recent episode depressed"
 53049002,Severe bipolar disorder without psychotic features
-53607008,Depressed bipolar I disorder in remission
 5464005,Brief reactive psychosis
 54761006,"Severe depressed bipolar I disorder with psychotic features, mood-congruent"
+5510009,Organic delusional disorder
 55516002,"Bipolar I disorder, most recent episode manic with postpartum onset"
 55736003,Schizophreniform disorder without good prognostic features
-5703000,Bipolar disorder in partial remission
 58214004,Schizophrenia
 58647003,"Severe mood disorder with psychotic features, mood-congruent"
 59617007,Severe depressed bipolar I disorder with psychotic features
 60099002,"Severe major depression with psychotic features, mood-incongruent"
 60123008,"Delusional disorder, mixed type"
-60401000119104,Postpartum psychosis in remission
+61144001,Alcohol-induced psychotic disorder with delusions
 61403008,Severe depressed bipolar I disorder without psychotic features
 61831009,Induced psychotic disorder
-63181006,Paranoid schizophrenia in remission
 63204009,Bouffée délirante
-63249007,Manic bipolar I disorder in partial remission
 63395003,Folie à trois
+6348008,Cocaine-induced psychotic disorder with hallucinations
+63649001,Cannabis delusional disorder
+63983005,Inhalant-induced psychotic disorder with hallucinations
 64731001,"Severe mixed bipolar I disorder with psychotic features, mood-congruent"
 64905009,Paranoid schizophrenia
 65042007,"Bipolar I disorder, most recent episode mixed with postpartum onset"
+65179007,Koro
 65971000052100,Acute psychosis
 66631006,Moderate depressed bipolar I disorder
-67002003,"Severe bipolar II disorder, most recent episode major depressive, in partial remission"
 68569003,Manic bipolar I disorder
 68890003,Schizoaffective disorder
 68995007,Chronic catatonic schizophrenia
 69322001,Psychotic disorder
-698951002,Delusional disorder in remission
+69482004,Korsakoff's psychosis
 7025000,Subchronic undifferentiated schizophrenia with acute exacerbations
+7052005,Alcohol hallucinosis
 70546001,"Severe bipolar disorder with psychotic features, mood-congruent"
 70814008,Subchronic residual schizophrenia with acute exacerbations
 71103003,Chronic residual schizophrenia
@@ -250,10 +265,19 @@ code,term
 719717006,Psychosis co-occurrent and due to Parkinson's disease
 71984005,Mild manic bipolar I disorder
 723899008,Delusional disorder currently symptomatic
-723900003,Delusional disorder currently in partial remission
-723901004,Delusional disorder currently in full remission
-723903001,Bipolar type I disorder currently in full remission
-723905008,Bipolar type II disorder currently in full remission
+723927004,Psychotic disorder caused by alcohol with schizophreniform symptoms
+723936000,Psychotic disorder caused by cannabis
+724655005,Psychotic disorder caused by opioid
+724673008,Psychotic disorder caused by sedative
+724674002,Psychotic disorder caused by hypnotic
+724675001,Psychotic disorder caused by anxiolytic
+724689006,Psychotic disorder caused by cocaine
+724696008,Psychotic disorder caused by hallucinogen
+724702008,Psychotic disorder caused by volatile inhalant
+724706006,Psychotic disorder caused by methylenedioxymethamphetamine
+724718002,Psychotic disorder caused by dissociative drug
+724719005,Psychotic disorder caused by ketamine
+724729003,Psychotic disorder caused by psychoactive substance
 724755002,Positive symptoms co-occurrent and due to primary psychotic disorder
 724756001,Negative symptoms co-occurrent and due to primary psychotic disorder
 724758000,Manic symptoms co-occurrent and due to primary psychotic disorder
@@ -261,16 +285,21 @@ code,term
 724760003,Cognitive impairment co-occurrent and due to primary psychotic disorder
 726772006,Major depression with psychotic features
 73471000,"Bipolar I disorder, most recent episode mixed with catatonic features"
+735750005,Psychotic disorder with schizophreniform symptoms caused by cocaine
 737225007,Secondary psychotic syndrome with hallucinations and delusions
+737340007,Psychotic disorder caused by synthetic cannabinoid
 73867007,Severe major depression with psychotic features
 74686005,Mild depressed bipolar I disorder
-75360000,"Bipolar I disorder, single manic episode, in remission"
-755301000000102,Paranoid state in remission
-755311000000100,Non-organic psychosis in remission
-755321000000106,"Single major depressive episode, severe, with psychosis, psychosis in remission"
-755331000000108,"Recurrent major depressive episodes, severe, with psychosis, psychosis in remission"
+75122001,Inhalant-induced psychotic disorder with delusions
 75752004,"Bipolar I disorder, most recent episode depressed with melancholic features"
 760721000000109,"Mixed bipolar affective disorder, in partial remission"
+762325009,Psychotic disorder caused by stimulant
+762326005,Psychotic disorder with hallucinations caused by stimulant
+762327001,Psychotic disorder with delusions caused by stimulant
+762507003,Psychotic disorder caused by synthetic cathinone
+762508008,Psychotic disorder with hallucinations caused by synthetic cathinone
+762509000,Psychotic disorder with delusions caused by synthetic cathinone
+762510005,Psychotic disorder with schizophreniform symptoms caused by synthetic cathinone
 764591000000108,"Mixed bipolar affective disorder, severe"
 764621000000106,"Recurrent manic episodes, severe"
 764641000000104,"Single manic episode, severe"
@@ -285,8 +314,9 @@ code,term
 767633005,"Bipolar affective disorder, most recent episode mixed"
 767635003,"Bipolar I disorder, most recent episode manic"
 767636002,"Bipolar I disorder, most recent episode depression"
+77475008,Jealous delusion disorder
+7761000119106,Psychotic disorder caused by amphetamine
 77911002,"Severe major depression, single episode, with psychotic features, mood-congruent"
-78269000,"Bipolar I disorder, single manic episode, in partial remission"
 78640000,"Severe manic bipolar I disorder with psychotic features, mood-congruent"
 789061003,Rapid cycling bipolar II disorder
 79204003,Chronic undifferentiated schizophrenia with acute exacerbations
@@ -303,4 +333,10 @@ code,term
 87203005,"Bipolar I disorder, most recent episode depressed with postpartum onset"
 87950005,"Bipolar I disorder, single manic episode with catatonic features"
 88975006,Schizophreniform disorder
+89618007,Persecutory delusion disorder
 9340000,"Bipolar I disorder, single manic episode"
+943071000000104,Opioid-induced psychosis
+943081000000102,Cannabis-induced psychosis
+943091000000100,Sedative-induced psychosis
+943101000000108,Cocaine-induced psychosis
+943131000000102,Hallucinogen-induced psychosis

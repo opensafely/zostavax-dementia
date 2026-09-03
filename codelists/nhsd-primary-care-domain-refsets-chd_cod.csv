@@ -72,6 +72,7 @@ code,term
 161503005,History of myocardial infarct at age greater than sixty
 1641000119107,Coronary arteriosclerosis in native artery
 16415081000119104,Supraventricular tachycardia following acute myocardial infarction
+16754391000119100,Stable angina due to coronary arteriosclerosis
 16837681000119104,Myocardial infarction due to demand ischemia
 16891151000119103,Coronary artery disease due to type 2 diabetes mellitus
 16891191000119108,Coronary artery disease due to type 1 diabetes mellitus
@@ -205,7 +206,7 @@ code,term
 420006002,Obliterative coronary artery disease
 42531007,Microinfarct of heart
 426856002,Ischemic congestive cardiomyopathy
-427919004,Coronary arteriosclerosis caused by radiation
+427919004,Coronary arteriosclerosis caused by ionizing radiation
 428196007,Mixed myocardial ischemia and infarction
 42866003,Congenital coronary artery sclerosis
 428752002,Recent myocardial infarction
@@ -323,6 +324,7 @@ code,term
 868224003,Acute ST segment elevation myocardial infarction due to occlusion of marginal branch of right coronary artery
 868225002,Acute ST segment elevation myocardial infarction due to occlusion of posterior descending branch of right coronary artery
 868226001,Acute ST segment elevation myocardial infarction due to occlusion of posterior lateral branch of right coronary artery
+87343002,Prinzmetal angina
 876856005,Stenosis of right coronary artery
 876857001,Stenosis of left coronary artery main stem
 876858006,Stenosis of circumflex branch of left coronary artery

@@ -2,6 +2,8 @@ code,term
 10349009,Multi-infarct dementia with delirium
 106021000119105,Multi-infarct dementia due to atherosclerosis
 1089531000000108,Predominantly cortical vascular dementia
+1259485008,Dementia due to cerebral vasculitis
+1259488005,Dementia due to cerebral amyloid angiopathy
 1259499007,Dementia due to hemorrhagic cerebral infarction due to hypertension
 14070001,Multi-infarct dementia with depression
 154850006,Vascular dementia
@@ -32,7 +34,6 @@ code,term
 429998004,Vascular dementia
 56267009,Multi-infarct dementia
 597951000000102,Arteriosclerotic dementia NOS
-698948009,Vascular dementia in remission
 70936005,"Multi-infarct dementia, uncomplicated"
 723123001,Ischemic vascular dementia
 78511000000104,Multi-infarct dementia

@@ -23,6 +23,7 @@ code,term
 1186887004,Dementia caused by manganese and/or manganese compound
 1187004001,Chronic traumatic encephalopathy
 12348006,Presenile dementia
+1259066002,Disorder of autonomic nervous system due to senile dementia of Lewy body type
 1259121008,"Amyotrophic lateral sclerosis, parkinsonism, dementia complex of West New Guinea"
 1259123006,"Amyotrophic lateral sclerosis, parkinsonism, dementia complex of Kii Peninsula"
 1259124000,Amyotrophic lateral sclerosis with frontotemporal dementia
@@ -80,7 +81,8 @@ code,term
 134422007,Alzheimer's disease with early onset
 134423002,Alzheimer's disease with late onset
 135811000119107,Lewy body dementia with behavioral disturbance
-138736007,H/O: dementia
+1363184005,Early onset dementia due to Lewy body disease
+1363185006,Dementia due to Lewy body disease
 14070001,Multi-infarct dementia with depression
 141991000119109,Alzheimer's disease with delusions
 142001000119106,Alzheimer's disease with depressed mood
@@ -97,7 +99,6 @@ code,term
 15662003,Senile dementia
 1581000119101,Dementia of the Alzheimer type with behavioral disturbance
 1591000119103,Dementia with behavioral disturbance
-161465002,History of dementia
 16219201000119101,Late onset Alzheimer's dementia with behavioral disturbance
 16276361000119109,Vascular dementia without behavioral disturbance
 191449005,Uncomplicated senile dementia
@@ -249,10 +250,6 @@ code,term
 698725008,Dementia associated with neurosyphilis
 698726009,Dementia associated with viral encephalitis
 698781002,Dementia associated with cerebral anoxia
-698948009,Vascular dementia in remission
-698949001,Dementia in remission
-698954005,"Primary degenerative dementia of the Alzheimer type, senile onset in remission"
-698955006,"Primary degenerative dementia of the Alzheimer type, presenile onset in remission"
 700911000000100,Other senile/presenile dementia
 702393003,Frontotemporal dementia with gene located on 3p11
 702421006,Familial encephalopathy with neuroserpin inclusion bodies
@@ -297,8 +294,6 @@ code,term
 783161005,Familial dementia British type
 783258000,Familial dementia Danish type
 78511000000104,Multi-infarct dementia
-788861009,Aggression due to dementia
-788862002,Agitation due to dementia
 788898005,Dementia caused by volatile inhalant
 788899002,Dementia due to pellagra
 789170003,Disinhibited behavior due to dementia

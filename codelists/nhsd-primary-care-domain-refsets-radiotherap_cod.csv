@@ -352,6 +352,7 @@ code,term
 380041000000103,Megavoltage treatment for complex radiotherapy
 380051000000100,Superficial or orthovoltage treatment for radiotherapy
 38104006,External beam radiation therapy by linear accelerator
+384692006,Intracavitary brachytherapy
 393015004,Stereotactic radiotherapy
 393098003,Combined pre-operative chemotherapy and radiotherapy
 393099006,Combined post-operative chemotherapy and radiotherapy
@@ -406,6 +407,7 @@ code,term
 448294009,External radiation therapy using superficial radiation
 448385000,Megavoltage radiation therapy using photons
 448461009,Stereotactic radiation therapy using megavoltage radiation
+449157000,Interstitial brachytherapy using iridium wire
 449290006,Megavoltage radiation therapy using photons and electrons
 449438004,Selective internal radiation using iodine radioisotope labeled ethiodized oil
 45643008,External beam radiation therapy using electrons

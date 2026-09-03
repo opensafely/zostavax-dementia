@@ -49,7 +49,7 @@ code,term
 1231282002,Self-limited familial neonatal-infantile epilepsy
 1231737000,"Rolandic epilepsy, paroxysmal exercise-induced dystonia, writer's cramp syndrome"
 1236807002,Encephalopathy due to mitochondrial and peroxisomal fission defect
-1236975007,Behavioral arrest epileptic seizure
+1236975007,Behavior arrest epileptic seizure
 1237571004,Self-limited familial infantile epilepsy
 1259196009,Focal onset nonmotor onset epileptic seizure
 1259197000,Focal onset myoclonic epileptic seizure
@@ -101,6 +101,10 @@ code,term
 1284865006,Focal onset cognitive epileptic seizure with memory impairment
 1285078002,Focal onset emotional epileptic seizure
 128612007,Focal onset motor onset epileptic seizure
+1287669005,Temporal lobe epileptic seizure
+1287670006,Parietal lobe epileptic seizure
+1287671005,Occipital lobe epileptic seizure
+1287672003,Frontal lobe epileptic seizure
 1299164006,Status epilepticus with prominent motor symptoms
 1299165007,Myoclonic status epilepticus
 1299166008,Generalized tonic-clonic status epilepticus
@@ -153,7 +157,7 @@ code,term
 193006008,Partial epilepsy without mention of impairment of consciousness
 193008009,Somatosensory epilepsy
 193009001,Partial epilepsy with autonomic symptoms
-193010006,Visual reflex epilepsy
+193010006,Reflex epilepsy with visual stimulation-induced seizures
 193011005,Unilateral epilepsy
 193012003,Other specified partial epilepsy without mention of impairment of consciousness
 193013008,Partial epilepsy without mention of impairment of consciousness NOS
@@ -184,7 +188,7 @@ code,term
 230386004,Childhood epilepsy with occipital paroxysms
 230387008,Self-limited epilepsy with autonomic seizures
 230388003,Childhood occipital visual epilepsy
-230389006,Primary inherited reading epilepsy
+230389006,Epilepsy with reading-induced seizures
 230390002,Localization-related symptomatic epilepsy
 230391003,Amygdalo-hippocampal temporal lobe epilepsy
 230392005,Rhinencephalic epilepsy
@@ -232,11 +236,11 @@ code,term
 230444006,Menstrual epilepsy
 230445007,Nocturnal epilepsy
 230446008,Epilepsy only in relation to photic stimulation
-230448009,Writing epilepsy
+230448009,Reflex epilepsy with writing-induced seizures
 230449001,Tactile epilepsy
-230450001,Eating epilepsy
+230450001,Reflex epilepsy with eating-induced seizures
 230451002,Tapping epilepsy
-230452009,Toothbrushing epilepsy
+230452009,Reflex epilepsy with toothbrushing-induced seizures
 230453004,Decision-making epilepsy
 230454005,Aquagenic epilepsy
 230455006,Self-induced non-photosensitive epilepsy
@@ -357,7 +361,7 @@ code,term
 716278005,Epilepsy with eyelid myoclonia
 716706009,Protocadherin 19 clustering epilepsy
 717223008,X-linked epilepsy with learning disability and behavior disorder syndrome
-717225001,Benign adult familial myoclonic epilepsy
+717225001,Familial adult myoclonic epilepsy
 717276003,Folinic acid responsive developmental and epileptic encephalopathy
 71831005,Symptomatic generalized epilepsy
 719810000,X-linked intellectual disability with seizure and psoriasis syndrome
@@ -392,17 +396,17 @@ code,term
 7454002,Focal onset aware autonomic epileptic seizure
 75023009,Post-traumatic epilepsy
 763349002,Progressive myoclonic epilepsy with dystonia
-763534009,Hot water reflex epilepsy
-763622006,Thinking epilepsy
-763632004,Startle epilepsy
-763802009,Micturition induced epilepsy
-763827002,Orgasm induced epilepsy
+763534009,Reflex epilepsy with hot water-induced seizures
+763622006,Reflex epilepsy with thinking-induced seizures
+763632004,Reflex epilepsy with startle-induced seizures
+763802009,Reflex epilepsy with micturition-induced seizures
+763827002,Reflex epilepsy with orgasm-induced seizures
 764453009,Action myoclonus renal failure syndrome
 764522009,Familial focal epilepsy with variable foci
 765089003,"Focal epilepsy, intellectual disability, cerebro-cerebellar malformation syndrome"
 765093009,"Rolandic epilepsy, speech dyspraxia syndrome"
 765170001,Sodium voltage-gated channel alpha subunit 8 developmental and epileptic encephalopathy
-765216006,Audiogenic epilepsy
+765216006,Reflex epilepsy with sound-induced seizures
 766815007,Perioral myoclonia with absences
 766932005,Gelastic seizures with hypothalamic hamartoma
 768473009,Purine rich element binding protein A syndrome
@@ -473,5 +477,5 @@ code,term
 87095001,Focal onset sensory epileptic seizure with olfactory symptoms
 887101000000101,"Epilepsy, ataxia, sensorineural deafness and tubulopathy syndrome"
 89525009,Focal onset emotional epileptic seizure with laughing
-95208000,Photogenic epilepsy
+95208000,Reflex epilepsy with photic stimulation-induced seizures
 981000119108,Single epileptic seizure
