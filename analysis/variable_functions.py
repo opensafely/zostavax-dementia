@@ -71,6 +71,7 @@ def vaccinations(threshold_date):
 def primary_care_outcomes(threshold_date):
     
     dataset.dementia_gp_first_date_ever = first_gp_event_ever(codelists.dementia_snomed).date
+    dataset.dementia_charlson_gp_first_date_ever = first_gp_event_ever(codelists.dementia_charlson_snomed).date
     dataset.alzheimers_gp_first_date_ever = first_gp_event_ever(codelists.alzheimers_snomed).date
     dataset.vascular_gp_first_date_ever = first_gp_event_ever(codelists.vascular_snomed).date
     dataset.shingles_gp_first_date_after = first_gp_event_after(threshold_date, codelists.shingles_snomed).date
@@ -110,7 +111,6 @@ def primary_care_controls_assumptions(threshold_date):
         "osteoporosis": codelists.osteoporosis_snomed,
         "pad": codelists.pad_snomed,
         "ra": codelists.ra_snomed,
-        "stroke": codelists.stroke_snomed,
         "smi": codelists.smi_snomed
     }
 
@@ -133,11 +133,16 @@ def primary_care_controls_assumptions(threshold_date):
     obese_coded_date = first_gp_event_ever(codelists.obese_snomed).date
     dataset.obese_gp_first_date_ever = minimum_of(obese_bmi_date, obese_coded_date)
 
+    dataset.stroke_gp_first_date_after = first_gp_event_after(threshold_date, codelists.stroke_snomed).date
+    dataset.tia_gp_first_date_after = first_gp_event_after(threshold_date, codelists.tia_snomed).date
+
     covariate_balance = {
         "lrti": codelists.lrti_snomed,
         "smoker": codelists.current_smoker_snomed,
         "past_smoker": codelists.past_smoker_snomed,
         "cognitive_impair": codelists.cognitive_impairment_snomed,
+        "stroke": codelists.stroke_snomed,
+        "tia": codelists.tia_snomed
     }
 
     for name, codelist in covariate_balance.items():
