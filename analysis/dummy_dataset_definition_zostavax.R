@@ -15,6 +15,7 @@ bandwidth_days <- 365*3
 
 # thresholds
 threshold_date <- as.Date("2013-09-01")
+index_date <- as.Date("2014-02-01")
 dob_threshold_date <- threshold_date - years(80)
 
 latest_date <- as.Date("2026-06-01")
@@ -51,7 +52,7 @@ dag <- empty_dag() +
   # demographics
 
   node("date_of_birth", type=dob_node, min = -bandwidth_days, max = bandwidth_days, origin_date = dob_threshold_date) +
-  node("age", type="identity", formula = ~as.integer(floor(time_length(interval(date_of_birth, threshold_date), "year")))) + # ehrQL returns age as an integer in years
+  node("age", type="identity", formula = ~as.integer(floor(time_length(interval(date_of_birth, index_date), "year")))) + # ehrQL returns age as an integer in years
   node("sex", type="rcategorical", prob=c(0.5,0.5), labels=c("female", "male"), output="rcategorical") +
   node(
     "imd_quintile", type="rcategorical", 
@@ -97,7 +98,7 @@ dag <- empty_dag() +
 
   node("dementia_exclude_gp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.01, min_date = date_of_birth + years(60), max_date = latest_date)) +
   node("dementia_gp_first_date_ever", type="identity", formula = ~ if_else(rbernoulli(n = N, 0.1), as.Date(NA), dementia_exclude_gp_first_date_ever))+
-  node("dementia_charlson_gp_first_date_ever", type="identity", formula = ~ if_else(rbernoulli(n = N, 0.1), as.Date(NA), dementia_exclude_gp_first_date_ever))+
+  node("dementia_charlson_gp_first_date_ever", type="identity", formula = ~ if_else(rbernoulli(n = N, 0.1), as.Date(NA), dementia_gp_first_date_ever))+
   node("alzheimers_gp_first_date_ever", type="identity", formula = ~ if_else(rbernoulli(n = N, 0.3), as.Date(NA), dementia_gp_first_date_ever))+
   node("vascular_gp_first_date_ever", type="identity", formula = ~ if_else(rbernoulli(n = N, 0.3), as.Date(NA), dementia_gp_first_date_ever))+
   node("neuralgia_gp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
@@ -159,8 +160,8 @@ dag <- empty_dag() +
   node("cognitive_impair_gp_last_date_before", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = threshold_date)) +
   node("stroke_gp_last_date_before", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = threshold_date)) +
   node("tia_gp_last_date_before", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = threshold_date)) +
-  node("stroke_gp_first_date_after", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = threshold_date)) +
-  node("tia_gp_first_date_after", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = threshold_date))
+  node("stroke_gp_first_date_after", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = threshold_date, max_date = latest_date)) +
+  node("tia_gp_first_date_after", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = threshold_date, max_date = latest_date))
 
 ## simulate from DAG ----
 
