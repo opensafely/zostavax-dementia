@@ -208,9 +208,7 @@ neuralgia_icd10 = codelist_from_csv(
     column = "code"
 )
 
-
-
-
+# assumptions
 hypertension_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-hyp_cod.csv",
     column = "code"
