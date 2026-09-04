@@ -10,8 +10,9 @@ exclusion_flow_chart <- function(vaccine_name, analysis, exclude_cols){
       here::here("output","zostavax","processed",
                  paste0("dataset_processed_", vaccine_name, "_", analysis, ".arrow")
                        )
+    )
     
-    )# Select your exclusion criteria columns
+    # Select your exclusion criteria columns
     criteria <- df[, exclude_cols]
     
     # Pairwise counts
@@ -24,6 +25,7 @@ exclusion_flow_chart <- function(vaccine_name, analysis, exclude_cols){
        across(everything(),
          ~ sdc.rounding(.x, sdc.threshold)
        )
+      )
     
     write_csv(
       flow_chart,
