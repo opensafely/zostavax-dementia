@@ -12,7 +12,7 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
     "copd", "depression", "t2dm",
     "epilepsy", "hf", "hypothyroid",
     "smi", "obese", "osteoporosis",
-    "pad", "ra", "stroke"
+    "pad", "ra"
   )
   control_date_cols <- setNames(
     paste0(control_conditions, "_gp_first_date_ever"),
@@ -27,9 +27,23 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
     mutate(
       across(contains("date"), as.Date),
       
+      # vaccine eligibility, according to date / age threshold
+      zostavax_eligibility_20130901 = between(date_of_birth, as.Date("1933-09-02"), as.Date("1934-09-01")) | between(date_of_birth, as.Date("1942-09-02"), as.Date("1943-09-01")) ,
+      zostavax_eligibility_20140901 = between(date_of_birth, as.Date("1934-09-02"), as.Date("1936-09-01")) | zostavax_eligibility_20130901,
+
+      zostavax_eligibility_main = zostavax_eligibility_20130901,
+      zostavax_eligibility_2010 = between(date_of_birth, as.Date("1933-09-02") + years(-3), as.Date("1934-09-01") + years(-3)) | between(date_of_birth, as.Date("1942-09-02") + years(-3), as.Date("1943-09-01") + years(-3)) ,
+      zostavax_eligibility_2016 = between(date_of_birth, as.Date("1933-09-02") + years(3), as.Date("1934-09-01") + years(3)) | between(date_of_birth, as.Date("1942-09-02") + years(3), as.Date("1943-09-01") + years(3)) ,
+
       # Earliest date of outcomes
       dementia_first_date_ever = pmin(
         dementia_gp_first_date_ever,
+        dementia_hosp_first_date_ever,
+        dementia_ons_date,
+        na.rm = TRUE
+      ),
+      dementia_charlson_first_date_ever = pmin(
+        dementia_charlson_gp_first_date_ever,
         dementia_hosp_first_date_ever,
         dementia_ons_date,
         na.rm = TRUE
@@ -172,8 +186,15 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
       lrti_before_threshold = coalesce(
         lrti_gp_last_date_before <= threshold_date,
         FALSE
-      )
-
+      ),
+      stroke_before_threshold = coalesce(
+        stroke_gp_last_date_before <= threshold_date,
+        FALSE
+      ),
+      tia_before_threshold = coalesce(
+        tia_gp_last_date_before <= threshold_date,
+        FALSE
+      ),
     ) %>%
     select(-c(immunosupp_gp_any_before,antihypertensives_rx_last_date_before,
               statins_rx_last_date_before,fluvax_last_date_before,
@@ -186,7 +207,7 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
               shingles_hosp_last_date_before,dementia_ons_date,alzheimers_ons_date,
               vascular_ons_date,lrti_gp_last_date_before,smoker_gp_last_date_before,
               past_smoker_gp_last_date_before,cognitive_impair_gp_last_date_before,
-              dementia_exclude_first_date_ever))
+              dementia_exclude_first_date_ever,stroke_gp_last_date_before,tia_gp_last_date_before))
 
   arrow::write_feather(
     processed_df,

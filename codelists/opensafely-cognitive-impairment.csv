@@ -1,0 +1,188 @@
+code,term
+102891000,Age-related cognitive decline
+1034921000000105,Memory: months of year in reverse unsuccessful
+1034931000000107,Memory: months of year in reverse unsuccessful 
+1036821000000108,Mild cognitive impairment review invitation
+1036841000000101,Mild cognitive impairment review invitation first letter
+1036861000000100,Mild cognitive impairment review invitation second letter
+1036881000000109,Mild cognitive impairment review invitation third letter
+1047041000000108,Mild cognitive impairment review
+1052381000000103,Mild cognitive impairment annual review
+1068921000000107,Difficulty recognising familiar people
+1068951000000102,Difficulty remembering places
+1069171000000103,Does not recognise objects by touch
+1069191000000104,Does not remember routines
+1070761000000109,Difficulty recognising objects
+1070771000000102,Difficulty recognising objects by sight
+1070781000000100,Difficulty recognising objects by touch
+1070801000000104,Difficulty recognising surroundings
+1070821000000108,Difficulty remembering past events
+1070831000000105,Difficulty remembering people
+1070841000000101,Difficulty remembering routines
+1072411000000103,Does not recognise familiar people
+1072451000000104,Does not recognise objects
+1072461000000101,Does not recognise objects by sight
+1072491000000107,Does not recognise surroundings
+1072501000000101,Does not remember past events
+1072511000000104,Does not remember people
+1072521000000105,Does not remember places
+1075681000000104,Unable to remember past events
+1075691000000102,Unable to remember people
+1075701000000102,Unable to remember places
+1075711000000100,Unable to remember routines
+110352000,Minimal cognitive impairment
+110355003,Lack of thinking ability
+111481000000100,Poor visual sequential memory
+111491000000103,Poor auditory sequential memory
+116340000,Disturbance of cognitive learning
+117931000000104,Poor visual sequential memory
+117941000000108,Poor auditory sequential memory
+1186839009,Cognitive impairment due to lead toxicity
+1234774002,Cognitive impairment caused by ethanol
+1259562009,Cognitive impairment due to late-delayed irradiation of brain
+1303576005,Forgets to take medication
+130964008,Impaired environmental interpretation syndrome
+1386319000,Digit span forwards performance impaired
+1386320006,Digit span reverse performance impaired
+139484009,Memory disturbance (& amnesia (& symptom))
+140621000119106,Memory disorder co-occurrent and due to organic brain damage
+140828009,Forgetful
+141601000119107,Cognitive changes due to organic disorder
+142261000119100,Cognitive deficit in attention
+142281000119109,Cognitive deficit in visuospatial function
+142291000119107,Cognitive deficit in psychomotor function
+142689007,Memory: own age not known
+142692006,Memory: present time not known
+142695008,Memory: present place not knwn
+142698005,Memory: present year not known
+142701002,Memory: own DOB not known
+142704005,Memory: present month not knwn
+142707003,Memory: important event not kn
+142710005,Memory: import.person not knwn
+142715000,Memory: count down unsuccess.
+142718003,Memory: address recall unsucc.
+154961004,Memory disturbance: [mild]
+15928141000119107,Cognitive impairment co-occurrent and due to human immunodeficiency virus infection
+162199006,Memory disturbance (& amnesia (& symptom))
+163621007,Forgetful
+165280004,Memory: own age not known
+165283002,Memory: present time not known
+165286005,Memory: present place not known
+165289003,Memory: present year not known
+165292004,Memory: own date of birth not known
+165295002,Memory: present month not known
+165298000,Memory: important event not known
+165301001,Memory: important person not known
+165305005,Memory: count down unsuccessful
+165308007,Memory: address recall unsuccessful
+16703491000119101,Memory deficit due to and following spontaneous intracerebral hemorrhage
+16703551000119107,Memory deficit due to and following cerebrovascular disease
+16703601000119109,Memory deficit due to and following spontaneous subarachnoid hemorrhage
+16703661000119105,Memory deficit due to and following cerebrovascular accident
+16703711000119100,Memory deficit due to and following embolic cerebrovascular accident
+16703761000119102,Memory deficit due to and following ischemic cerebrovascular accident
+16703821000119101,Memory deficit due to and following hemorrhagic cerebrovascular accident
+186561000000101,Disturbance of memory for order of events
+190001000000109,Disturbance of memory for order of events
+192071009,Mild memory disturbance
+192072002,Organic memory impairment
+206784007,[D]Amnesia (retrograde)
+225037001,Minor memory lapses
+225038006,Memory lapses
+225039003,Mixes past with present
+229676007,Language-related cognitive disorder
+231448004,Age-associated memory impairment
+247588002,Poor long-term memory
+247592009,Poor short-term memory
+247593004,Forgets what was going to do
+247594005,Forgets what was going to say
+247595006,Forgets recent activities
+247596007,Forgets what has just done
+247597003,Forgets what has just said
+247598008,Forgets what has just read
+247599000,Forgets what has just seen
+247600002,Forgets what has just heard
+247607004,Amnesia for day to day facts
+247608009,Unable to remember today's date
+247609001,Unable to remember name of reigning monarch
+247610006,Unable to remember name of current prime minister
+247611005,Amnesia for important personal information
+247612003,Cannot remember names of intimates
+247613008,Unable to remember own age
+247614002,Cannot remember wedding anniversary
+247615001,Cannot remember birth dates of children
+247616000,Cannot remember name of school
+268792003,Memory disturbance: [mild]
+275278005,Difficulty in remembering dates
+283878007,Impairment of registration
+283902008,Has delayed recall
+285157008,Unable to recognize objects
+285161002,Unable to recognize objects by touch
+285164005,Unable to recognize objects by sight
+285169000,Unable to recognize faces by sight
+285171000,Unable to recognize faces
+285177001,Unable to recognize surroundings
+285188007,Unable to remember own date of birth
+285191007,Unable to remember day of the week
+285194004,Unable to remember month of year
+285197006,Unable to remember current year
+285208000,Unable to recall random address at five minutes
+285210003,Unable to reproduce geometric figure at five minutes
+285212006,Unable to recall five digit number at five minutes
+285219002,Unable to remember motor skills
+285221007,Unable to remember new motor skills
+285223005,Unable to remember old motor skills
+285225003,Unable to remember objects
+285228001,Unable to remember faces
+285230004,Unable to remember sounds
+285774001,Unable to recognize familiar people
+290621000119101,Cognitive deficit due to and following cerebrovascular disease
+291621000119109,Cognitive deficit due to and following nontraumatic subarachnoid hemorrhage
+291711000119109,Cognitive deficit due to and following nontraumatic intracerebral hemorrhage
+311533004,Delayed verbal memory
+33254005,Uncompensated short term memory deficit
+386805003,Mild neurocognitive disorder
+386806002,Impaired cognition
+386807006,Memory impairment
+413088002,Poor visual sequential memory
+413089005,Poor auditory sequential memory
+42176003,Amnesia for recent events
+423864004,Forgets to complete personal care
+433081000,Organic amnesia of language
+442212003,Residual cognitive deficit as late effect of cerebrovascular accident
+443265004,Cognitive disorder
+454161000124103,Noncompliance with medication regimen due to cognitive impairment
+48167000,Amnesia
+495901000000102,[D]Amnesia (retrograde)
+51921000,Retrograde amnesia
+55533009,Forgetful
+6149008,Amnesia for remote events
+672561000119103,Cognitive deficit due to and following ischemic cerebrovascular accident
+672571000119109,Cognitive deficit due to and following hemorrhagic cerebrovascular accident
+690341000119100,Cognitive deficit due to and following embolic cerebrovascular accident
+698691002,Cognitive disorder in remission
+702955000,Moderate cognitive impairment
+702956004,Severe cognitive impairment
+709073001,Neurocognitive disorder
+716306006,Acquired language comprehension impairment
+716635007,Cognitive communication disorder
+724760003,Cognitive impairment co-occurrent and due to primary psychotic disorder
+736317001,Impaired executive functioning
+762298000,Cognitive impairment due to toxicity of substance
+76789006,Information conversion problem
+771417007,Cognitive dysfunction following surgical procedure
+78461004,Memory impairment
+80216008,Impaired cognition
+808311000000102,Poor short-term memory
+836301008,Amnestic mild cognitive disorder
+840449007,Cognitive impairment caused by ingestible alcohol
+85173004,False recognition
+88822006,Anterograde amnesia
+888271000000101,Mild cognitive impairment
+888281000000104,Mild cognitive impairment 
+888291000000102,Moderate cognitive impairment
+888301000000103,Moderate cognitive impairment 
+888311000000101,Severe cognitive impairment
+888321000000107,Severe cognitive impairment 
+918271000000105,Impaired cognition
+990531000000107,Memory impairment
