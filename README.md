@@ -1,8 +1,10 @@
-# shingles-vax
+# POS-2026-3003: The effect of herpes zoster vaccines on incident dementia in England
 
-[View on OpenSAFELY](https://jobs.opensafely.org/repo/https%253A%252F%252Fgithub.com%252Fopensafely%252Fshingles-vax)
+[View the purpose and any published outputs from this project.](https://www.opensafely.org/project/pos-2026-3003/)
 
-Details of the purpose and any published outputs from this project can be found at the link above.
+View the protocol for this project: [Walker et al. The effect of herpes zoster vaccines on incident dementia in England: Protocol for an OpenSAFELY regression discontinuity study. medRxiv https://doi.org/10.64898/2026.09.03.26362052](https://www.medrxiv.org/content/10.64898/2026.09.03.26362052v1)
+
+**Important: the codebase for this project (including codelists) is still in development.**
 
 The contents of this repository MUST NOT be considered an accurate or valid representation of the study or its purpose. 
 This repository may reflect an incomplete or incorrect analysis with no further ongoing work.
