@@ -1,5 +1,4 @@
 # Load libraries ----
-library(data.table)
 library(rdrobust)
 
 # Define function ----
@@ -21,7 +20,7 @@ rd_msebw <- function(data, dependent, running) {
   )
 
   ## Record mse-optimal bw selection ----
-  msebw <- data.table(
+  msebw <- data.frame(
     h_left = rd_mse$bws[1],
     h_right = rd_mse$bws[2],
     b_left = rd_mse$bws[3],

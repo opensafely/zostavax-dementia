@@ -19,8 +19,6 @@ rd_input_checks <- function(
   assert_choice(fn, c("rd_msebw", "rd_analysis"))
 
   ## Always checks ----
-  ### Check data is a data.table ----
-  assert_class(data, "data.table")
 
   ### Check data contains 1 or more rows ----
   assert_true(nrow(data) > 0)
@@ -31,8 +29,8 @@ rd_input_checks <- function(
     c("Date", "POSIXct", "POSIXlt")
   )
 
-  ### Check variable running is numeric ----
-  assert_multi_class(data[[running]], c("numeric"))
+  ### Check variable running is numeric or integer ----
+  assert_multi_class(data[[running]], c("numeric", "integer"))
 
   ### Check variables dependent and running are supplied ----
   required_vars <- c(dependent, running)
