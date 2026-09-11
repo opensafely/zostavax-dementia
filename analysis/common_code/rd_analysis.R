@@ -1,3 +1,8 @@
+# Load libraries ----
+library(data.table)
+library(rdrobust)
+
+# Define function ----
 rd_analysis <- function(
   data,
   design = c("sharp", "fuzzy"),
@@ -10,7 +15,7 @@ rd_analysis <- function(
   fuzzy_date = NULL,
   end
 ) {
-  # Validate function inputs ----
+  ## Validate function inputs ----
   rd_input_checks(
     fn = "rd_analysis",
     data = data,
@@ -25,13 +30,13 @@ rd_analysis <- function(
     end = end
   )
 
-  # Make fuzzy ----
+  ## Make fuzzy ----
 
   data[,
     fuzzy := fifelse(between(get(fuzzy_date), threshold, end), 1, 0, na = 0)
   ]
 
-  # Apply end date to dependent variable ----
+  ## Apply end date to dependent variable ----
 
   data[,
     dependent_ended := fifelse(
@@ -60,7 +65,7 @@ rd_analysis <- function(
     result$sharp <- rd_sharp
   }
 
-  # Run fuzzy RD ----
+  ## Run fuzzy RD ----
   if ("fuzzy" %in% design) {
     rd_fuzzy <- rdrobust(
       data = data,
@@ -76,7 +81,7 @@ rd_analysis <- function(
     result$fuzzy <- rd_fuzzy
   }
 
-  # Return ----
+  ## Return RD results ----
 
   return(result)
 }
