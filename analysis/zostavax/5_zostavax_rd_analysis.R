@@ -102,10 +102,18 @@ for (i in 1:nrow(analyses)) {
     h_left <- bw
     h_right <- bw
   }
+
+  ## Set design ----
+  if (analysis_group == "reduced_excl") {
+    design <- "sharp"
+  } else {
+    design <- c("sharp", "fuzzy")
+  }
+
   ## Run analysis ----
   rd <- rd_analysis(
     data = df_analysis,
-    design = analyses$design[i],
+    design = design,
     bandwidth = c(h_left, h_right),
     threshold = threshold,
     kernel = analyses$kernel[i],
@@ -121,7 +129,6 @@ for (i in 1:nrow(analyses)) {
     mutate(
       analysis_group = analyses$analysis_group[i],
       population = analyses$population[i],
-      design = analyses$design[i],
       msebw_multiplier = analyses$msebw_multiplier[i],
       threshold_year = analyses$threshold_year[i],
       end_date_years = analyses$end_date_years[i],
