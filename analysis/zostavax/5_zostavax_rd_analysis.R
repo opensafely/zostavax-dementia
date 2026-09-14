@@ -10,7 +10,7 @@ source(here::here("analysis", "common_code", "rd_analysis.R"))
 # Specify arguments ----
 args <- commandArgs(trailingOnly = TRUE)
 if (length(args) == 0) {
-  analysis_group <- "annual_fup"
+  analysis_group <- "fixed_bw2"
 } else {
   analysis_group <- args[[1]]
 }
@@ -21,25 +21,12 @@ analysis <- "main" # main, 2010, 2016
 lcd <- as.Date("2025-09-02")
 dob_threshold_date <- as.Date("1933-09-01")
 
-# Load analyses ----
-analyses <- read_csv(
-  "lib/zostavax.csv",
-  col_types = cols(
-    analysis_group = col_character(),
-    population = col_character(),
-    design = col_character(),
-    msebw_multiplier = col_double(),
-    threshold_year = col_integer(),
-    end_date_years = col_integer(),
-    kernel = col_character(),
-    polynomial = col_integer(),
-    outcome = col_character()
-  )
-)
-
-# Filter analyses ----
+# Load and filter analyses ----
+analyses <- read_csv("lib/zostavax.csv")
 analyses <- analyses[analyses$analysis_group == analysis_group, ]
 population <- unique(analyses$population)
+
+# Check population ----
 assert_choice(
   population,
   c(
@@ -78,8 +65,7 @@ df_population <- read_feather(here::here(
 result <- NULL
 
 for (i in 1:nrow(analyses)) {
-  # Make analysis ready dataset ----
-
+  ## Make analysis ready dataset ----
   df_analysis <- df_population %>%
     select(
       patient_id,
@@ -97,7 +83,7 @@ for (i in 1:nrow(analyses)) {
 
   ## Define end date ----
   if (!is.na(analyses$end_date_years[i])) {
-    end <- threshold + years(analyses$end_date_years[i])
+    end <- threshold %m+% years(analyses$end_date_years[i])
   } else {
     end <- lcd
   }
@@ -106,18 +92,16 @@ for (i in 1:nrow(analyses)) {
   if (!is.na(analyses$msebw_multiplier[i])) {
     h_left <- analyses$msebw_multiplier[i] * rd_msebw$h_left
     h_right <- analyses$msebw_multiplier[i] * rd_msebw$h_right
-  } else if (
-    analysis_group == "fixed_bw" & analyses$population[i] == "aged78_81"
-  ) {
-    h_left <- 1
-    h_right <- 1
-  } else if (
-    analysis_group == "fixed_bw" & analyses$population[i] == "aged77_82"
-  ) {
-    h_left <- 2
-    h_right <- 2
+  } else if (grepl("fixed_bw", analysis_group)) {
+    bw <- case_match(
+      analysis_group,
+      "fixed_bw1" ~ 12,
+      "fixed_bw2" ~ 24,
+      .default = NA_real_
+    )
+    h_left <- bw
+    h_right <- bw
   }
-
   ## Run analysis ----
   rd <- rd_analysis(
     data = df_analysis,
@@ -131,16 +115,21 @@ for (i in 1:nrow(analyses)) {
     fuzzy_date = "zostavax_date_1",
     end = end
   )
-  rd$analysis_group <- analyses$analysis_group[i]
-  rd$population <- analyses$population[i]
-  rd$design <- analyses$design[i]
-  rd$msebw_multiplier <- analyses$msebw_multiplier[i]
-  rd$kernel_input <- analyses$kernel[i]
-  rd$polynomial_input <- analyses$polynomial[i]
-  rd$threshold_year <- analyses$threshold_year[i]
-  rd$end_date_years <- analyses$end_date_years[i]
-  rd$outcome <- analyses$outcome[i]
-  rd$running <- "month_diff_threshold"
-  rd$fuzzy_date <- "zostavax_date_1"
+
+  ## Record additional info ----
+  rd <- rd %>%
+    mutate(
+      analysis_group = analyses$analysis_group[i],
+      population = analyses$population[i],
+      design = analyses$design[i],
+      msebw_multiplier = analyses$msebw_multiplier[i],
+      threshold_year = analyses$threshold_year[i],
+      end_date_years = analyses$end_date_years[i],
+      outcome = analyses$outcome[i],
+      running = "month_diff_threshold",
+      fuzzy_date = "zostavax_date_1"
+    )
+
+  ## Record results ----
   result <- rbind(result, rd)
 }
