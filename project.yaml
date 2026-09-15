@@ -1,89 +1,126 @@
 version: '5.0'
 
 actions:
-  # Zostavax primary analysis based around threshold date of 2013-09-01
+
+  ## # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+  ## DO NOT EDIT project.yaml DIRECTLY 
+  ## This file is created by create_project_actions.R 
+  ## Edit and run create_project_actions.R to update the project.yaml 
+  ## # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+  ## Generate dataset 
+
   generate_dataset_zostavax_main:
-    run: ehrql:v1 generate-dataset analysis/dataset_definition.py 
-      --output output/zostavax/dataset_zostavax_main.arrow
-      --dummy-data-file analysis/dummy_data/dummy_dataset_zostavax.arrow
-      --
-      --threshold_date "2013-09-01"
-      --index_date "2014-02-01"
-      --min_dob "1920-09-01" 
-      --max_dob "1948-09-01"
-      --vaccine_name "zostavax"
+    run: ehrql:v1 generate-dataset analysis/dataset_definition.py --output output/zostavax/dataset_zostavax_main.arrow
+      --dummy-data-file analysis/dummy_data/dummy_dataset_zostavax.arrow -- --threshold_date
+      2013-09-01 --index_date 2014-02-01 --min_dob 1920-09-01 --max_dob 1948-09-01
+      --vaccine_name zostavax
     outputs:
       highly_sensitive:
-        dataset: output/zostavax/dataset_zostavax_main.arrow
+        data1: output/zostavax/dataset_zostavax_main.arrow
 
-  # Zostavax sensitivity analysis - 2010
-  generate_dataset_zostavax_2010:
-    run: ehrql:v1 generate-dataset analysis/dataset_definition.py 
-      --output output/zostavax/dataset_zostavax_2010.arrow
-      --
-      --threshold_date "2010-09-01"
-      --index_date "2011-02-01"
-      --min_dob "1920-09-01"
-      --max_dob "1948-09-01"
-      --vaccine_name "zostavax"
-    outputs:
-      highly_sensitive:
-        dataset: output/zostavax/dataset_zostavax_2010.arrow
-
-  # Zostavax sensitivity analysis - 2016
-  generate_dataset_zostavax_2016:
-    run: ehrql:v1 generate-dataset analysis/dataset_definition.py 
-      --output output/zostavax/dataset_zostavax_2016.arrow
-      --
-      --threshold_date "2016-09-01"
-      --index_date "2017-02-01"
-      --min_dob "1920-09-01"
-      --max_dob "1948-09-01"
-      --vaccine_name "zostavax"
-    outputs:
-      highly_sensitive:
-        dataset: output/zostavax/dataset_zostavax_2016.arrow
+  ## Process dataset 
 
   process_zostavax:
     run: r:v2 analysis/zostavax/0_zostavax_processing.R
-    needs: [generate_dataset_zostavax_main, generate_dataset_zostavax_2010, generate_dataset_zostavax_2016]
+    needs:
+    - generate_dataset_zostavax_main
     outputs:
       highly_sensitive:
         data1: output/zostavax/processed/dataset_processed_zostavax_main.arrow
-        data2: output/zostavax/processed/dataset_processed_zostavax_2010.arrow
-        data3: output/zostavax/processed/dataset_processed_zostavax_2016.arrow
+
+  ## Flow chart 
 
   flow_chart_zostavax:
     run: r:v2 analysis/zostavax/1_zostavax_flow_chart.R
-    needs: [process_zostavax]
+    needs:
+    - process_zostavax
     outputs:
       moderately_sensitive:
         data1: output/zostavax/processed/flow_chart_zostavax_main.csv
-        data2: output/zostavax/processed/flow_chart_zostavax_2010.csv
-        data3: output/zostavax/processed/flow_chart_zostavax_2016.csv
 
-  descriptives_main:
+  ## Descriptives 
+
+  descriptives_zostavax:
     run: r:v2 analysis/zostavax/2_zostavax_descriptives.R
-    needs: [process_zostavax]
+    needs:
+    - process_zostavax
     outputs:
       moderately_sensitive:
         txt: output/zostavax/descriptives/main/*.txt
         csv: output/zostavax/descriptives/main/*.csv
         png: output/zostavax/descriptives/main/*.png
 
-  ################################################################\
+  ## Define populations 
 
-  # Shingrix analysis based around threshold date of 2023-09-01
-  #generate_dataset_shingrix_main:
-  #  run: ehrql:v1 generate-dataset analysis/dataset_definition.py 
-  #    --output output/shingrix/dataset_shingrix_main.arrow
-  #    --
-  #    --threshold_date "2023-09-01"
-  #    --index_date "2014-02-01"
-  #    --min_dob "1948-09-01"
-  #    --max_dob "1968-09-01"
-  #    --vaccine_name "shingrix"
-  #  outputs:
-  #    highly_sensitive:
-  #      dataset: output/shingrix/dataset_shingrix_main.arrow
-  
+  rd_populations_general:
+    run: r:v2 analysis/zostavax/3_zostavax_rd_populations.R general
+    needs:
+    - process_zostavax
+    outputs:
+      highly_sensitive:
+        cohort: output/zostavax/populations/dataset_analysis_zostavax_main_general.arrow
+
+  rd_populations_reduced_excl:
+    run: r:v2 analysis/zostavax/3_zostavax_rd_populations.R reduced_excl
+    needs:
+    - process_zostavax
+    outputs:
+      highly_sensitive:
+        cohort: output/zostavax/populations/dataset_analysis_zostavax_main_reduced_excl.arrow
+
+  rd_populations_aged78_81:
+    run: r:v2 analysis/zostavax/3_zostavax_rd_populations.R aged78_81
+    needs:
+    - process_zostavax
+    outputs:
+      highly_sensitive:
+        cohort: output/zostavax/populations/dataset_analysis_zostavax_main_aged78_81.arrow
+
+  rd_populations_aged77_82:
+    run: r:v2 analysis/zostavax/3_zostavax_rd_populations.R aged77_82
+    needs:
+    - process_zostavax
+    outputs:
+      highly_sensitive:
+        cohort: output/zostavax/populations/dataset_analysis_zostavax_main_aged77_82.arrow
+
+  rd_populations_women:
+    run: r:v2 analysis/zostavax/3_zostavax_rd_populations.R women
+    needs:
+    - process_zostavax
+    outputs:
+      highly_sensitive:
+        cohort: output/zostavax/populations/dataset_analysis_zostavax_main_women.arrow
+
+  rd_populations_men:
+    run: r:v2 analysis/zostavax/3_zostavax_rd_populations.R men
+    needs:
+    - process_zostavax
+    outputs:
+      highly_sensitive:
+        cohort: output/zostavax/populations/dataset_analysis_zostavax_main_men.arrow
+
+  rd_populations_cogimp_yes:
+    run: r:v2 analysis/zostavax/3_zostavax_rd_populations.R cogimp_yes
+    needs:
+    - process_zostavax
+    outputs:
+      highly_sensitive:
+        cohort: output/zostavax/populations/dataset_analysis_zostavax_main_cogimp_yes.arrow
+
+  rd_populations_cogimp_no:
+    run: r:v2 analysis/zostavax/3_zostavax_rd_populations.R cogimp_no
+    needs:
+    - process_zostavax
+    outputs:
+      highly_sensitive:
+        cohort: output/zostavax/populations/dataset_analysis_zostavax_main_cogimp_no.arrow
+
+  rd_populations_thresholdm_no:
+    run: r:v2 analysis/zostavax/3_zostavax_rd_populations.R thresholdm_no
+    needs:
+    - process_zostavax
+    outputs:
+      highly_sensitive:
+        cohort: output/zostavax/populations/dataset_analysis_zostavax_main_thresholdm_no.arrow
+
