@@ -37,7 +37,8 @@ def demographics(threshold_date):
     )
 
     dataset.date_of_death = minimum_of(ons_deaths.date, patients.date_of_death)
-
+    dataset.date_of_death_gp = patients.date_of_death
+    
     current_registration = practice_registrations.for_patient_on(threshold_date)
     dataset.reg_start_date = current_registration.start_date
     dataset.reg_end_date = current_registration.end_date
