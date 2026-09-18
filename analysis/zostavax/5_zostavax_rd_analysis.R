@@ -6,6 +6,7 @@ library("magrittr")
 library("dplyr")
 library("readr")
 library("checkmate")
+library("lubridate")
 
 # Specify command-line arguments ----
 args <- commandArgs(trailingOnly = TRUE)
