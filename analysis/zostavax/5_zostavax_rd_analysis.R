@@ -12,7 +12,7 @@ library("lubridate")
 args <- commandArgs(trailingOnly = TRUE)
 if (length(args) == 0) {
   population_arg <- "general"
-  analysis_group_arg <- "primary"
+  analysis_group_arg <- "alt_outcome"
 } else {
   population_arg <- args[[1]]
   analysis_group_arg <- args[[2]]
@@ -97,14 +97,49 @@ df_population <- read_feather(here::here(
 results <- vector("list", nrow(analyses))
 
 for (i in seq_len(nrow(analyses))) {
+  ## Apply additional exclusion criteria ----
+  outcome <- analyses$outcome[i]
+  if (analysis_group_arg == "alt_outcome") {
+    df_excl <- df_population %>%
+      filter(
+        case_when(
+          outcome == "asthma_gp_first_date_ever" ~ asthma_before_threshold == 0,
+          outcome == "afib_gp_first_date_ever" ~ afib_before_threshold == 0,
+          outcome == "chd_gp_first_date_ever" ~ chd_before_threshold == 0,
+          outcome == "ckd_gp_first_date_ever" ~ ckd_before_threshold == 0,
+          outcome == "copd_gp_first_date_ever" ~ copd_before_threshold == 0,
+          outcome == "depression_gp_first_date_ever" ~
+            depression_before_threshold == 0,
+          outcome == "t2dm_gp_first_date_ever" ~ t2dm_before_threshold == 0,
+          outcome == "epilepsy_gp_first_date_ever" ~
+            epilepsy_before_threshold == 0,
+          outcome == "hf_gp_first_date_ever" ~ hf_before_threshold == 0,
+          outcome == "hypothyroid_gp_first_date_ever" ~
+            hypothyroid_before_threshold == 0,
+          outcome == "osteoporosis_gp_first_date_ever" ~
+            osteoporosis_before_threshold == 0,
+          outcome == "pad_gp_first_date_ever" ~ pad_before_threshold == 0,
+          outcome == "ra_gp_first_date_ever" ~ ra_before_threshold == 0,
+          outcome == "smi_gp_first_date_ever" ~ smi_before_threshold == 0,
+          outcome == "obese_gp_first_date_ever" ~ obese_before_threshold == 0,
+          outcome == "stroke_gp_first_date_after" ~
+            stroke_before_threshold == 0,
+          outcome == "tia_gp_first_date_after" ~ tia_before_threshold == 0,
+          TRUE ~ TRUE
+        )
+      )
+  } else {
+    df_excl <- df_population
+  }
+
   ## Make analysis ready dataset ----
-  df_analysis <- df_population %>%
+  df_analysis <- df_excl %>%
     select(
       patient_id,
       pat_end_date,
       month_diff_threshold,
       glue("{vaccine_name}_date_1"),
-      analyses$outcome[i]
+      outcome
     )
 
   ## Define threshold ----
@@ -150,7 +185,7 @@ for (i in seq_len(nrow(analyses))) {
     threshold = threshold,
     kernel = analyses$kernel[i],
     polynomial = analyses$polynomial[i],
-    dependent = analyses$outcome[i],
+    dependent = outcome,
     running = "month_diff_threshold",
     fuzzy_date = glue("{vaccine_name}_date_1"),
     end = end
