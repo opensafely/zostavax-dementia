@@ -75,6 +75,7 @@ dag <- empty_dag() +
     output="rcategorical"
   ) +
   node("date_of_death", type=dod_node, rate_per_day = 0.0001, max_date = latest_date, origin_date = threshold_date) +
+  node("date_of_death_gp", type=dod_node, rate_per_day = 0.0001, max_date = latest_date, origin_date = threshold_date) +
   node("reg_start_date", type="identity", formula = ~ as.Date(-runif(n = N, max=365*15), origin = threshold_date))+
   node("reg_end_date", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.5, min_date = threshold_date, max_date = latest_date))+
   node(
@@ -117,7 +118,6 @@ dag <- empty_dag() +
   node("dementia_ons_date", type="identity", formula = ~ if_else(runif(n = N)<0.1, date_of_death, as.Date(NA))) +
   node("alzheimers_ons_date", type="identity", formula = ~ if_else(rbernoulli(n = N, 0.3), as.Date(NA), dementia_ons_date)) +
   node("vascular_ons_date", type="identity", formula = ~ if_else(rbernoulli(n = N, 0.3), as.Date(NA), dementia_ons_date)) +
-  
   node("immunosupp_gp_any_before", type="rbernoulli", p=0.05) +
 
   # vaccines

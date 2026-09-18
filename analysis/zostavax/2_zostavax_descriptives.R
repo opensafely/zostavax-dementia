@@ -513,6 +513,14 @@ cumulative_events(
   "eligibility",
   precision = 7,
   365,
+  "shingles_gp_first_date_after",
+  "Shingles (GP only)"
+)
+cumulative_events(
+  df_analysis,
+  "eligibility",
+  precision = 7,
+  365,
   "dementia_first_date_ever",
   "Dementia"
 )
@@ -524,6 +532,14 @@ cumulative_events(
   365,
   "neuralgia_first_date_ever",
   "Neuralgia"
+)
+cumulative_events(
+  df_analysis |> filter(!neuralgia_before_threshold),
+  "eligibility",
+  precision = 7,
+  365,
+  "neuralgia_gp_first_date_ever",
+  "Neuralgia (GP only)"
 )
 cumulative_events(
   df_analysis |> filter(!dementia_exclude_before_threshold),
@@ -548,6 +564,14 @@ cumulative_events(
   365,
   "dementia_charlson_first_date_ever",
   "Dementia (Charlson)"
+)
+cumulative_events(
+  df_analysis |> filter(!dementia_exclude_before_threshold),
+  "eligibility",
+  precision = 7,
+  365,
+  "dementia_gp_first_date_ever",
+  "Dementia (GP only)"
 )
 
 cumulative_events(
@@ -1058,6 +1082,14 @@ check_discontinuity_post(
   365 * 2,
   "date_of_death",
   "All-cause death"
+)
+check_discontinuity_post(
+  df_analysis,
+  dob_threshold_date,
+  index_date,
+  365 * 2,
+  "date_of_death_gp",
+  "All-cause death (TPP only)"
 )
 
 # other covariates
