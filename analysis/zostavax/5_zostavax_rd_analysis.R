@@ -2,31 +2,58 @@
 library("arrow")
 library("here")
 library("glue")
+library("magrittr")
+library("dplyr")
+library("readr")
+library("checkmate")
 
-# Source functions ----
-source(here::here("analysis", "common_code", "rd_input_checks.R"))
-source(here::here("analysis", "common_code", "rd_analysis.R"))
-
-# Specify arguments ----
+# Specify command-line arguments ----
 args <- commandArgs(trailingOnly = TRUE)
 if (length(args) == 0) {
-  analysis_group <- "fixed_bw2"
+  analysis_group_arg <- "primary"
 } else {
-  analysis_group <- args[[1]]
+  analysis_group_arg <- args[[1]]
 }
+assert_choice(
+  analysis_group_arg,
+  c(
+    "primary",
+    "alt_outcome",
+    "alt_kernel",
+    "alt_msebw",
+    "alt_polynomial",
+    "annual_fup",
+    "excl_thresholdm",
+    "fixed_bw1",
+    "fixed_bw2",
+    "reduced_excl",
+    "sub_cogimp",
+    "sub_sex"
+  )
+)
 
-# Specify analysis parameters ----
+# Specify parameters ----
 vaccine_name <- "zostavax"
-analysis <- "main" # main, 2010, 2016
+analysis <- "main"
 lcd <- as.Date("2025-09-02")
 dob_threshold_date <- as.Date("1933-09-01")
 
-# Load and filter analyses ----
-analyses <- read_csv("lib/zostavax.csv")
-analyses <- analyses[analyses$analysis_group == analysis_group, ]
-population <- unique(analyses$population)
+# Create output directory ----
+output_dir <- here("output", vaccine_name, "results")
+fs::dir_create(output_dir)
 
-# Check population ----
+# Source functions ----
+source(here::here("analysis", "common_code", "rd_input_checks.R"))
+source(here::here("analysis", "common_code", "extract_rd_results.R"))
+source(here::here("analysis", "common_code", "rd_analysis.R"))
+
+# Load and filter analyses table ----
+analyses <- read_csv("lib/zostavax.csv") |>
+  filter(analysis_group == analysis_group_arg) |>
+  mutate(analysis_id = row_number())
+
+# Determine population to use ----
+population <- unique(analyses$population)
 assert_choice(
   population,
   c(
@@ -62,9 +89,9 @@ df_population <- read_feather(here::here(
 ))
 
 # Run RD analysis ----
-result <- NULL
+results <- vector("list", nrow(analyses))
 
-for (i in 1:nrow(analyses)) {
+for (i in seq_len(nrow(analyses))) {
   ## Make analysis ready dataset ----
   df_analysis <- df_population %>%
     select(
@@ -92,9 +119,9 @@ for (i in 1:nrow(analyses)) {
   if (!is.na(analyses$msebw_multiplier[i])) {
     h_left <- analyses$msebw_multiplier[i] * rd_msebw$h_left
     h_right <- analyses$msebw_multiplier[i] * rd_msebw$h_right
-  } else if (grepl("fixed_bw", analysis_group)) {
+  } else if (grepl("fixed_bw", analysis_group_arg)) {
     bw <- case_match(
-      analysis_group,
+      analysis_group_arg,
       "fixed_bw1" ~ 12,
       "fixed_bw2" ~ 24,
       .default = NA_real_
@@ -104,7 +131,7 @@ for (i in 1:nrow(analyses)) {
   }
 
   ## Set design ----
-  if (analysis_group == "reduced_excl") {
+  if (analysis_group_arg == "reduced_excl") {
     design <- "sharp"
   } else {
     design <- c("sharp", "fuzzy")
@@ -125,18 +152,29 @@ for (i in 1:nrow(analyses)) {
   )
 
   ## Record additional info ----
-  rd <- rd %>%
+  rd <- rd |>
     mutate(
-      analysis_group = analyses$analysis_group[i],
-      population = analyses$population[i],
-      msebw_multiplier = analyses$msebw_multiplier[i],
-      threshold_year = analyses$threshold_year[i],
-      end_date_years = analyses$end_date_years[i],
-      outcome = analyses$outcome[i],
+      analysis_id = analyses$analysis_id[i],
       running = "month_diff_threshold",
       fuzzy_date = "zostavax_date_1"
     )
 
   ## Record results ----
-  result <- rbind(result, rd)
+  results[[i]] <- rd
 }
+
+# Flatten results and record analyses info ----
+all_results <- bind_rows(results)
+output <- analyses |>
+  left_join(all_results, by = "analysis_id") |>
+  select(-analysis_id)
+
+# Save output ----
+write_csv(
+  output,
+  here::here(
+    "output",
+    vaccine_name,
+    paste0("results/rd_results_", analysis_group_arg, ".csv")
+  )
+)
