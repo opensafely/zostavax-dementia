@@ -142,7 +142,7 @@ actions:
     - rd_populations_general
     - rd_msebw_zostavax
     outputs:
-      highly_sensitive:
+      moderately_sensitive:
         results: output/zostavax/results/rd_results_alt_kernel.csv
 
   rd_analysis_alt_msebw:
@@ -151,7 +151,7 @@ actions:
     - rd_populations_general
     - rd_msebw_zostavax
     outputs:
-      highly_sensitive:
+      moderately_sensitive:
         results: output/zostavax/results/rd_results_alt_msebw.csv
 
   rd_analysis_alt_outcome:
@@ -160,7 +160,7 @@ actions:
     - rd_populations_general
     - rd_msebw_zostavax
     outputs:
-      highly_sensitive:
+      moderately_sensitive:
         results: output/zostavax/results/rd_results_alt_outcome.csv
 
   rd_analysis_alt_polynomial:
@@ -169,7 +169,7 @@ actions:
     - rd_populations_general
     - rd_msebw_zostavax
     outputs:
-      highly_sensitive:
+      moderately_sensitive:
         results: output/zostavax/results/rd_results_alt_polynomial.csv
 
   rd_analysis_annual_fup:
@@ -178,7 +178,7 @@ actions:
     - rd_populations_general
     - rd_msebw_zostavax
     outputs:
-      highly_sensitive:
+      moderately_sensitive:
         results: output/zostavax/results/rd_results_annual_fup.csv
 
   rd_analysis_fixed_bw_aged77_82:
@@ -187,7 +187,7 @@ actions:
     - rd_populations_aged77_82
     - rd_msebw_zostavax
     outputs:
-      highly_sensitive:
+      moderately_sensitive:
         results: output/zostavax/results/rd_results_fixed_bw_aged77_82.csv
 
   rd_analysis_fixed_bw_aged78_81:
@@ -196,7 +196,7 @@ actions:
     - rd_populations_aged78_81
     - rd_msebw_zostavax
     outputs:
-      highly_sensitive:
+      moderately_sensitive:
         results: output/zostavax/results/rd_results_fixed_bw_aged78_81.csv
 
   rd_analysis_primary:
@@ -205,7 +205,7 @@ actions:
     - rd_populations_general
     - rd_msebw_zostavax
     outputs:
-      highly_sensitive:
+      moderately_sensitive:
         results: output/zostavax/results/rd_results_primary.csv
 
   rd_analysis_reduced_excl:
@@ -214,7 +214,7 @@ actions:
     - rd_populations_reduced_excl
     - rd_msebw_zostavax
     outputs:
-      highly_sensitive:
+      moderately_sensitive:
         results: output/zostavax/results/rd_results_reduced_excl.csv
 
   rd_analysis_sub_cogimp_no:
@@ -223,7 +223,7 @@ actions:
     - rd_populations_cogimp_no
     - rd_msebw_zostavax
     outputs:
-      highly_sensitive:
+      moderately_sensitive:
         results: output/zostavax/results/rd_results_sub_cogimp_no.csv
 
   rd_analysis_sub_cogimp_yes:
@@ -232,7 +232,7 @@ actions:
     - rd_populations_cogimp_yes
     - rd_msebw_zostavax
     outputs:
-      highly_sensitive:
+      moderately_sensitive:
         results: output/zostavax/results/rd_results_sub_cogimp_yes.csv
 
   rd_analysis_sub_sex_men:
@@ -241,7 +241,7 @@ actions:
     - rd_populations_men
     - rd_msebw_zostavax
     outputs:
-      highly_sensitive:
+      moderately_sensitive:
         results: output/zostavax/results/rd_results_sub_sex_men.csv
 
   rd_analysis_sub_sex_women:
@@ -250,7 +250,7 @@ actions:
     - rd_populations_women
     - rd_msebw_zostavax
     outputs:
-      highly_sensitive:
+      moderately_sensitive:
         results: output/zostavax/results/rd_results_sub_sex_women.csv
 
   rd_analysis_thresholdm_no:
@@ -259,7 +259,7 @@ actions:
     - rd_populations_thresholdm_no
     - rd_msebw_zostavax
     outputs:
-      highly_sensitive:
+      moderately_sensitive:
         results: output/zostavax/results/rd_results_thresholdm_no.csv
 
   ## Make output 

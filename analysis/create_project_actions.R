@@ -125,7 +125,7 @@ run_rd_analysis <- function(vax, population_analysis_group) {
         glue("rd_populations_{population}"),
         glue("rd_msebw_{vaccine_name}")
       ),
-      highly_sensitive = list(
+      moderately_sensitive = list(
         results = glue(
           "output/{vaccine_name}/results/rd_results_{analysis_group}.csv"
         )
