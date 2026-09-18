@@ -63,7 +63,7 @@ rd_analysis <- function(
       c = 0,
       h = bandwidth
     )
-    results[["sharp"]] <- extract_rd_results(rd_sharp, "sharp")
+    results[["sharp"]] <- extract_rd_results(rd = rd_sharp, design = "sharp")
   }
 
   ## Run fuzzy RD ----
@@ -78,7 +78,7 @@ rd_analysis <- function(
       c = 0,
       h = bandwidth
     )
-    results[["fuzzy"]] <- extract_rd_results(rd_fuzzy, "fuzzy")
+    results[["fuzzy"]] <- extract_rd_results(rd = rd_fuzzy, design = "fuzzy")
   }
 
   ## Return RD results ----
