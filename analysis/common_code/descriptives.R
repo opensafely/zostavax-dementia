@@ -112,10 +112,10 @@ km_at_t <- function(event_time, event_indicator, time_horizon) {
 
 # get Kaplan Meier estimates for each day up to time horizon
 # heavily inspired by the KM reusable OpeNSAFELY action https://github.com/opensafely-actions/kaplan-meier-function/blob/main/analysis/km.R
-km <- function(.data, group_col, index_date, precision = 1, time_horizon, event_date_col, censor_date_col) {
+km <- function(.data, group_col, start_date, precision = 1, time_horizon, event_date_col, censor_date_col) {
 
   time_horizon <- ceiling_any(time_horizon, precision) # convert time_horizon in days to lower precision if needed
-  index_date <- index_date - 1L # if events occur on same day as index date, that's ok, treat as event_time=1
+  start_date <- start_date - 1L # if events occur on same day as start date, that's ok, treat as event_time=1
 
   df_tte <-
     .data |>
@@ -123,7 +123,7 @@ km <- function(.data, group_col, index_date, precision = 1, time_horizon, event_
       group = .data[[group_col]],
       event_date = .data[[event_date_col]],
       censor_date = .data[[censor_date_col]],
-      event_time = as.integer(pmin(event_date, censor_date, index_date + time_horizon, na.rm=TRUE) - index_date),
+      event_time = as.integer(pmin(event_date, censor_date, start_date + time_horizon, na.rm=TRUE) - start_date),
     ) |>
    mutate(
     event_time = ceiling_any(event_time, precision),
