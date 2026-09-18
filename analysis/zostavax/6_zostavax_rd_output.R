@@ -1,3 +1,8 @@
+# Load libraries ----
+library("here")
+library("glue")
+library("dplyr")
+
 # Specify parameters ----
 vaccine_name <- "zostavax"
 output_cols <- c(
@@ -40,7 +45,7 @@ fs::dir_create(output_dir)
 source(here::here("analysis", "common_code", "utility.R"))
 
 # Load analyses ----
-analyses <- read_csv(glue("lib/{vaccine_name}.csv"))
+analyses <- read.csv(glue("lib/{vaccine_name}.csv"))
 analysis_group <- unique(analyses$analysis_group)
 
 # Combine results into list
@@ -72,7 +77,7 @@ all_results$n_obs_right_rounded <- sdc.rounding(
 # Save output ----
 all_results$vaccine <- vaccine_name
 
-write_csv(
+write.csv(
   all_results,
   here::here(
     "output",
@@ -81,7 +86,7 @@ write_csv(
   )
 )
 
-write_csv(
+write.csv(
   all_results[, !names(all_results) %in% c("n_obs_left", "n_obs_right")],
   here::here(
     "output",
