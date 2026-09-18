@@ -38,19 +38,18 @@ df_population <- open_dataset(
     )
   ),
   format = "ipc"
-) %>%
+) |>
   select(
     patient_id,
     pat_end_date,
     month_diff_threshold,
     zostavax_date_1,
     dementia_first_date_ever
-  ) %>%
+  ) |>
   collect()
 
 # Remove dementia events that occur after patient end date ---
-
-df_analysis <- df_population %>%
+df_analysis <- df_population |>
   mutate(
     dementia_first_date_ever = if_else(
       dementia_first_date_ever > pat_end_date,

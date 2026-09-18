@@ -121,7 +121,7 @@ if (population == "thresholdm_no") {
 
 # Make analysis ready dataset ----
 
-df_analysis <- df_population %>%
+df_analysis <- df_population |>
   mutate(
     month_diff_threshold = as.integer(
       time_length(
@@ -130,7 +130,7 @@ df_analysis <- df_population %>%
       )
     ),
     pat_end_date = pmin(lcd, date_of_death, reg_end_date, na.rm = TRUE)
-  ) %>%
+  ) |>
   select(
     patient_id,
     date_of_birth,

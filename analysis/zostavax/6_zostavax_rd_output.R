@@ -49,9 +49,7 @@ analyses <- read.csv(glue("lib/{vaccine_name}.csv"))
 analysis_group <- unique(analyses$analysis_group)
 
 # Combine results into list
-
 results <- list()
-
 for (i in analysis_group) {
   tmp <- read.csv(glue(
     "output/{vaccine_name}/results/rd_results_{i}.csv"

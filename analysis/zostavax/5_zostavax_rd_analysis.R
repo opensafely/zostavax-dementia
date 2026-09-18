@@ -1,10 +1,8 @@
 # Load libraries ----
+library("tidyverse")
 library("arrow")
 library("here")
 library("glue")
-library("magrittr")
-library("dplyr")
-library("readr")
 library("checkmate")
 library("lubridate")
 
@@ -100,7 +98,7 @@ for (i in seq_len(nrow(analyses))) {
   ## Apply additional exclusion criteria ----
   outcome <- analyses$outcome[i]
   if (analysis_group_arg == "alt_outcome") {
-    df_excl <- df_population %>%
+    df_excl <- df_population |>
       filter(
         case_when(
           outcome == "asthma_gp_first_date_ever" ~ asthma_before_threshold == 0,
@@ -133,7 +131,7 @@ for (i in seq_len(nrow(analyses))) {
   }
 
   ## Make analysis ready dataset ----
-  df_analysis <- df_excl %>%
+  df_analysis <- df_excl |>
     select(
       patient_id,
       pat_end_date,

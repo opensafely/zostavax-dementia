@@ -1,5 +1,4 @@
 # Load libraries ----
-
 library(tidyverse)
 library(yaml)
 library(here)
@@ -8,15 +7,16 @@ library(readr)
 library(dplyr)
 
 # Specify analysis components ----
-
-vax <- "zostavax"
+vaccine_name <- "zostavax"
 threshold_date <- "2013-09-01"
 index_date <- "2014-02-01"
 min_dob <- "1920-09-01"
 max_dob <- "1948-09-01"
 
 # Load analyses ----
-analyses <- read_csv(glue("lib/{vax}.csv"))
+analyses <- read_csv(glue("lib/{vaccine_name}.csv"))
+
+# Extract population and analysis groups from analyses ----
 populations <- unique(analyses$population)
 analysis_groups <- unique(analyses$analysis_group)
 population_analysis_group <- unique(paste0(
@@ -26,13 +26,11 @@ population_analysis_group <- unique(paste0(
 ))
 
 # Specify defaults ----
-
 defaults_list <- list(
   version = "5.0"
 )
 
 # Create generic action function -----
-
 action <- function(
   name,
   run,
@@ -62,50 +60,7 @@ action <- function(
   action_list
 }
 
-# Create make_population function ----
-
-make_population <- function(vax, population) {
-  splice(
-    action(
-      name = glue("rd_populations_{population}"),
-      run = glue(
-        "r:v2 analysis/{vax}/3_{vax}_rd_populations.R {population}"
-      ),
-      needs = list(glue("process_{vax}")),
-      highly_sensitive = list(
-        cohort = glue(
-          "output/{vax}/populations/dataset_analysis_{vax}_main_{population}.arrow"
-        )
-      )
-    )
-  )
-}
-
-# Create run_rd_analysis function ----
-
-run_rd_analysis <- function(vax, population_analysis_group) {
-  population <- strsplit(population_analysis_group, split = "-")[[1]][1]
-  analysis_group <- strsplit(population_analysis_group, split = "-")[[1]][2]
-  splice(
-    action(
-      name = glue(
-        "rd_analysis_{analysis_group}"
-      ),
-      run = glue(
-        "r:v2 analysis/{vax}/5_{vax}_rd_analysis.R {population} {analysis_group}"
-      ),
-      needs = list(glue("rd_populations_{population}"), glue("rd_msebw_{vax}")),
-      highly_sensitive = list(
-        cohort = glue(
-          "output/{vax}/results/rd_results_{analysis_group}.csv"
-        )
-      )
-    )
-  )
-}
-
 # Create generic comment function ----
-
 comment <- function(...) {
   list_comments <- list(...)
   comments <- map(list_comments, ~ paste0("## ", ., " ##"))
@@ -113,7 +68,6 @@ comment <- function(...) {
 }
 
 # Create function to convert comment "actions" in a yaml string into proper comments ----
-
 convert_comment_actions <- function(yaml.txt) {
   yaml.txt %>%
     str_replace_all("\\\n(\\s*)\\'\\'\\:(\\s*)\\'", "\n\\1") %>%
@@ -122,143 +76,7 @@ convert_comment_actions <- function(yaml.txt) {
     str_replace_all("\\#\\#\\'\\\n", "\n")
 }
 
-# Define and combine all actions into a list of actions ------------------------
-
-actions_list <- splice(
-  ## Post YAML disclaimer ------------------------------------------------------
-
-  comment(
-    "# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #",
-    "DO NOT EDIT project.yaml DIRECTLY",
-    "This file is created by create_project_actions.R",
-    "Edit and run create_project_actions.R to update the project.yaml",
-    "# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #"
-  ),
-
-  comment("Generate dataset"),
-
-  action(
-    name = glue("generate_dataset_{vax}_main"),
-    run = glue(
-      "ehrql:v1 generate-dataset analysis/dataset_definition.py --output output/{vax}/dataset_{vax}_main.arrow --dummy-data-file analysis/dummy_data/dummy_dataset_{vax}.arrow -- --threshold_date {threshold_date} --index_date {index_date} --min_dob {min_dob} --max_dob {max_dob} --vaccine_name {vax}"
-    ),
-    highly_sensitive = list(
-      data1 = glue("output/{vax}/dataset_{vax}_main.arrow")
-    )
-  ),
-
-  comment("Process dataset"),
-
-  action(
-    name = glue("process_{vax}"),
-    run = glue("r:v2 analysis/{vax}/0_{vax}_processing.R"),
-    needs = list(glue("generate_dataset_{vax}_main")),
-    highly_sensitive = list(
-      data1 = glue("output/{vax}/processed/dataset_processed_{vax}_main.arrow")
-    )
-  ),
-
-  comment("Flow chart"),
-
-  action(
-    name = glue("flow_chart_{vax}"),
-    run = glue("r:v2 analysis/{vax}/1_{vax}_flow_chart.R"),
-    needs = list(glue("process_{vax}")),
-    moderately_sensitive = list(
-      data1 = glue("output/{vax}/processed/flow_chart_{vax}_main.csv")
-    )
-  ),
-
-  comment("Descriptives"),
-
-  action(
-    name = glue("descriptives_{vax}"),
-    run = glue("r:v2 analysis/{vax}/2_{vax}_descriptives.R"),
-    needs = list(glue("process_{vax}")),
-    moderately_sensitive = list(
-      txt = glue("output/{vax}/descriptives/main/*.txt"),
-      csv = glue("output/{vax}/descriptives/main/*.csv"),
-      png = glue("output/{vax}/descriptives/main/*.png")
-    )
-  ),
-
-  comment("Define populations"),
-
-  splice(
-    unlist(
-      lapply(
-        populations,
-        function(x) {
-          make_population(
-            vax = glue("{vax}"),
-            population = x
-          )
-        }
-      ),
-      recursive = FALSE
-    )
-  ),
-
-  comment("Determine MSE optimal bandwidth"),
-
-  action(
-    name = glue("rd_msebw_{vax}"),
-    run = glue("r:v2 analysis/{vax}/4_{vax}_rd_msebw.R"),
-    needs = list("rd_populations_general"),
-    moderately_sensitive = list(
-      data1 = glue("output/{vax}/setup/rd_msebw.csv")
-    )
-  ),
-
-  comment("Run RD analyses"),
-
-  splice(
-    unlist(
-      lapply(
-        population_analysis_group,
-        function(x) {
-          run_rd_analysis(
-            vax = glue("{vax}"),
-            population_analysis_group = x
-          )
-        }
-      ),
-      recursive = FALSE
-    )
-  ),
-
-  comment("Make output"),
-
-  action(
-    name = glue("rd_output_{vax}"),
-    run = glue("r:v2 analysis/{vax}/6_{vax}_rd_output.R"),
-    needs = as.list(paste0("rd_analysis_", analysis_groups)),
-    moderately_sensitive = list(
-      data1 = glue("output/{vax}/output/rd_results.csv"),
-      data2 = glue("output/{vax}/output/rd_results_rounded.csv")
-    )
-  )
-)
-
-# Combine actions into project list --------------------------------------------
-
-project_list <- splice(
-  defaults_list,
-  list(actions = actions_list)
-)
-
-# Convert list to yaml, reformat, and output a .yaml file ----------------------
-
-as.yaml(project_list, indent = 2) %>%
-  # convert comment actions to comments
-  convert_comment_actions() %>%
-  # add one blank line before level 1 and level 2 keys
-  str_replace_all("\\\n(\\w)", "\n\n\\1") %>%
-  str_replace_all("\\\n\\s\\s(\\w)", "\n\n  \\1") %>%
-  writeLines("project.yaml")
-
-# Return number of actions -----------------------------------------------------
-
+# Create function to count number of actions ----
 count_run_elements <- function(x) {
   if (!is.list(x)) {
     return(0)
@@ -271,6 +89,190 @@ count_run_elements <- function(x) {
   return(current_count + sum(sapply(x, count_run_elements)))
 }
 
+# Create project-specific functions
+
+## Create make_population function ----
+make_population <- function(vax, population) {
+  splice(
+    action(
+      name = glue("rd_populations_{population}"),
+      run = glue(
+        "r:v2 analysis/{vaccine_name}/3_{vaccine_name}_rd_populations.R {population}"
+      ),
+      needs = list(glue("process_{vaccine_name}")),
+      highly_sensitive = list(
+        cohort = glue(
+          "output/{vaccine_name}/populations/dataset_analysis_{vaccine_name}_main_{population}.arrow"
+        )
+      )
+    )
+  )
+}
+
+## Create run_rd_analysis function ----
+run_rd_analysis <- function(vax, population_analysis_group) {
+  population <- strsplit(population_analysis_group, split = "-")[[1]][1]
+  analysis_group <- strsplit(population_analysis_group, split = "-")[[1]][2]
+  splice(
+    action(
+      name = glue(
+        "rd_analysis_{analysis_group}"
+      ),
+      run = glue(
+        "r:v2 analysis/{vaccine_name}/5_{vaccine_name}_rd_analysis.R {population} {analysis_group}"
+      ),
+      needs = list(
+        glue("rd_populations_{population}"),
+        glue("rd_msebw_{vaccine_name}")
+      ),
+      highly_sensitive = list(
+        cohort = glue(
+          "output/{vaccine_name}/results/rd_results_{analysis_group}.csv"
+        )
+      )
+    )
+  )
+}
+
+
+# Define and combine all actions into a list of actions ----
+
+actions_list <- splice(
+  ## Post YAML disclaimer ----
+
+  comment(
+    "# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #",
+    "DO NOT EDIT project.yaml DIRECTLY",
+    "This file is created by create_project_actions.R",
+    "Edit and run create_project_actions.R to update the project.yaml",
+    "# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #"
+  ),
+
+  comment("Generate dataset"),
+
+  action(
+    name = glue("generate_dataset_{vaccine_name}_main"),
+    run = glue(
+      "ehrql:v1 generate-dataset analysis/dataset_definition.py --output output/{vaccine_name}/dataset_{vaccine_name}_main.arrow --dummy-data-file analysis/dummy_data/dummy_dataset_{vaccine_name}.arrow -- --threshold_date {threshold_date} --index_date {index_date} --min_dob {min_dob} --max_dob {max_dob} --vaccine_name {vaccine_name}"
+    ),
+    highly_sensitive = list(
+      data1 = glue("output/{vaccine_name}/dataset_{vaccine_name}_main.arrow")
+    )
+  ),
+
+  comment("Process dataset"),
+
+  action(
+    name = glue("process_{vaccine_name}"),
+    run = glue("r:v2 analysis/{vaccine_name}/0_{vaccine_name}_processing.R"),
+    needs = list(glue("generate_dataset_{vaccine_name}_main")),
+    highly_sensitive = list(
+      data1 = glue(
+        "output/{vaccine_name}/processed/dataset_processed_{vaccine_name}_main.arrow"
+      )
+    )
+  ),
+
+  comment("Flow chart"),
+
+  action(
+    name = glue("flow_chart_{vaccine_name}"),
+    run = glue("r:v2 analysis/{vaccine_name}/1_{vaccine_name}_flow_chart.R"),
+    needs = list(glue("process_{vaccine_name}")),
+    moderately_sensitive = list(
+      data1 = glue(
+        "output/{vaccine_name}/processed/flow_chart_{vaccine_name}_main.csv"
+      )
+    )
+  ),
+
+  comment("Descriptives"),
+
+  action(
+    name = glue("descriptives_{vaccine_name}"),
+    run = glue("r:v2 analysis/{vaccine_name}/2_{vaccine_name}_descriptives.R"),
+    needs = list(glue("process_{vaccine_name}")),
+    moderately_sensitive = list(
+      txt = glue("output/{vaccine_name}/descriptives/main/*.txt"),
+      csv = glue("output/{vaccine_name}/descriptives/main/*.csv"),
+      png = glue("output/{vaccine_name}/descriptives/main/*.png")
+    )
+  ),
+
+  comment("Define populations"),
+
+  splice(
+    unlist(
+      lapply(
+        populations,
+        function(x) {
+          make_population(
+            vax = glue("{vaccine_name}"),
+            population = x
+          )
+        }
+      ),
+      recursive = FALSE
+    )
+  ),
+
+  comment("Determine MSE optimal bandwidth"),
+
+  action(
+    name = glue("rd_msebw_{vaccine_name}"),
+    run = glue("r:v2 analysis/{vaccine_name}/4_{vaccine_name}_rd_msebw.R"),
+    needs = list("rd_populations_general"),
+    moderately_sensitive = list(
+      data1 = glue("output/{vaccine_name}/setup/rd_msebw.csv")
+    )
+  ),
+
+  comment("Run RD analyses"),
+
+  splice(
+    unlist(
+      lapply(
+        population_analysis_group,
+        function(x) {
+          run_rd_analysis(
+            vax = glue("{vaccine_name}"),
+            population_analysis_group = x
+          )
+        }
+      ),
+      recursive = FALSE
+    )
+  ),
+
+  comment("Make output"),
+
+  action(
+    name = glue("rd_output_{vaccine_name}"),
+    run = glue("r:v2 analysis/{vaccine_name}/6_{vaccine_name}_rd_output.R"),
+    needs = as.list(paste0("rd_analysis_", analysis_groups)),
+    moderately_sensitive = list(
+      data1 = glue("output/{vaccine_name}/output/rd_results.csv"),
+      data2 = glue("output/{vaccine_name}/output/rd_results_rounded.csv")
+    )
+  )
+)
+
+# Combine actions into project list ----
+project_list <- splice(
+  defaults_list,
+  list(actions = actions_list)
+)
+
+# Convert list to yaml, reformat, and output a .yaml file ----
+as.yaml(project_list, indent = 2) %>%
+  # convert comment actions to comments
+  convert_comment_actions() %>%
+  # add one blank line before level 1 and level 2 keys
+  str_replace_all("\\\n(\\w)", "\n\n\\1") %>%
+  str_replace_all("\\\n\\s\\s(\\w)", "\n\n  \\1") %>%
+  writeLines("project.yaml")
+
+# Return number of actions ----
 print(paste0(
   "YAML created with ",
   count_run_elements(actions_list),

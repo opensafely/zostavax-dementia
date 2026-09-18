@@ -44,7 +44,7 @@ extract_rd_results <- function(rd, design) {
     robust_uci = rd$ci[6]
   )
 
-  # Add Stage 1 results
+  ## Add Stage 1 results ----
   stage1_methods <- c("conv", "bc", "robust")
   if (design == "fuzzy") {
     for (i in seq_along(stage1_methods)) {
@@ -53,12 +53,10 @@ extract_rd_results <- function(rd, design) {
       result[[paste0("stage1_", method, "_se")]] <- rd$se_T[i]
       result[[paste0("stage1_", method, "_z")]] <- rd$z_T[i]
       result[[paste0("stage1_", method, "_p")]] <- rd$pv_T[i]
-      # CI indices are arranged as: # conv: 1, 4 # bc: 2, 5 # robust: 3, 6
       result[[paste0("stage1_", method, "_lci")]] <- rd$ci_T[i]
-      result[[paste0("stage1_", method, "_uci")]] <- rd$ci_T[i + 3]
+      result[[paste0("stage1_", method, "_uci")]] <- rd$ci_T[i + 3] # CI indices are arranged as: # conv: 1, 4 # bc: 2, 5 # robust: 3, 6
     }
   } else {
-    # Add NA columns for sharp RD
     for (method in stage1_methods) {
       result[[paste0("stage1_", method, "_coef")]] <- NA_real_
       result[[paste0("stage1_", method, "_se")]] <- NA_real_
@@ -69,5 +67,6 @@ extract_rd_results <- function(rd, design) {
     }
   }
 
+  ## Return extracted result ----
   return(result)
 }

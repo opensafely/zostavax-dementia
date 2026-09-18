@@ -30,7 +30,6 @@ rd_analysis <- function(
   )
 
   ## Make fuzzy ----
-
   data$fuzzy <- dplyr::if_else(
     dplyr::between(data[[fuzzy_date]], threshold, end),
     1L,
@@ -39,7 +38,6 @@ rd_analysis <- function(
   )
 
   ## Apply end date to dependent variable ----
-
   data <- data |>
     dplyr::mutate(
       dependent_ended = dplyr::if_else(
@@ -49,10 +47,10 @@ rd_analysis <- function(
       )
     )
 
-  # Make results dataframe ----
+  ## Make results dataframe ----
   results <- list()
 
-  # Run sharp RD ----
+  ## Run sharp RD ----
   if ("sharp" %in% design) {
     rd_sharp <- rdrobust(
       y = data[["dependent_ended"]],
@@ -82,7 +80,6 @@ rd_analysis <- function(
   }
 
   ## Return RD results ----
-
   rd_analysis_results <- bind_rows(results)
   return(rd_analysis_results)
 }
