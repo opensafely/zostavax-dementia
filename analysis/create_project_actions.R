@@ -7,7 +7,6 @@ library(glue)
 library(readr)
 library(dplyr)
 
-
 # Specify analysis components ----
 
 vax <- "zostavax"
@@ -19,6 +18,7 @@ max_dob <- "1948-09-01"
 # Load analyses ----
 analyses <- read_csv(glue("lib/{vax}.csv"))
 populations <- unique(analyses$population)
+analysis_groups <- unique(analyses$analysis_group)
 population_analysis_group <- unique(paste0(
   analyses$population,
   "-",
@@ -224,6 +224,18 @@ actions_list <- splice(
         }
       ),
       recursive = FALSE
+    )
+  ),
+
+  comment("Make output"),
+
+  action(
+    name = glue("rd_output_{vax}"),
+    run = glue("r:v2 analysis/{vax}/6_{vax}_rd_output.R"),
+    needs = as.list(paste0("rd_analysis_", analysis_groups)),
+    moderately_sensitive = list(
+      data1 = glue("output/{vax}/output/rd_results.csv"),
+      data2 = glue("output/{vax}/output/rd_results_rounded.csv")
     )
   )
 )

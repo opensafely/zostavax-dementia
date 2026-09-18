@@ -262,3 +262,27 @@ actions:
       highly_sensitive:
         cohort: output/zostavax/results/rd_results_thresholdm_no.csv
 
+  ## Make output 
+
+  rd_output_zostavax:
+    run: r:v2 analysis/zostavax/6_zostavax_rd_output.R
+    needs:
+    - rd_analysis_alt_kernel
+    - rd_analysis_alt_msebw
+    - rd_analysis_alt_outcome
+    - rd_analysis_alt_polynomial
+    - rd_analysis_annual_fup
+    - rd_analysis_fixed_bw_aged77_82
+    - rd_analysis_fixed_bw_aged78_81
+    - rd_analysis_primary
+    - rd_analysis_reduced_excl
+    - rd_analysis_sub_cogimp_no
+    - rd_analysis_sub_cogimp_yes
+    - rd_analysis_sub_sex_men
+    - rd_analysis_sub_sex_women
+    - rd_analysis_thresholdm_no
+    outputs:
+      moderately_sensitive:
+        data1: output/zostavax/output/rd_results.csv
+        data2: output/zostavax/output/rd_results_rounded.csv
+

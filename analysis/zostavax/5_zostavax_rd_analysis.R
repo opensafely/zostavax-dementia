@@ -180,6 +180,6 @@ write_csv(
   here::here(
     "output",
     vaccine_name,
-    paste0("results/rd_results_", analysis_group_arg, ".csv")
+    glue("results/rd_results_{analysis_group_arg}.csv")
   )
 )
