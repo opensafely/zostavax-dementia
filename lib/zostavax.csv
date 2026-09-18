@@ -128,3 +128,6 @@ thresholdm_no,thresholdm_no,1,2013,,triangular,1,date_of_death
 thresholdm_no,thresholdm_no,1,2013,,triangular,1,dementia_first_date_ever
 thresholdm_no,thresholdm_no,1,2013,,triangular,1,neuralgia_first_date_ever
 thresholdm_no,thresholdm_no,1,2013,,triangular,1,shingles_first_date_after
+alt_outcome,general,1,2013,,triangular,1,date_of_death_gp
+alt_outcome,general,1,2013,,triangular,1,neuralgia_gp_first_date_ever
+alt_outcome,general,1,2013,,triangular,1,shingles_gp_first_date_after
