@@ -1,5 +1,13 @@
+# Load libraries ----
+library(checkmate)
+
+# Define function ----
 extract_rd_results <- function(rd, design) {
-  data.frame(
+  ## Check inputs ----
+  assert_choice(design, c("sharp", "fuzzy"))
+  assert_list(rd, min.len = 1)
+  ## Extract result ----
+  result <- data.frame(
     rd = design,
     bw_type = rd$bwselect,
     rd_kernel = rd$kernel,
@@ -53,4 +61,6 @@ extract_rd_results <- function(rd, design) {
     stage1_robust_lci = if (design == "fuzzy") rd$ci_T[3] else NA_real_,
     stage1_robust_uci = if (design == "fuzzy") rd$ci_T[6] else NA_real_
   )
+
+  return(result)
 }

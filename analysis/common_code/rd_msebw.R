@@ -13,7 +13,6 @@ rd_msebw <- function(data, dependent, running) {
 
   ## Perform mse-optimal bw selection ----
   rd_mse <- rdbwselect(
-    data = data,
     y = data[[dependent]],
     x = data[[running]],
     bwselect = "mserd"

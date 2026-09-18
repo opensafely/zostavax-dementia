@@ -7,6 +7,7 @@ library(glue)
 library(readr)
 library(dplyr)
 
+
 # Specify analysis components ----
 
 vax <- "zostavax"
@@ -14,18 +15,15 @@ threshold_date <- "2013-09-01"
 index_date <- "2014-02-01"
 min_dob <- "1920-09-01"
 max_dob <- "1948-09-01"
-populations <- c(
-  "general",
-  "reduced_excl",
-  "aged78_81",
-  "aged77_82",
-  "women",
-  "men",
-  "cogimp_yes",
-  "cogimp_no",
-  "thresholdm_no"
-)
-analysis_groups <- c()
+
+# Load analyses ----
+analyses <- read_csv(glue("lib/{vax}.csv"))
+populations <- unique(analyses$population)
+population_analysis_group <- unique(paste0(
+  analyses$population,
+  "-",
+  analyses$analysis_group
+))
 
 # Specify defaults ----
 
@@ -64,7 +62,7 @@ action <- function(
   action_list
 }
 
-# Create populations function ----
+# Create make_population function ----
 
 make_population <- function(vax, population) {
   splice(
@@ -77,6 +75,29 @@ make_population <- function(vax, population) {
       highly_sensitive = list(
         cohort = glue(
           "output/{vax}/populations/dataset_analysis_{vax}_main_{population}.arrow"
+        )
+      )
+    )
+  )
+}
+
+# Create run_rd_analysis function ----
+
+run_rd_analysis <- function(vax, population_analysis_group) {
+  population <- strsplit(population_analysis_group, split = "-")[[1]][1]
+  analysis_group <- strsplit(population_analysis_group, split = "-")[[1]][2]
+  splice(
+    action(
+      name = glue(
+        "rd_analysis_{analysis_group}"
+      ),
+      run = glue(
+        "r:v2 analysis/{vax}/5_{vax}_rd_analysis.R {population} {analysis_group}"
+      ),
+      needs = list(glue("rd_populations_{population}"), glue("rd_msebw_{vax}")),
+      highly_sensitive = list(
+        cohort = glue(
+          "output/{vax}/results/rd_results_{analysis_group}.csv"
         )
       )
     )
@@ -176,36 +197,35 @@ actions_list <- splice(
       ),
       recursive = FALSE
     )
-  ) #,
+  ),
 
-  # comment("Determine MSE optimal bandwidth"),
+  comment("Determine MSE optimal bandwidth"),
 
-  # action(
-  #   name = glue("rd_msebw_{vax}"),
-  #   run = glue("r:v2 analysis/{vax}/4_{vax}_rd_msebw.R"),
-  #   needs = list(glue("rd_populations_general")),
-  #   moderately_sensitive = list(
-  #     data1 = "output/{vax}/setup/rd_msebw.csv"
-  #   )
-  # ),
+  action(
+    name = glue("rd_msebw_{vax}"),
+    run = glue("r:v2 analysis/{vax}/4_{vax}_rd_msebw.R"),
+    needs = list("rd_populations_general"),
+    moderately_sensitive = list(
+      data1 = glue("output/{vax}/setup/rd_msebw.csv")
+    )
+  ),
 
-  # # comment("Run RD analyses"),
-  #
-  # splice(
-  #   unlist(
-  #     lapply(
-  #       populations,
-  #       function(x)
-  #         population_action(
-  #           action = "analysis",
-  #           script_number = "5",
-  #           vax = glue("{vax}"),
-  #           population = x
-  #         )
-  #     ),
-  #     recursive = FALSE
-  #   )
-  # )
+  comment("Run RD analyses"),
+
+  splice(
+    unlist(
+      lapply(
+        population_analysis_group,
+        function(x) {
+          run_rd_analysis(
+            vax = glue("{vax}"),
+            population_analysis_group = x
+          )
+        }
+      ),
+      recursive = FALSE
+    )
+  )
 )
 
 # Combine actions into project list --------------------------------------------

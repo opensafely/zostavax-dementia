@@ -55,8 +55,7 @@ rd_analysis <- function(
   # Run sharp RD ----
   if ("sharp" %in% design) {
     rd_sharp <- rdrobust(
-      data = data,
-      y = dependent_ended,
+      y = data[["dependent_ended"]],
       x = data[[running]],
       p = polynomial,
       kernel = kernel,
@@ -70,10 +69,9 @@ rd_analysis <- function(
   ## Run fuzzy RD ----
   if ("fuzzy" %in% design) {
     rd_fuzzy <- rdrobust(
-      data = data,
-      y = dependent_ended,
+      y = data[["dependent_ended"]],
       x = data[[running]],
-      fuzzy = fuzzy,
+      fuzzy = data[["fuzzy"]],
       p = polynomial,
       kernel = kernel,
       vce = "hc0",

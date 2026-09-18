@@ -10,27 +10,12 @@ library("checkmate")
 # Specify command-line arguments ----
 args <- commandArgs(trailingOnly = TRUE)
 if (length(args) == 0) {
+  population_arg <- "general"
   analysis_group_arg <- "primary"
 } else {
-  analysis_group_arg <- args[[1]]
+  population_arg <- args[[1]]
+  analysis_group_arg <- args[[2]]
 }
-assert_choice(
-  analysis_group_arg,
-  c(
-    "primary",
-    "alt_outcome",
-    "alt_kernel",
-    "alt_msebw",
-    "alt_polynomial",
-    "annual_fup",
-    "excl_thresholdm",
-    "fixed_bw1",
-    "fixed_bw2",
-    "reduced_excl",
-    "sub_cogimp",
-    "sub_sex"
-  )
-)
 
 # Specify parameters ----
 vaccine_name <- "zostavax"
@@ -47,15 +32,9 @@ source(here::here("analysis", "common_code", "rd_input_checks.R"))
 source(here::here("analysis", "common_code", "extract_rd_results.R"))
 source(here::here("analysis", "common_code", "rd_analysis.R"))
 
-# Load and filter analyses table ----
-analyses <- read_csv("lib/zostavax.csv") |>
-  filter(analysis_group == analysis_group_arg) |>
-  mutate(analysis_id = row_number())
-
-# Determine population to use ----
-population <- unique(analyses$population)
+# Check arguments ----
 assert_choice(
-  population,
+  population_arg,
   c(
     "general",
     "reduced_excl",
@@ -69,8 +48,33 @@ assert_choice(
   )
 )
 
+assert_choice(
+  analysis_group_arg,
+  c(
+    "primary",
+    "alt_outcome",
+    "alt_kernel",
+    "alt_msebw",
+    "alt_polynomial",
+    "annual_fup",
+    "reduced_excl",
+    "fixed_bw_aged78_81",
+    "fixed_bw_aged77_82",
+    "sub_sex_women",
+    "sub_sex_men",
+    "sub_cogimp_yes",
+    "sub_cogimp_no",
+    "thresholdm_no"
+  )
+)
+
+# Load and filter analyses table ----
+analyses <- read_csv(glue("lib/{vaccine_name}.csv")) |>
+  filter(analysis_group == analysis_group_arg) |>
+  mutate(analysis_id = row_number())
+
 # Load MSE-optimal bandwidth ----
-rd_msebw <- read.csv("output/zostavax/setup/rd_msebw.csv")
+rd_msebw <- read.csv(glue("output/{vaccine_name}/setup/rd_msebw.csv"))
 
 # Load data ----
 df_population <- read_feather(here::here(
@@ -83,7 +87,7 @@ df_population <- read_feather(here::here(
     "_",
     analysis,
     "_",
-    population,
+    population_arg,
     ".arrow"
   )
 ))
@@ -98,7 +102,7 @@ for (i in seq_len(nrow(analyses))) {
       patient_id,
       pat_end_date,
       month_diff_threshold,
-      zostavax_date_1,
+      glue("{vaccine_name}_date_1"),
       analyses$outcome[i]
     )
 
@@ -122,8 +126,8 @@ for (i in seq_len(nrow(analyses))) {
   } else if (grepl("fixed_bw", analysis_group_arg)) {
     bw <- case_match(
       analysis_group_arg,
-      "fixed_bw1" ~ 12,
-      "fixed_bw2" ~ 24,
+      "fixed_bw_aged78_81" ~ 12,
+      "fixed_bw_aged77_82" ~ 24,
       .default = NA_real_
     )
     h_left <- bw
@@ -147,7 +151,7 @@ for (i in seq_len(nrow(analyses))) {
     polynomial = analyses$polynomial[i],
     dependent = analyses$outcome[i],
     running = "month_diff_threshold",
-    fuzzy_date = "zostavax_date_1",
+    fuzzy_date = glue("{vaccine_name}_date_1"),
     end = end
   )
 
@@ -156,7 +160,7 @@ for (i in seq_len(nrow(analyses))) {
     mutate(
       analysis_id = analyses$analysis_id[i],
       running = "month_diff_threshold",
-      fuzzy_date = "zostavax_date_1"
+      fuzzy_date = glue("{vaccine_name}_date_1")
     )
 
   ## Record results ----
