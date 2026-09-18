@@ -4,25 +4,22 @@ library("arrow")
 library("here")
 library("glue")
 
-# Specify analysis parameters ----
-## Analysis specific parameters ----
+# Specify parameters ----
 vaccine_name <- "zostavax"
 analysis <- "main" # main, 2010, 2016
 population <- "general"
-
-## Define index_date specific dates ----
 if (analysis == "main") {
   index_date <- as.Date("2013-09-01")
   dob_threshold_date <- as.Date("1933-09-01")
 }
 
-# Source functions ----
-source(here::here("analysis", "common_code", "rd_input_checks.R"))
-source(here::here("analysis", "common_code", "rd_msebw.R"))
-
 # Create output directory ----
 output_dir <- here("output", vaccine_name, "setup")
 fs::dir_create(output_dir)
+
+# Source functions ----
+source(here::here("analysis", "common_code", "rd_input_checks.R"))
+source(here::here("analysis", "common_code", "rd_msebw.R"))
 
 # Load data ----
 df_population <- open_dataset(

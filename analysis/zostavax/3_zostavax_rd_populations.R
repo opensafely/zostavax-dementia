@@ -5,7 +5,7 @@ library("here")
 library("glue")
 library("checkmate")
 
-# Specify arguments ----
+# Specify command-line arguments ----
 args <- commandArgs(trailingOnly = TRUE)
 if (length(args) == 0) {
   population <- "general"
@@ -13,7 +13,6 @@ if (length(args) == 0) {
   population <- args[[1]]
 }
 
-# Check arguments ---
 assert_choice(
   population,
   c(
@@ -29,24 +28,21 @@ assert_choice(
   )
 )
 
-# Specify analysis parameters ----
-## Analysis specific parameters ----
+# Specify parameters ----
 vaccine_name <- "zostavax"
-analysis <- "main" # main, 2010, 2016
+analysis <- "main"
 lcd <- as.Date("2025-09-02")
-
-## Define index_date specific dates ----
 if (analysis == "main") {
   index_date <- as.Date("2013-09-01")
   dob_threshold_date <- as.Date("1933-09-01")
 }
 
-# Source functions ----
-source(here::here("analysis", "common_code", "rd_input_checks.R"))
-
 # Create output directory ----
 output_dir <- here("output", vaccine_name, "populations")
 fs::dir_create(output_dir)
+
+# Source functions ----
+source(here::here("analysis", "common_code", "rd_input_checks.R"))
 
 # Load data ----
 df_processed <- read_feather(here(
