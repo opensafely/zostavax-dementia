@@ -111,7 +111,7 @@ km_at_t <- function(event_time, event_indicator, time_horizon) {
 }
 
 # get Kaplan Meier estimates for each day up to time horizon
-# heavily inspired by the KM reusable OpeNSAFELY action https://github.com/opensafely-actions/kaplan-meier-function/blob/main/analysis/km.R
+# heavily inspired by the KM reusable OpenSAFELY action https://github.com/opensafely-actions/kaplan-meier-function/blob/main/analysis/km.R
 km <- function(.data, group_col, start_date, precision = 1, time_horizon, event_date_col, censor_date_col) {
 
   time_horizon <- ceiling_any(time_horizon, precision) # convert time_horizon in days to lower precision if needed
