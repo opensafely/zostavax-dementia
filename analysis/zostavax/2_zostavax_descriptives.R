@@ -205,52 +205,6 @@ write_csv(table_balance_keep_prior_dementia_wide, fs::path(output_dir, "table_ba
 # Check pre-index date discontinuities: report rate of event X by week of birth ----
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-check_discontinuity_pre <- function(.data, dob_threshold_date, threshold_date, event_col, event_name) {
-  
-  dat_summary <-
-    .data |>
-    transmute(
-      month_of_birth,
-      event = .data[[event_col]],
-     ) |>
-    group_by(month_of_birth) |>
-    summarise(
-      n =n(),
-      event_n = sum(event),
-      event_rate = mean(event)
-    ) |>
-    ungroup() |> 
-    # apply SDC
-    mutate(
-      n = sdc.rounding(n, sdc.threshold),
-      event_n = sdc.rounding(event_n, sdc.threshold),
-      event_rate = event_n / n
-    ) 
-
-  plot_summary <-
-    ggplot(dat_summary) +
-    geom_point(aes(x = month_of_birth, y = event_rate))+
-    geom_vline(aes(xintercept = dob_threshold_date), linetype="dashed")+
-    scale_x_date(
-      
-      # Three possible options for scale of horizontal axis 
-      name = "Date of birth", labels = ~ scales::label_date("%d %b %y")(.), breaks = dob_threshold_date + months(seq(-10,10)*12),
-      #name = glue("Month of birth (relative to {scales::label_date('%d %b %y')(dob_threshold_date)})"), labels = ~ interval(dob_threshold_date, .) %/% months(1), breaks = dob_threshold_date + months(seq(-10,10)*6),
-      #name = glue("Age at {scales::label_date('%d %b %y')(threshold_date)}"), labels = ~ (interval(., threshold_date) %/% months(1))/12, breaks = dob_threshold_date + months(seq(-10,10)*6),
-        
-    )+
-    scale_y_continuous(labels = scales::label_percent())+
-    labs(
-      y = glue("Proportion")
-    )+
-    theme_bw()
-  
-  
-  print(plot_summary)
-
-  # save to disk
-  ggsave(plot_summary, filename=glue("discontinuity_pre_{event_name}.png"), path=output_dir)
-}
 
 check_discontinuity_pre(df_analysis, dob_threshold_date, threshold_date, "shingles_before_threshold", "Prior Shingles")
 check_discontinuity_pre(df_analysis, dob_threshold_date, threshold_date, "asthma_before_threshold", "Asthma")
@@ -285,59 +239,6 @@ check_discontinuity_pre(df_analysis, dob_threshold_date, threshold_date, "antihy
 
 # calculate KM estimates, save data, and plot curves
 
-cumulative_events <- function(.data, group, precision, time_horizon, event_date_col, event_name){
-  
-  df_km <- km(.data, group, threshold_date, precision, time_horizon, event_date_col, "censor_date")
-
-  write_csv(df_km, fs::path(output_dir, glue("cumulative_incidence_{event_name}_{time_horizon}.csv")))
-
-  df_time0 <-
-    df_km |>
-    mutate(
-      lagtime = lag(time, 1, 0), # assumes the time-origin is zero
-    ) %>%
-    group_modify(
-      ~ add_row(
-        .x,
-        time = 0, # assumes time origin is zero
-        lagtime = 0,
-        cmlinc = 0,
-        cmlinc.low = 0,
-        cmlinc.high = 0,
-        .before = 0
-      )
-    )
-  
-   plot_km <-
-    ggplot(df_time0, aes(group = group, colour = group, fill = group)) +
-    geom_step(aes(x = time, y = cmlinc), direction = "vh") +
-    geom_step(aes(x = time, y = cmlinc), direction = "vh", linetype = "dashed", alpha = 0.5) +
-    geom_rect(aes(xmin = lagtime, xmax = time, ymin = cmlinc.low, ymax = cmlinc.high), alpha = 0.1, colour = "transparent") +
-    scale_color_discrete() +
-    scale_fill_discrete(guide = "none") +
-    scale_y_continuous(expand = expansion(mult = c(0, 0.01))) +
-    coord_cartesian(xlim = c(0, NA)) +
-    labs(
-      x = "Time",
-      y = "Cumulative Incidence",
-      colour = NULL,
-      fill = NULL,
-      title = NULL
-    ) +
-    theme_minimal() +
-    theme(
-      axis.line.x = element_line(colour = "black"),
-      panel.grid.minor.x = element_blank(),
-      legend.position = "inside",
-      legend.position.inside = c(.05, .95),
-      legend.justification = c(0, 1),
-    )
-  
-  print(plot_km)
-  
-  ggsave(plot_km, filename=glue("cumulative_incidence_{event_name}_{time_horizon}.png"), path=output_dir, width = 15, height = 15, units = "cm")
-
-}
 
 # Cumulative coverage of Zostavax by age in months up to one year after the threshold date
 cumulative_events(df_analysis |> filter(between(age, 79, 80)), "month_of_birth_fct", precision=7, 365, "zostavax_date_1", "Zostavax by month")
@@ -349,65 +250,6 @@ cumulative_events(df_analysis, "eligibility", precision=7, 365, "zostavax_date_1
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Check post-index date discontinuities: report rate of event X at time T by month of birth ----
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-check_discontinuity_post <- function(.data, dob_threshold_date, threshold_date, time_horizon, event_date_col, event_name) {
-  
-  threshold_date <- threshold_date - 1L # so that events occurring on the threshold date are not excluded 
-
-  dat_summary <-
-    .data |>
-    transmute(
-      month_of_birth,
-      day_diff_threshold,
-      event_date = .data[[event_date_col]],
-      censor_date = pmin(reg_end_date, date_of_death, na.rm=TRUE),
-      event_time = as.integer(pmin(event_date, censor_date, threshold_date + time_horizon, na.rm=TRUE) - threshold_date),
-      event_indicator = event_time < time_horizon
-    ) |>
-    group_by(month_of_birth) |>
-    summarise(
-      n = n(),
-      cmlinc = 1 - km_at_t(event_time = event_time, event_indicator = event_indicator, time_horizon = time_horizon)
-    ) |> 
-    ungroup() |>
-    # apply SDC
-    mutate(
-      n = sdc.rounding(n, sdc.threshold),
-      cmlinc = sdc.rounding(cmlinc*n, sdc.threshold) / n, 
-    )
-
-  plot_summary <-
-    ggplot(dat_summary) +
-    geom_point(aes(x = month_of_birth, y = cmlinc))+
-    geom_vline(aes(xintercept = dob_threshold_date), linetype="dashed")+
-    scale_x_date(
-      
-      # Three possible options for scale of horizontal axis 
-
-      name = "Date of birth", labels = ~ scales::label_date("%d %b %y")(.), breaks = dob_threshold_date + months(seq(-10,10)*12),
-      #name = glue("Month of birth (relative to {scales::label_date('%d %b %y')(dob_threshold_date)})"), labels = ~ interval(dob_threshold_date, .) %/% months(1), breaks = dob_threshold_date + months(seq(-10,10)*6),
-      #name = glue("Age at {scales::label_date('%d %b %y')(threshold_date)}"), labels = ~ (interval(., threshold_date) %/% (months(1))/12, breaks = dob_threshold_date + months(seq(-10,10)*6),
-      
-      ## For some reason using a secondary axis like this doesn't work! very frustrating
-      #sec.axis = sec_axis(
-      #  name = glue("Age at {scales::label_date('%d %b %y')(threshold_date)}"), 
-      #  transform = ~ . , 
-      #  labels = ~ (interval(., threshold_date) %/% (months(1)))/12,
-      #  breaks = dob_threshold_date + months(seq(-10,10)*6)
-      #)
-    )+
-    scale_y_continuous(labels = scales::label_percent())+
-    labs(
-      y = glue("Cumulative incidence of event within {time_horizon} days")
-    )+
-    theme_bw()
-  
-  
-  print(plot_summary)
-
-  ggsave(plot_summary, filename=glue("discontinuity_{event_name}_{time_horizon}.png"), path=output_dir)
-}
-
 
 ## Outcome rates at index date (5 months after threshold)
 days_to_index_date <- as.numeric(index_date - threshold_date + 1 )
