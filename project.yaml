@@ -8,7 +8,6 @@ actions:
       --dummy-data-file analysis/dummy_data/dummy_dataset_zostavax.arrow
       --
       --threshold_date "2013-09-01"
-      --index_date "2014-02-01"
       --min_dob "1920-09-01" 
       --max_dob "1948-09-01"
       --vaccine_name "zostavax"
@@ -22,7 +21,6 @@ actions:
       --output output/zostavax/dataset_zostavax_2010.arrow
       --
       --threshold_date "2010-09-01"
-      --index_date "2011-02-01"
       --min_dob "1920-09-01"
       --max_dob "1948-09-01"
       --vaccine_name "zostavax"
@@ -36,7 +34,6 @@ actions:
       --output output/zostavax/dataset_zostavax_2016.arrow
       --
       --threshold_date "2016-09-01"
-      --index_date "2017-02-01"
       --min_dob "1920-09-01"
       --max_dob "1948-09-01"
       --vaccine_name "zostavax"
@@ -79,7 +76,6 @@ actions:
   #    --output output/shingrix/dataset_shingrix_main.arrow
   #    --
   #    --threshold_date "2023-09-01"
-  #    --index_date "2014-02-01"
   #    --min_dob "1948-09-01"
   #    --max_dob "1968-09-01"
   #    --vaccine_name "shingrix"
