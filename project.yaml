@@ -12,7 +12,7 @@ actions:
   generate_dataset_zostavax_main:
     run: ehrql:v1 generate-dataset analysis/dataset_definition.py --output output/zostavax/dataset_zostavax_main.arrow
       --dummy-data-file analysis/dummy_data/dummy_dataset_zostavax.arrow -- --threshold_date
-      2013-09-01 --index_date 2014-02-01 --min_dob 1920-09-01 --max_dob 1948-09-01
+      2013-09-01 --min_dob 1920-09-01 --max_dob 1948-09-01
       --vaccine_name zostavax
     outputs:
       highly_sensitive:
