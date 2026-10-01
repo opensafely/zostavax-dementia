@@ -15,6 +15,7 @@ bandwidth_days <- 365*3
 
 # thresholds
 threshold_date <- as.Date("2013-09-01")
+index_date <- as.Date("2014-02-01")
 dob_threshold_date <- threshold_date - years(80)
 
 latest_date <- as.Date("2026-06-01")
@@ -51,7 +52,7 @@ dag <- empty_dag() +
   # demographics
 
   node("date_of_birth", type=dob_node, min = -bandwidth_days, max = bandwidth_days, origin_date = dob_threshold_date) +
-  node("age", type="identity", formula = ~as.integer(floor(time_length(interval(date_of_birth, threshold_date), "year")))) + # ehrQL returns age as an integer in years
+  node("age", type="identity", formula = ~as.integer(floor(time_length(interval(date_of_birth, index_date), "year")))) + # ehrQL returns age as an integer in years
   node("sex", type="rcategorical", prob=c(0.5,0.5), labels=c("female", "male"), output="rcategorical") +
   node(
     "imd_quintile", type="rcategorical", 
