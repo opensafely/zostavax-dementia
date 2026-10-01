@@ -37,13 +37,13 @@ rd_analysis <- function(
     missing = 0L
   )
 
-  ## Apply end date to dependent variable ----
+  ## Apply end date to dependent variable and make it binary ----
   data <- data |>
     dplyr::mutate(
       dependent_ended = dplyr::if_else(
-        .data[[dependent]] <= end,
-        .data[[dependent]],
-        as.Date(NA)
+        .data[[dependent]] <= pmin(pat_end_date, end),
+        TRUE,
+        FALSE
       )
     )
 
