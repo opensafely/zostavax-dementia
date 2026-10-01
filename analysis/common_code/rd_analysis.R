@@ -40,11 +40,8 @@ rd_analysis <- function(
   ## Apply end date to dependent variable and make it binary ----
   data <- data |>
     dplyr::mutate(
-      dependent_ended = dplyr::if_else(
-        .data[[dependent]] <= pmin(pat_end_date, end),
-        TRUE,
-        FALSE
-      )
+      dependent_binary = !is.na(.data[[dependent]]) &
+        .data[[dependent]] <= pmin(pat_end_date, end)
     )
 
   ## Make results dataframe ----
@@ -53,7 +50,7 @@ rd_analysis <- function(
   ## Run sharp RD ----
   if ("sharp" %in% design) {
     rd_sharp <- rdrobust(
-      y = data[["dependent_ended"]],
+      y = data[["dependent_binary"]],
       x = data[[running]],
       p = polynomial,
       kernel = kernel,
@@ -67,7 +64,7 @@ rd_analysis <- function(
   ## Run fuzzy RD ----
   if ("fuzzy" %in% design) {
     rd_fuzzy <- rdrobust(
-      y = data[["dependent_ended"]],
+      y = data[["dependent_binary"]],
       x = data[[running]],
       fuzzy = data[["fuzzy"]],
       p = polynomial,
