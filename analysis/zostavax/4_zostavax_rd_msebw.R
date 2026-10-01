@@ -8,6 +8,8 @@ library("glue")
 vaccine_name <- "zostavax"
 analysis <- "main" # main, 2010, 2016
 population <- "general"
+lcd <- as.Date("2025-09-02")
+msebw_outcome <- "dementia_first_date_ever"
 if (analysis == "main") {
   index_date <- as.Date("2013-09-01")
   dob_threshold_date <- as.Date("1933-09-01")
@@ -43,26 +45,20 @@ df_population <- open_dataset(
     patient_id,
     pat_end_date,
     month_diff_threshold,
-    zostavax_date_1,
-    dementia_first_date_ever
+    glue("{vaccine_name}_date_1"),
+    msebw_outcome
   ) |>
   collect()
 
-# Remove dementia events that occur after patient end date ---
-df_analysis <- df_population |>
-  mutate(
-    dementia_first_date_ever = if_else(
-      dementia_first_date_ever > pat_end_date,
-      as.Date(NA),
-      dementia_first_date_ever
-    )
-  )
+## Define end date ----
+end <- lcd
 
 # Perform bandwidth selection ----
 rd_msebw <- rd_msebw(
-  data = df_analysis,
-  dependent = "dementia_first_date_ever",
-  running = "month_diff_threshold"
+  data = df_population,
+  dependent = msebw_outcome,
+  running = "month_diff_threshold",
+  end = end
 )
 
 # Save ----

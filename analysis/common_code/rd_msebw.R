@@ -2,7 +2,7 @@
 library(rdrobust)
 
 # Define function ----
-rd_msebw <- function(data, dependent, running) {
+rd_msebw <- function(data, dependent, running, end) {
   ## Validate function inputs ----
   rd_input_checks(
     fn = "rd_msebw",
@@ -10,6 +10,13 @@ rd_msebw <- function(data, dependent, running) {
     dependent = dependent,
     running = running
   )
+
+  ## Apply end date to dependent variable and make it binary ----
+  data <- data |>
+    dplyr::mutate(
+      dependent_binary = !is.na(.data[[dependent]]) &
+        .data[[dependent]] <= pmin(pat_end_date, end)
+    )
 
   ## Perform mse-optimal bw selection ----
   rd_mse <- rdbwselect(
