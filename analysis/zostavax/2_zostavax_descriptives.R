@@ -232,6 +232,24 @@ check_discontinuity_pre(df_analysis, dob_threshold_date, threshold_date, "antihy
 
 
 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# Check ascertainment of shingle vaccine from product codes in the vaccinations table versus snomed codes in the clinical events table ----
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# simple analysis to count how much overlap exists between product codes and snomed codes, within 1 year
+
+df_analysis |>
+  transmute(
+    zostavax_within1year = coalesce(zostavax_date_1 <= threshold_date + 365, FALSE),
+    shvacgp_within1year = coalesce(shvacgp_first_date_ever <= threshold_date + 365, FALSE),
+  ) |>
+  count(zostavax_within1year, shvacgp_within1year) |>
+  mutate(
+    pct_of_zostavax = (zostavax_within1year)*n / sum(n[zostavax_within1year]),
+    pct_of_shvacgp = (shvacgp_within1year)*n / sum(n[shvacgp_within1year])
+  ) |>
+  write_csv(file = fs::path(output_dir, "product codes vs snomed codes.csv"))
+
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Cumulative incidence of vaccination since index date ----
