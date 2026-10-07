@@ -264,6 +264,12 @@ cumulative_events(df_analysis |> filter(between(age, 79, 80)), "month_of_birth_f
 # Cumulative coverage of Zostavax by eligibility (born either side of threshold date)
 cumulative_events(df_analysis, "eligibility", precision=7, 365, "zostavax_date_1", "Zostavax")
 
+# Cumulative coverage of "shingles vaccine snomed code" by age in months up to one year after the threshold date
+cumulative_events(df_analysis |> filter(between(age, 79, 80)), "month_of_birth_fct", precision=7, 365, "shvacgp_first_date_after", "Shingles vaccine snomed code by month")
+
+# Cumulative coverage of "shingles vaccine snomed code" by eligibility (born either side of threshold date)
+cumulative_events(df_analysis, "eligibility", precision=7, 365, "shvacgp_first_date_after", "Shingles vaccine snomed code")
+
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Check post-index date discontinuities: report rate of event X at time T by month of birth ----
