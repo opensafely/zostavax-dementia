@@ -187,6 +187,10 @@ ihd_snomed = codelist_from_csv(
     column = "code"
 )
 
+shvacgp_snomed = codelist_from_csv(
+    "codelists/nhsd-primary-care-domain-refsets-shvacgp_cod.csv",
+    column = "code"
+)
 
 ##########################################################
 

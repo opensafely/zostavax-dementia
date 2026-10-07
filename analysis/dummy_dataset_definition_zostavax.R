@@ -131,6 +131,8 @@ dag <- empty_dag() +
   node("shingrix_date_1", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = if_else(age<80, 0.01, 0.5), min_date = threshold_date, max_date = threshold_date + years(2))) +
   node("shingrix_date_2", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = if_else(!is.na(shingrix_date_1), 0.1, 0), min_date = shingrix_date_1, max_date = shingrix_date_1 + years(2)))+
   node("varicella_first_date_after", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.4, min_date = threshold_date, max_date = threshold_date + years(2)))+
+  node("shvacgp_first_date_ever", type="identity", formula = ~ zostavax_date_1 + as.integer(rcauchy(n = N, 0.5, 0.2)) + sample(c(NA,0L), size=N, replace=TRUE, prob=c(0.2, 0.8))) + 
+  node("shvacgp_first_date_after", type="identity", formula = ~ if_else(shvacgp_first_date_ever >= threshold_date, shvacgp_first_date_ever, as.Date(NA))) + 
 
   # health status and health care
     
