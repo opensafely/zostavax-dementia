@@ -78,7 +78,7 @@ capture.output(
 # create dataset same as analysis dataset but without excluding prior dementia
 df_analysis_keep_prior_dementia <-
   df_processed |> 
-  filter(common_exclusions_wo_dementia)
+  filter(!common_exclusions_wo_dementia)
 
 
 # many variables names are as follows:
