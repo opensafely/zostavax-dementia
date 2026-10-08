@@ -78,7 +78,7 @@ capture.output(
 # create dataset same as analysis dataset but without excluding prior dementia
 df_analysis_keep_prior_dementia <-
   df_processed |> 
-  filter(common_exclusions_wo_dementia)
+  filter(!common_exclusions_wo_dementia)
 
 
 # many variables names are as follows:
@@ -202,7 +202,7 @@ write_csv(table_balance_keep_prior_dementia_wide, fs::path(output_dir, "table_ba
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-# Check pre-index date discontinuities: report rate of event X by week of birth ----
+# Check pre-index date discontinuities: report rate of event X by month of birth ----
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 
@@ -232,6 +232,24 @@ check_discontinuity_pre(df_analysis, dob_threshold_date, threshold_date, "antihy
 
 
 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# Check ascertainment of shingle vaccine from product codes in the vaccinations table versus snomed codes in the clinical events table ----
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# simple analysis to count how much overlap exists between product codes and snomed codes, within 1 year
+
+df_analysis |>
+  transmute(
+    zostavax_within1year = coalesce(zostavax_date_1 <= threshold_date + 365, FALSE),
+    shvacgp_within1year = coalesce(shvacgp_first_date_ever <= threshold_date + 365, FALSE),
+  ) |>
+  count(zostavax_within1year, shvacgp_within1year) |>
+  mutate(
+    pct_of_zostavax = (zostavax_within1year)*n / sum(n[zostavax_within1year]),
+    pct_of_shvacgp = (shvacgp_within1year)*n / sum(n[shvacgp_within1year])
+  ) |>
+  write_csv(file = fs::path(output_dir, "product codes vs snomed codes.csv"))
+
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Cumulative incidence of vaccination since index date ----
@@ -245,6 +263,12 @@ cumulative_events(df_analysis |> filter(between(age, 79, 80)), "month_of_birth_f
 
 # Cumulative coverage of Zostavax by eligibility (born either side of threshold date)
 cumulative_events(df_analysis, "eligibility", precision=7, 365, "zostavax_date_1", "Zostavax")
+
+# Cumulative coverage of "shingles vaccine snomed code" by age in months up to one year after the threshold date
+cumulative_events(df_analysis |> filter(between(age, 79, 80)), "month_of_birth_fct", precision=7, 365, "shvacgp_first_date_after", "Shingles vaccine snomed code by month")
+
+# Cumulative coverage of "shingles vaccine snomed code" by eligibility (born either side of threshold date)
+cumulative_events(df_analysis, "eligibility", precision=7, 365, "shvacgp_first_date_after", "Shingles vaccine snomed code")
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
