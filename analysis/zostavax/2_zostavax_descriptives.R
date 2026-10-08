@@ -202,7 +202,7 @@ write_csv(table_balance_keep_prior_dementia_wide, fs::path(output_dir, "table_ba
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-# Check pre-index date discontinuities: report rate of event X by week of birth ----
+# Check pre-index date discontinuities: report rate of event X by month of birth ----
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 
