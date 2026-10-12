@@ -43,15 +43,21 @@ fs::dir_create(output_dir)
 df_processed <- read_feather(here("output", vaccine_name, "processed", glue("dataset_processed_{vaccine_name}_{analysis}.arrow")))
 
 # add some variables convenient for descriptives
-df_processed <- 
-  df_processed |> 
+df_processed <-
+  df_processed |>
   mutate(
     eligibility = .data[[glue("zostavax_eligibility_{analysis}")]],
     month_of_birth = floor_date(date_of_birth, "month"), # this should be an identity because currently in OS birth dates are rounded down to 1st of the month
-    month_of_birth_fct = fct_reorder(scales::label_date(format = "%b '%y")(month_of_birth), month_of_birth), # convert to factor
-    month_diff_threshold = as.integer(time_length(interval(dob_threshold_date, date_of_birth), unit = "months")),
+    month_of_birth_fct = fct_reorder(
+      scales::label_date(format = "%b '%y")(month_of_birth),
+      month_of_birth
+    ), # convert to factor
+    month_diff_threshold = as.integer(time_length(
+      interval(dob_threshold_date, date_of_birth),
+      unit = "months"
+    )),
     day_diff_threshold = as.integer(date_of_birth - dob_threshold_date),
-    registration_duration = as.numeric(as.Date("2013-09-02") - reg_start_date),
+    registration_duration = as.numeric(threshold_date - reg_start_date),
     censor_date = pmin(reg_end_date, date_of_death, na.rm = TRUE)
   )
 
