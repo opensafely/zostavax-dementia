@@ -66,6 +66,9 @@ def vaccinations(threshold_date):
         "VARIVAX live vaccine"
     ]
     dataset.varicella_first_date_after = first_vax_event_after(threshold_date, product_name=varicella_products).date
+    
+    dataset.shvacgp_first_date_ever = first_gp_event_ever(codelists.shvacgp_snomed).date
+    dataset.shvacgp_first_date_after = first_gp_event_after(threshold_date, codelists.shvacgp_snomed).date
 
     return dataset
 
