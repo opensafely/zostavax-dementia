@@ -227,6 +227,59 @@ km <- function(
   return(df_km_rounded)
 }
 
+
+# report any discontinuities in events occurring either side of the threhold_date, by reporting outcome rates by month_of_birth ----
+# use the "X_before_threshold" columns as the event_col for this function
+check_discontinuity_pre <- function(.data, dob_threshold_date, threshold_date, event_col, event_name) {
+
+  dat_summary <-
+    .data |>
+    transmute(
+      month_of_birth,
+      event = .data[[event_col]],
+     ) |>
+    group_by(month_of_birth) |>
+    summarise(
+      n =n(),
+      event_n = sum(event),
+      event_rate = mean(event)
+    ) |>
+    ungroup() |> 
+    # apply SDC
+    mutate(
+      n = sdc.rounding(n, sdc.threshold),
+      event_n = sdc.rounding(event_n, sdc.threshold),
+      event_rate = event_n / n
+    ) 
+
+  plot_summary <-
+    ggplot(dat_summary) +
+    geom_point(aes(x = month_of_birth, y = event_rate))+
+    geom_vline(aes(xintercept = dob_threshold_date), linetype="dashed")+
+    scale_x_date(
+
+      # Three possible options for scale of horizontal axis 
+      name = "Date of birth", labels = ~ scales::label_date("%d %b %y")(.), breaks = dob_threshold_date + months(seq(-10,10)*12),
+      #name = glue("Month of birth (relative to {scales::label_date('%d %b %y')(dob_threshold_date)})"), labels = ~ interval(dob_threshold_date, .) %/% months(1), breaks = dob_threshold_date + months(seq(-10,10)*6),
+      #name = glue("Age at {scales::label_date('%d %b %y')(threshold_date)}"), labels = ~ (interval(., threshold_date) %/% months(1))/12, breaks = dob_threshold_date + months(seq(-10,10)*6),
+
+    )+
+    scale_y_continuous(labels = scales::label_percent())+
+    labs(
+      y = glue("Proportion")
+    )+
+    theme_bw()
+
+
+  print(plot_summary)
+
+  # save to disk
+  ggsave(plot_summary, filename=glue("discontinuity_pre_{event_name}.png"), path=output_dir)
+}
+
+
+
+
 # report the cumulative incidence of events by age either side of threshold date (or by month_of_birth) ----
 # use the "X_first_date_after" column as the event_date_col, or the "X_first_date_ever" column with a filter on the inputted data to ensure this event did not occur prior to baseline
 cumulative_events <- function(
