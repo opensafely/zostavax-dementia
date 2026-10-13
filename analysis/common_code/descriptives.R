@@ -137,7 +137,11 @@ km <- function(
     ) |>
     mutate(
       event_time = ceiling_any(event_time, precision),
-      event_indicator = event_time < time_horizon,
+      event_indicator = coalesce(
+        event_date <=
+          pmin(censor_date, start_date + time_horizon, na.rm = TRUE),
+        FALSE
+      )
     )
 
   times_count <- table(
@@ -222,7 +226,8 @@ km <- function(
         n_rounded,
       cmlinc.high = sdc.rounding(cmlinc.high * n_rounded, sdc.threshold) /
         n_rounded,
-    )
+    ) |>
+    filter(time %in% df_tte$event_time)
 
   return(df_km_rounded)
 }

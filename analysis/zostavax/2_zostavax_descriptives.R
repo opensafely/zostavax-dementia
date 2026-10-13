@@ -11,7 +11,7 @@ library("survival")
 vaccine_name <- "zostavax"
 analysis <- "main" # main, 2010, 2016
 
-# define index_date specific dates
+# define threshold dates
 if (analysis == "main") {
   dob_threshold_date <- as.Date("1933-09-01")
   threshold_date <- as.Date("2013-09-01")
@@ -266,16 +266,16 @@ df_analysis |>
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 # Cumulative coverage of Zostavax by age in months up to one year after the threshold date
-cumulative_events(df_analysis |> filter(between(age, 79, 80)), "month_of_birth_fct", precision=7, 365, "zostavax_date_1", "Zostavax by month")
+cumulative_events(df_analysis |> filter(between(age, 79, 80)), "month_of_birth_fct", precision=7, 52*7, "zostavax_date_1", "Zostavax by month")
 
 # Cumulative coverage of Zostavax by eligibility (born either side of threshold date)
-cumulative_events(df_analysis, "eligibility", precision=7, 365, "zostavax_date_1", "Zostavax")
+cumulative_events(df_analysis, "eligibility", precision=7, 52*7, "zostavax_date_1", "Zostavax")
 
 # Cumulative coverage of "shingles vaccine snomed code" by age in months up to one year after the threshold date
-cumulative_events(df_analysis |> filter(between(age, 79, 80)), "month_of_birth_fct", precision=7, 365, "shvacgp_first_date_after", "Shingles vaccine snomed code by month")
+cumulative_events(df_analysis |> filter(between(age, 79, 80)), "month_of_birth_fct", precision=7, 52*7, "shvacgp_first_date_after", "Shingles vaccine snomed code by month")
 
 # Cumulative coverage of "shingles vaccine snomed code" by eligibility (born either side of threshold date)
-cumulative_events(df_analysis, "eligibility", precision=7, 365, "shvacgp_first_date_after", "Shingles vaccine snomed code")
+cumulative_events(df_analysis, "eligibility", precision=7, 52*7, "shvacgp_first_date_after", "Shingles vaccine snomed code")
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
