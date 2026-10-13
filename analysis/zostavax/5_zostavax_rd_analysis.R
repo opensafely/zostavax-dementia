@@ -146,6 +146,11 @@ for (i in seq_len(nrow(analyses))) {
     format = "%d-%m-%Y"
   )
 
+  index_date <- as.Date(
+       paste0("01-02-", analyses$threshold_year[i]),
+    format = "%d-%m-%Y"
+  ) 
+
   ## Define end date ----
   if (!is.na(analyses$end_date_years[i])) {
     end <- threshold %m+% years(analyses$end_date_years[i])
