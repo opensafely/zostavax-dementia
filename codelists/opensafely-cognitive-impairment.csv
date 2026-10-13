@@ -42,10 +42,12 @@ code,term
 1259562009,Cognitive impairment due to late-delayed irradiation of brain
 1303576005,Forgets to take medication
 130964008,Impaired environmental interpretation syndrome
+130988005,Chronic confusion
 1386319000,Digit span forwards performance impaired
 1386320006,Digit span reverse performance impaired
 139484009,Memory disturbance (& amnesia (& symptom))
 140621000119106,Memory disorder co-occurrent and due to organic brain damage
+140826008,Mild cognitive disorder
 140828009,Forgetful
 141601000119107,Cognitive changes due to organic disorder
 142261000119100,Cognitive deficit in attention
@@ -61,9 +63,12 @@ code,term
 142710005,Memory: import.person not knwn
 142715000,Memory: count down unsuccess.
 142718003,Memory: address recall unsucc.
+145040006,Mild cognitive disorder
 154961004,Memory disturbance: [mild]
+158178004,[D]Amnesia (retrograde)
 15928141000119107,Cognitive impairment co-occurrent and due to human immunodeficiency virus infection
 162199006,Memory disturbance (& amnesia (& symptom))
+163619002,Mild cognitive disorder
 163621007,Forgetful
 165280004,Memory: own age not known
 165283002,Memory: present time not known
@@ -84,13 +89,18 @@ code,term
 16703821000119101,Memory deficit due to and following hemorrhagic cerebrovascular accident
 186561000000101,Disturbance of memory for order of events
 190001000000109,Disturbance of memory for order of events
+191520004,Chronic confusional state
 192071009,Mild memory disturbance
 192072002,Organic memory impairment
+192195008,Mild cognitive disorder
 206784007,[D]Amnesia (retrograde)
+206789002,[D]Anterograde amnesia
+207606006,[X]Other amnesia
 225037001,Minor memory lapses
 225038006,Memory lapses
 225039003,Mixes past with present
 229676007,Language-related cognitive disorder
+231447009,Mild cognitive disorder
 231448004,Age-associated memory impairment
 247588002,Poor long-term memory
 247592009,Poor short-term memory
@@ -102,6 +112,7 @@ code,term
 247598008,Forgets what has just read
 247599000,Forgets what has just seen
 247600002,Forgets what has just heard
+247606008,Amnesia
 247607004,Amnesia for day to day facts
 247608009,Unable to remember today's date
 247609001,Unable to remember name of reigning monarch
@@ -114,6 +125,7 @@ code,term
 247616000,Cannot remember name of school
 268792003,Memory disturbance: [mild]
 275278005,Difficulty in remembering dates
+280994000,Chronic confusional state
 283878007,Impairment of registration
 283902008,Has delayed recall
 285157008,Unable to recognize objects
@@ -144,6 +156,7 @@ code,term
 386805003,Mild neurocognitive disorder
 386806002,Impaired cognition
 386807006,Memory impairment
+41171000000106,Mild cognitive disorder
 413088002,Poor visual sequential memory
 413089005,Poor auditory sequential memory
 42176003,Amnesia for recent events
@@ -152,9 +165,12 @@ code,term
 442212003,Residual cognitive deficit as late effect of cerebrovascular accident
 443265004,Cognitive disorder
 454161000124103,Noncompliance with medication regimen due to cognitive impairment
+480201000000101,[X]Other amnesia
 48167000,Amnesia
 495901000000102,[D]Amnesia (retrograde)
+495941000000104,[D]Anterograde amnesia
 51921000,Retrograde amnesia
+55261000087107,Neurocognitive disorder suspected
 55533009,Forgetful
 6149008,Amnesia for remote events
 672561000119103,Cognitive deficit due to and following ischemic cerebrovascular accident
@@ -172,10 +188,10 @@ code,term
 76789006,Information conversion problem
 771417007,Cognitive dysfunction following surgical procedure
 78461004,Memory impairment
+78521000000105,Mild cognitive disorder
 80216008,Impaired cognition
 808311000000102,Poor short-term memory
 836301008,Amnestic mild cognitive disorder
-840449007,Cognitive impairment caused by ingestible alcohol
 85173004,False recognition
 88822006,Anterograde amnesia
 888271000000101,Mild cognitive impairment
