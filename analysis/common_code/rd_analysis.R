@@ -41,6 +41,7 @@ rd_analysis <- function(
   data <- data |>
     dplyr::mutate(
       dependent_binary = !is.na(.data[[dependent]]) &
+        .data[[dependent]] >= index_date &
         .data[[dependent]] <= pmin(pat_end_date, end)
     )
 
