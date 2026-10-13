@@ -1,2 +1,0 @@
-[format]
-skip = ["cumulative_events", "check_discontinuity_post"]
