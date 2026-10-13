@@ -54,7 +54,7 @@ df_processed <-
       unit = "months"
     )),
     day_diff_threshold = as.integer(date_of_birth - dob_threshold_date),
-    registration_duration = as.numeric(threshold_date - reg_start_date),
+    registration_duration = as.integer(index_date - reg_start_date + 1L),
     censor_date = pmin(reg_end_date, date_of_death, na.rm = TRUE)
   )
 
@@ -68,18 +68,7 @@ capture.output(
 # create core analysis dataset with exclusions applied
 df_analysis <-
   df_processed |>
-  filter(no_common_exclusions) |>
-  mutate(
-    eligibility = .data[[glue("zostavax_eligibility_{analysis}")]],
-    month_of_birth = floor_date(date_of_birth, "month"), # this should be an identity because currently in OS birth dates are rounded down to 1st of the month
-    month_diff_threshold = as.integer(time_length(
-      interval(dob_threshold_date, date_of_birth),
-      unit = "months"
-    )),
-    day_diff_threshold = as.integer(date_of_birth - dob_threshold_date),
-    registration_duration = as.numeric(as.Date("2013-09-02") - reg_start_date),
-    censor_date = pmin(reg_end_date, date_of_death, na.rm = TRUE)
-  )
+  filter(no_common_exclusions)
 
 # print summary of analysis dataset - not disclosure controlled, not for release
 capture.output(
