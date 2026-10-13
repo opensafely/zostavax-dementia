@@ -1,7 +1,8 @@
 from ehrql.tables.tpp import (clinical_events, apcs, medications, vaccinations, ons_deaths)
 from ehrql import case, when
 
-clinical_events = (
+
+clinical_events = ( #TOCHECK
     clinical_events.where(clinical_events.date.is_on_or_after("2010-01-01"))
 )
 

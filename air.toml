@@ -1,2 +1,2 @@
 [format]
-skip = ["cumulative_events", "check_discontinuity_post"]
+skip = ["cumulative_events", "check_discontinuity_pre", "check_discontinuity_post", "node"]

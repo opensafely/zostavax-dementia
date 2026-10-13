@@ -112,10 +112,17 @@ km_at_t <- function(event_time, event_indicator, time_horizon) {
 
 ## get Kaplan Meier estimates for each day up to time horizon ----
 # heavily inspired by the KM reusable OpenSAFELY action https://github.com/opensafely-actions/kaplan-meier-function/blob/main/analysis/km.R
-km <- function(.data, group_col, start_date, precision = 1, time_horizon, event_date_col, censor_date_col) {
-
+km <- function(
+  .data,
+  group_col,
+  start_date,
+  precision = 1,
+  time_horizon,
+  event_date_col,
+  censor_date_col
+) {
   time_horizon <- ceiling_any(time_horizon, precision) # convert time_horizon in days to lower precision if needed
-  start_date <- start_date - 1L # if events occur on same day as start date, that's ok, treat as event_time=1
+  start_date <- start_date - 1L # if events occur on same day as index date, that's ok, treat as event_time=1
 
   df_tte <-
     .data |>
@@ -123,16 +130,31 @@ km <- function(.data, group_col, start_date, precision = 1, time_horizon, event_
       group = .data[[group_col]],
       event_date = .data[[event_date_col]],
       censor_date = .data[[censor_date_col]],
-      event_time = as.integer(pmin(event_date, censor_date, start_date + time_horizon, na.rm=TRUE) - start_date),
+      event_time = as.integer(
+        pmin(event_date, censor_date, start_date + time_horizon, na.rm = TRUE) -
+          start_date
+      ),
     ) |>
-   mutate(
-    event_time = ceiling_any(event_time, precision),
-    event_indicator = event_time < time_horizon,
-   )
+    mutate(
+      event_time = ceiling_any(event_time, precision),
+      event_indicator = coalesce(
+        event_date <=
+          pmin(censor_date, start_date + time_horizon, na.rm = TRUE),
+        FALSE
+      )
+    )
 
-  times_count <- table(cut(df_tte$event_time, c(-Inf, 0, 1, Inf), right=FALSE, labels= c("<0", "0", ">0")), useNA="ifany")
+  times_count <- table(
+    cut(
+      df_tte$event_time,
+      c(-Inf, 0, 1, Inf),
+      right = FALSE,
+      labels = c("<0", "0", ">0")
+    ),
+    useNA = "ifany"
+  )
 
-  if(!identical(as.integer(times_count), c(0L, 0L, nrow(df_tte)))) {
+  if (!identical(as.integer(times_count), c(0L, 0L, nrow(df_tte)))) {
     print(times_count)
     stop("all event times must be strictly positive")
   }
@@ -149,19 +171,22 @@ km <- function(.data, group_col, start_date, precision = 1, time_horizon, event_
     group_by(group) |>
     nest() |>
     mutate(
-      surv_obj_tidy = purrr::map(data, ~ {
-        survival::survfit(
-          survival::Surv(event_time, event_indicator) ~ 1,
-          data = .x,
-          conf.type="log-log"
-        ) |>
-        broom::tidy() |>
-        tidyr::complete(
-          time = seq_len(time_horizon), # fill in 1 row for each day of follow up
-          fill = list(n.event = 0L, n.censor = 0L) # fill in zero events on those days
-        ) |>
-        tidyr::fill(n.risk, .direction = c("up"))
-      }),
+      surv_obj_tidy = purrr::map(
+        data,
+        ~ {
+          survival::survfit(
+            survival::Surv(event_time, event_indicator) ~ 1,
+            data = .x,
+            conf.type = "log-log"
+          ) |>
+            broom::tidy() |>
+            tidyr::complete(
+              time = seq_len(time_horizon), # fill in 1 row for each day of follow up
+              fill = list(n.event = 0L, n.censor = 0L) # fill in zero events on those days
+            ) |>
+            tidyr::fill(n.risk, .direction = c("up"))
+        }
+      ),
     ) |>
     select(-data) |>
     tidyr::unnest(surv_obj_tidy)
@@ -170,15 +195,18 @@ km <- function(.data, group_col, start_date, precision = 1, time_horizon, event_
   # round event times such that no event time has fewer than `min_count` events
   # recalculate KM estimates based on these rounded event times
 
-
-  df_km_rounded <- 
+  df_km_rounded <-
     df_km |>
     mutate(
       surv = cumprod(1 - n.event / n.risk),
       ## standard errors on complementary log-log scale
       surv.cll = log(-log(surv)), # this is equivalent to the log cumulative hazard
       summand = (1 / (n.risk - n.event)) - (1 / n.risk), # = n.event / ((n.risk - n.event) * n.risk) but re-written to prevent integer overflow
-      surv.cll.se = if_else(surv==1, 0, sqrt((1 / log(surv)^2) * cumsum(summand))), # assume SE is zero until there are events -- makes plotting easier
+      surv.cll.se = if_else(
+        surv == 1,
+        0,
+        sqrt((1 / log(surv)^2) * cumsum(summand))
+      ), # assume SE is zero until there are events -- makes plotting easier
       surv.low = exp(-exp(surv.cll + qnorm(0.975) * surv.cll.se)),
       surv.high = exp(-exp(surv.cll + qnorm(0.025) * surv.cll.se)),
       #cumulative incidence (= complement of survival)
@@ -193,20 +221,22 @@ km <- function(.data, group_col, start_date, precision = 1, time_horizon, event_
 
       # multiply cumulative incidence by (rounded) baseline population size, apply rounding, and rescale
       n_rounded = sdc.rounding(max(n.risk), sdc.threshold),
-      cmlinc = sdc.rounding(cmlinc*n_rounded, sdc.threshold) / n_rounded, 
-      cmlinc.low = sdc.rounding(cmlinc.low*n_rounded, sdc.threshold) / n_rounded, 
-      cmlinc.high = sdc.rounding(cmlinc.high*n_rounded, sdc.threshold) / n_rounded, 
-    )
-  
+      cmlinc = sdc.rounding(cmlinc * n_rounded, sdc.threshold) / n_rounded,
+      cmlinc.low = sdc.rounding(cmlinc.low * n_rounded, sdc.threshold) /
+        n_rounded,
+      cmlinc.high = sdc.rounding(cmlinc.high * n_rounded, sdc.threshold) /
+        n_rounded,
+    ) |>
+    filter(time %in% df_tte$event_time)
+
   return(df_km_rounded)
 }
-
 
 
 # report any discontinuities in events occurring either side of the threhold_date, by reporting outcome rates by month_of_birth ----
 # use the "X_before_threshold" columns as the event_col for this function
 check_discontinuity_pre <- function(.data, dob_threshold_date, threshold_date, event_col, event_name) {
-  
+
   dat_summary <-
     .data |>
     transmute(
@@ -232,20 +262,20 @@ check_discontinuity_pre <- function(.data, dob_threshold_date, threshold_date, e
     geom_point(aes(x = month_of_birth, y = event_rate))+
     geom_vline(aes(xintercept = dob_threshold_date), linetype="dashed")+
     scale_x_date(
-      
+
       # Three possible options for scale of horizontal axis 
       name = "Date of birth", labels = ~ scales::label_date("%d %b %y")(.), breaks = dob_threshold_date + months(seq(-10,10)*12),
       #name = glue("Month of birth (relative to {scales::label_date('%d %b %y')(dob_threshold_date)})"), labels = ~ interval(dob_threshold_date, .) %/% months(1), breaks = dob_threshold_date + months(seq(-10,10)*6),
       #name = glue("Age at {scales::label_date('%d %b %y')(threshold_date)}"), labels = ~ (interval(., threshold_date) %/% months(1))/12, breaks = dob_threshold_date + months(seq(-10,10)*6),
-        
+
     )+
     scale_y_continuous(labels = scales::label_percent())+
     labs(
       y = glue("Proportion")
     )+
     theme_bw()
-  
-  
+
+
   print(plot_summary)
 
   # save to disk
@@ -253,13 +283,35 @@ check_discontinuity_pre <- function(.data, dob_threshold_date, threshold_date, e
 }
 
 
+
+
 # report the cumulative incidence of events by age either side of threshold date (or by month_of_birth) ----
 # use the "X_first_date_after" column as the event_date_col, or the "X_first_date_ever" column with a filter on the inputted data to ensure this event did not occur prior to baseline
-cumulative_events <- function(.data, group, precision, time_horizon, event_date_col, event_name){
-  
-  df_km <- km(.data, group, threshold_date, precision, time_horizon, event_date_col, "censor_date")
+cumulative_events <- function(
+  .data,
+  group,
+  precision,
+  time_horizon,
+  event_date_col,
+  event_name
+) {
+  df_km <- km(
+    .data,
+    group,
+    threshold_date,
+    precision,
+    time_horizon,
+    event_date_col,
+    "censor_date"
+  )
 
-  write_csv(df_km, fs::path(output_dir, glue("cumulative_incidence_{event_name}_{time_horizon}.csv")))
+  write_csv(
+    df_km,
+    fs::path(
+      output_dir,
+      glue("cumulative_incidence_{event_name}_{time_horizon}.csv")
+    )
+  )
 
   df_time0 <-
     df_km |>
@@ -277,12 +329,21 @@ cumulative_events <- function(.data, group, precision, time_horizon, event_date_
         .before = 0
       )
     )
-  
-   plot_km <-
+
+  plot_km <-
     ggplot(df_time0, aes(group = group, colour = group, fill = group)) +
     geom_step(aes(x = time, y = cmlinc), direction = "vh") +
-    geom_step(aes(x = time, y = cmlinc), direction = "vh", linetype = "dashed", alpha = 0.5) +
-    geom_rect(aes(xmin = lagtime, xmax = time, ymin = cmlinc.low, ymax = cmlinc.high), alpha = 0.1, colour = "transparent") +
+    geom_step(
+      aes(x = time, y = cmlinc),
+      direction = "vh",
+      linetype = "dashed",
+      alpha = 0.5
+    ) +
+    geom_rect(
+      aes(xmin = lagtime, xmax = time, ymin = cmlinc.low, ymax = cmlinc.high),
+      alpha = 0.1,
+      colour = "transparent"
+    ) +
     scale_color_discrete() +
     scale_fill_discrete(guide = "none") +
     scale_y_continuous(expand = expansion(mult = c(0, 0.01))) +
@@ -302,20 +363,30 @@ cumulative_events <- function(.data, group, precision, time_horizon, event_date_
       legend.position.inside = c(.05, .95),
       legend.justification = c(0, 1),
     )
-  
+
   print(plot_km)
-  
-  ggsave(plot_km, filename=glue("cumulative_incidence_{event_name}_{time_horizon}.png"), path=output_dir, width = 15, height = 15, units = "cm")
 
+  ggsave(
+    plot_km,
+    filename = glue("cumulative_incidence_{event_name}_{time_horizon}.png"),
+    path = output_dir,
+    width = 15,
+    height = 15,
+    units = "cm"
+  )
 }
-
-
 
 # report any discontinuities in events occurring either side of the threhold_date, by reporting outcome rates by month_of_birth ----
 # use the "X_first_date_after" column as the event_date_col, or the "X_first_date_ever" column with a filter on the inputted data to ensure this event did not occur prior to baseline
-check_discontinuity_post <- function(.data, dob_threshold_date, threshold_date, time_horizon, event_date_col, event_name) {
-  
-  threshold_date <- threshold_date - 1L # so that events occurring on the threshold date are not excluded 
+check_discontinuity_post <- function(
+  .data,
+  dob_threshold_date,
+  threshold_date,
+  time_horizon,
+  event_date_col,
+  event_name
+) {
+  threshold_date <- threshold_date - 1L # so that events occurring on the threshold date are not excluded
 
   dat_summary <-
     .data |>
@@ -323,50 +394,67 @@ check_discontinuity_post <- function(.data, dob_threshold_date, threshold_date, 
       month_of_birth,
       day_diff_threshold,
       event_date = .data[[event_date_col]],
-      censor_date = pmin(reg_end_date, date_of_death, na.rm=TRUE),
-      event_time = as.integer(pmin(event_date, censor_date, threshold_date + time_horizon, na.rm=TRUE) - threshold_date),
+      censor_date = pmin(reg_end_date, date_of_death, na.rm = TRUE),
+      event_time = as.integer(
+        pmin(
+          event_date,
+          censor_date,
+          threshold_date + time_horizon,
+          na.rm = TRUE
+        ) -
+          threshold_date
+      ),
       event_indicator = event_time < time_horizon
     ) |>
     group_by(month_of_birth) |>
     summarise(
       n = n(),
-      cmlinc = 1 - km_at_t(event_time = event_time, event_indicator = event_indicator, time_horizon = time_horizon)
-    ) |> 
+      cmlinc = 1 -
+        km_at_t(
+          event_time = event_time,
+          event_indicator = event_indicator,
+          time_horizon = time_horizon
+        )
+    ) |>
     ungroup() |>
     # apply SDC
     mutate(
       n = sdc.rounding(n, sdc.threshold),
-      cmlinc = sdc.rounding(cmlinc*n, sdc.threshold) / n, 
+      cmlinc = sdc.rounding(cmlinc * n, sdc.threshold) / n,
     )
 
   plot_summary <-
     ggplot(dat_summary) +
-    geom_point(aes(x = month_of_birth, y = cmlinc))+
-    geom_vline(aes(xintercept = dob_threshold_date), linetype="dashed")+
+    geom_point(aes(x = month_of_birth, y = cmlinc)) +
+    geom_vline(aes(xintercept = dob_threshold_date), linetype = "dashed") +
     scale_x_date(
-      
-      # Three possible options for scale of horizontal axis 
+      # Three possible options for scale of horizontal axis
 
-      name = "Date of birth", labels = ~ scales::label_date("%d %b %y")(.), breaks = dob_threshold_date + months(seq(-10,10)*12),
+      name = "Date of birth",
+      labels = ~ scales::label_date("%d %b %y")(.),
+      breaks = dob_threshold_date + months(seq(-10, 10) * 12),
       #name = glue("Month of birth (relative to {scales::label_date('%d %b %y')(dob_threshold_date)})"), labels = ~ interval(dob_threshold_date, .) %/% months(1), breaks = dob_threshold_date + months(seq(-10,10)*6),
       #name = glue("Age at {scales::label_date('%d %b %y')(threshold_date)}"), labels = ~ (interval(., threshold_date) %/% (months(1))/12, breaks = dob_threshold_date + months(seq(-10,10)*6),
-      
+
       ## For some reason using a secondary axis like this doesn't work! very frustrating
       #sec.axis = sec_axis(
-      #  name = glue("Age at {scales::label_date('%d %b %y')(threshold_date)}"), 
-      #  transform = ~ . , 
+      #  name = glue("Age at {scales::label_date('%d %b %y')(threshold_date)}"),
+      #  transform = ~ . ,
       #  labels = ~ (interval(., threshold_date) %/% (months(1)))/12,
       #  breaks = dob_threshold_date + months(seq(-10,10)*6)
       #)
-    )+
-    scale_y_continuous(labels = scales::label_percent())+
+    ) +
+    scale_y_continuous(labels = scales::label_percent()) +
     labs(
       y = glue("Cumulative incidence of event within {time_horizon} days")
-    )+
+    ) +
     theme_bw()
-  
-  
+
   print(plot_summary)
 
-  ggsave(plot_summary, filename=glue("discontinuity_{event_name}_{time_horizon}.png"), path=output_dir)
+  ggsave(
+    plot_summary,
+    filename = glue("discontinuity_{event_name}_{time_horizon}.png"),
+    path = output_dir
+  )
 }

@@ -7,22 +7,22 @@ library("survival")
 
 # Specify analysis parameters ----
 
-# analysis specific parameters 
+# analysis specific parameters
 vaccine_name <- "zostavax"
 analysis <- "main" # main, 2010, 2016
 
 # define threshold dates
-if(analysis == "main"){
+if (analysis == "main") {
   dob_threshold_date <- as.Date("1933-09-01")
   threshold_date <- as.Date("2013-09-01")
 }
 
-if(analysis == "2010"){
+if (analysis == "2010") {
   dob_threshold_date <- as.Date("1933-09-01") + years(-3)
   threshold_date <- as.Date("2013-09-01") + years(-3)
 }
 
-if(analysis == "2016"){
+if (analysis == "2016") {
   dob_threshold_date <- as.Date("1933-09-01") + years(3)
   threshold_date <- as.Date("2013-09-01") + years(3)
 }
@@ -33,14 +33,17 @@ index_date <- threshold_date + months(5)
 source(here::here("analysis", "common_code", "utility.R"))
 source(here::here("analysis", "common_code", "descriptives.R"))
 
-
 # create output directory ----
 output_dir <- here("output", vaccine_name, "descriptives", analysis)
 fs::dir_create(output_dir)
 
 # read and prepare data ----
-
-df_processed <- read_feather(here("output", vaccine_name, "processed", glue("dataset_processed_{vaccine_name}_{analysis}.arrow")))
+df_processed <- read_feather(here(
+  "output",
+  vaccine_name,
+  "processed",
+  glue("dataset_processed_{vaccine_name}_{analysis}.arrow")
+))
 
 # add some variables convenient for descriptives
 df_processed <-
@@ -57,7 +60,7 @@ df_processed <-
       unit = "months"
     )),
     day_diff_threshold = as.integer(date_of_birth - dob_threshold_date),
-    registration_duration = as.numeric(threshold_date - reg_start_date),
+    registration_duration = as.integer(threshold_date - reg_start_date + 1L),
     censor_date = pmin(reg_end_date, date_of_death, na.rm = TRUE)
   )
 
@@ -80,12 +83,10 @@ capture.output(
   split = FALSE
 )
 
-
 # create dataset same as analysis dataset but without excluding prior dementia
 df_analysis_keep_prior_dementia <-
   df_processed |> 
   filter(!common_exclusions_wo_dementia)
-
 
 # many variables names are as follows:
 # - [name]_first_date_ever - for outcomes where we are only interested in the very first event (i.e. exclude people with the event before threshold);
@@ -95,9 +96,8 @@ df_analysis_keep_prior_dementia <-
 # look-up list for nice variable names
 variable_labels <-
   lst(
-
     # Total numbers
-    N  = "Total N",
+    N = "Total N",
 
     # primary exposure
     eligibility = "Eligibility",
@@ -110,7 +110,7 @@ variable_labels <-
     region = "Region",
     registration_duration = "GP registration duration",
 
-    #prior outcomes 
+    #prior outcomes
     shingles_before_threshold = "Prior Shingles",
     neuralgia_before_threshold = "Prior Neuralgia",
 
@@ -127,7 +127,7 @@ variable_labels <-
     hf_before_threshold = "Heart Failure",
     hypothyroid_before_threshold = "Hypothyroidism",
     osteoporosis_before_threshold = "Osteoporosis",
-    pad_before_threshold =  "peripheral artery disease",
+    pad_before_threshold = "peripheral artery disease",
     ra_before_threshold = "rheumatoid arthritis",
     stroke_before_threshold = "Stroke",
     tia_before_threshold = "Transient ischaemic attack",
@@ -143,7 +143,6 @@ variable_labels <-
   )
 
 
-
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Baseline pre-outcome and covariate balance ----
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -151,7 +150,7 @@ variable_labels <-
 # create a table of baseline differences between exposed / not exposed
 # using existing function based on gtsummary package but which also does redaction
 
-table_balance <- 
+table_balance <-
   df_analysis |>
   mutate(
     N = 1L,
@@ -162,25 +161,24 @@ table_balance <-
     threshold = sdc.threshold
   )
 
-# reformat to wide 
-table_balance_wide <- 
+# reformat to wide
+table_balance_wide <-
   table_balance |>
-  filter(!is.na(group1_level))  |>
-    pivot_wider(
-      id_cols = c(variable, variable_label, variable_level, context),
-      names_from = group1_level,
-      names_sep = "_",
-      values_from = c(n, N, p, mean, sd, p10, p25, median, p75, p90),
-      names_vary = "slowest"
-    )
+  filter(!is.na(group1_level)) |>
+  pivot_wider(
+    id_cols = c(variable, variable_label, variable_level, context),
+    names_from = group1_level,
+    names_sep = "_",
+    values_from = c(n, N, p, mean, sd, p10, p25, median, p75, p90),
+    names_vary = "slowest"
+  )
 
 # save to disk
 write_csv(table_balance_wide, fs::path(output_dir, "table_balance.csv"))
 
 
 # as table of baseline differences above, but INCLUDING people who may have prior dementia diagnosis
-
-table_balance_keep_prior_dementia <- 
+table_balance_keep_prior_dementia <-
   df_analysis_keep_prior_dementia |>
   mutate(
     N = 1L,
@@ -191,26 +189,27 @@ table_balance_keep_prior_dementia <-
     threshold = sdc.threshold
   )
 
-# reformat to wide 
-table_balance_keep_prior_dementia_wide <- 
+# reformat to wide
+table_balance_keep_prior_dementia_wide <-
   table_balance_keep_prior_dementia |>
-  filter(!is.na(group1_level))  |>
-    pivot_wider(
-      id_cols = c(variable, variable_label, variable_level, context),
-      names_from = group1_level,
-      names_sep = "_",
-      values_from = c(n, N, p, mean, sd, p10, p25, median, p75, p90),
-      names_vary = "slowest"
-    )
+  filter(!is.na(group1_level)) |>
+  pivot_wider(
+    id_cols = c(variable, variable_label, variable_level, context),
+    names_from = group1_level,
+    names_sep = "_",
+    values_from = c(n, N, p, mean, sd, p10, p25, median, p75, p90),
+    names_vary = "slowest"
+  )
 
 # save to disk
-write_csv(table_balance_keep_prior_dementia_wide, fs::path(output_dir, "table_balance_keep_prior_dementia.csv"))
+write_csv(
+  table_balance_keep_prior_dementia_wide,
+  fs::path(output_dir, "table_balance_keep_prior_dementia.csv")
+)
 
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Check pre-index date discontinuities: report rate of event X by month of birth ----
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
 
 check_discontinuity_pre(df_analysis, dob_threshold_date, threshold_date, "shingles_before_threshold", "Prior Shingles")
 check_discontinuity_pre(df_analysis, dob_threshold_date, threshold_date, "asthma_before_threshold", "Asthma")
@@ -237,7 +236,6 @@ check_discontinuity_pre(df_analysis, dob_threshold_date, threshold_date, "fluvax
 check_discontinuity_pre(df_analysis, dob_threshold_date, threshold_date, "antihypertensives_before_threshold", "Antihypertensive use")
 
 
-
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Check ascertainment of shingle vaccine from product codes in the vaccinations table versus snomed codes in the clinical events table ----
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -246,13 +244,19 @@ check_discontinuity_pre(df_analysis, dob_threshold_date, threshold_date, "antihy
 
 df_analysis |>
   transmute(
-    zostavax_within1year = coalesce(zostavax_date_1 <= threshold_date + 365, FALSE),
-    shvacgp_within1year = coalesce(shvacgp_first_date_ever <= threshold_date + 365, FALSE),
+    zostavax_within1year = coalesce(
+      zostavax_date_1 <= threshold_date + 365,
+      FALSE
+    ),
+    shvacgp_within1year = coalesce(
+      shvacgp_first_date_ever <= threshold_date + 365,
+      FALSE
+    ),
   ) |>
   count(zostavax_within1year, shvacgp_within1year) |>
   mutate(
-    pct_of_zostavax = (zostavax_within1year)*n / sum(n[zostavax_within1year]),
-    pct_of_shvacgp = (shvacgp_within1year)*n / sum(n[shvacgp_within1year])
+    pct_of_zostavax = (zostavax_within1year) * n / sum(n[zostavax_within1year]),
+    pct_of_shvacgp = (shvacgp_within1year) * n / sum(n[shvacgp_within1year])
   ) |>
   write_csv(file = fs::path(output_dir, "product codes vs snomed codes.csv"))
 
@@ -261,59 +265,52 @@ df_analysis |>
 # Cumulative incidence of vaccination since index date ----
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-# calculate KM estimates, save data, and plot curves
-
-
 # Cumulative coverage of Zostavax by age in months up to one year after the threshold date
-cumulative_events(df_analysis |> filter(between(age, 79, 80)), "month_of_birth_fct", precision=7, 365, "zostavax_date_1", "Zostavax by month")
+cumulative_events(df_analysis |> filter(between(age, 79, 80)), "month_of_birth_fct", precision=7, 52*7, "zostavax_date_1", "Zostavax by month")
 
 # Cumulative coverage of Zostavax by eligibility (born either side of threshold date)
-cumulative_events(df_analysis, "eligibility", precision=7, 365, "zostavax_date_1", "Zostavax")
+cumulative_events(df_analysis, "eligibility", precision=7, 52*7, "zostavax_date_1", "Zostavax")
 
 # Cumulative coverage of "shingles vaccine snomed code" by age in months up to one year after the threshold date
-cumulative_events(df_analysis |> filter(between(age, 79, 80)), "month_of_birth_fct", precision=7, 365, "shvacgp_first_date_after", "Shingles vaccine snomed code by month")
+cumulative_events(df_analysis |> filter(between(age, 79, 80)), "month_of_birth_fct", precision=7, 52*7, "shvacgp_first_date_after", "Shingles vaccine snomed code by month")
 
 # Cumulative coverage of "shingles vaccine snomed code" by eligibility (born either side of threshold date)
-cumulative_events(df_analysis, "eligibility", precision=7, 365, "shvacgp_first_date_after", "Shingles vaccine snomed code")
+cumulative_events(df_analysis, "eligibility", precision=7, 52*7, "shvacgp_first_date_after", "Shingles vaccine snomed code")
 
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Check post-index date discontinuities: report rate of event X at time T by month of birth ----
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 ## Outcome rates at index date (5 months after threshold)
-days_to_index_date <- as.numeric(index_date - threshold_date + 1 )
+days_to_index_date <- as.numeric(index_date - threshold_date + 1)
 
 check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, days_to_index_date, "zostavax_date_1", "Zostavax")
 
 
-
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 ## Post-baseline information --- DO NOT RUN BEFORE VACCINE UPTAKE DISCONTINUITY CONFIRMED
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-# Do not run until the protocol is locked down and 
-# we have confirmed empirically that we can see a discontinuity in vaccine coverage 
+# Do not run until the protocol is locked down and
+# we have confirmed empirically that we can see a discontinuity in vaccine coverage
 # and therefore the code is behaving as expected.
 
 reveal_post_baseline_outcomes <- FALSE
 
-if(reveal_post_baseline_outcomes){
-
-
+if (reveal_post_baseline_outcomes) {
   # Cumulative coverage of all other outcomes by eligibility (born either side of threshold date)
 
   cumulative_events(df_analysis, "eligibility", precision=7, 365, "shingles_first_date_after", "Shingles")
   cumulative_events(df_analysis, "eligibility", precision=7, 365, "shingles_gp_first_date_after", "Shingles (GP only)")
   cumulative_events(df_analysis, "eligibility", precision=7, 365, "dementia_first_date_ever", "Dementia")
 
-  cumulative_events(df_analysis |> filter(!neuralgia_before_threshold), "eligibility", precision=7, 365, "neuralgia_first_date_ever", "Neuralgia") 
-  cumulative_events(df_analysis |> filter(!neuralgia_before_threshold), "eligibility", precision=7, 365, "neuralgia_gp_first_date_ever", "Neuralgia (GP only)") 
-  cumulative_events(df_analysis |> filter(!dementia_exclude_before_threshold), "eligibility", precision=7, 365, "alzheimers_first_date_ever", "Alzheimers dementia")  
-  cumulative_events(df_analysis |> filter(!dementia_exclude_before_threshold), "eligibility", precision=7, 365, "vascular_first_date_ever", "Vascular dementia")  
-  cumulative_events(df_analysis |> filter(!dementia_exclude_before_threshold), "eligibility", precision=7, 365, "dementia_charlson_first_date_ever", "Dementia (Charlson)")  
-  cumulative_events(df_analysis |> filter(!dementia_exclude_before_threshold), "eligibility", precision=7, 365, "dementia_gp_first_date_ever", "Dementia (GP only)")  
+  cumulative_events(df_analysis |> filter(!neuralgia_before_threshold), "eligibility", precision=7, 365, "neuralgia_first_date_ever", "Neuralgia")
+  cumulative_events(df_analysis |> filter(!neuralgia_before_threshold), "eligibility", precision=7, 365, "neuralgia_gp_first_date_ever", "Neuralgia (GP only)")
+  cumulative_events(df_analysis |> filter(!dementia_exclude_before_threshold), "eligibility", precision=7, 365, "alzheimers_first_date_ever", "Alzheimers dementia")
+  cumulative_events(df_analysis |> filter(!dementia_exclude_before_threshold), "eligibility", precision=7, 365, "vascular_first_date_ever", "Vascular dementia")
+  cumulative_events(df_analysis |> filter(!dementia_exclude_before_threshold), "eligibility", precision=7, 365, "dementia_charlson_first_date_ever", "Dementia (Charlson)")
+  cumulative_events(df_analysis |> filter(!dementia_exclude_before_threshold), "eligibility", precision=7, 365, "dementia_gp_first_date_ever", "Dementia (GP only)")
 
   cumulative_events(df_analysis, "eligibility", precision=7, 365, "varicella_first_date_after", "Varicella vaccine")
 
@@ -334,7 +331,6 @@ if(reveal_post_baseline_outcomes){
   cumulative_events(df_analysis, "eligibility", precision=7, 365, "tia_gp_first_date_after", "Transient ischaemic attack")
   cumulative_events(df_analysis |> filter(!smi_before_threshold), "eligibility", precision=7, 365, "smi_gp_first_date_ever", "Serious mental illness")
   cumulative_events(df_analysis |> filter(!obese_before_threshold), "eligibility", precision=7, 365, "obese_gp_first_date_ever", "Obesity")
-
 
   ## 1 year after
 
@@ -368,7 +364,6 @@ if(reveal_post_baseline_outcomes){
   check_discontinuity_post(df_analysis |> filter(!smi_before_threshold), dob_threshold_date, threshold_date, 365, "smi_gp_first_date_ever", "Serious mental illness")
   check_discontinuity_post(df_analysis |> filter(!obese_before_threshold), dob_threshold_date, threshold_date, 365, "obese_gp_first_date_ever", "Obesity")
 
-
   ## 2 years after
 
   #outcomes
@@ -400,5 +395,4 @@ if(reveal_post_baseline_outcomes){
   check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*2, "tia_gp_first_date_after", "Transient ischaemic attack")
   check_discontinuity_post(df_analysis |> filter(!smi_before_threshold), dob_threshold_date, threshold_date, 365*2, "smi_gp_first_date_ever", "Serious mental illness")
   check_discontinuity_post(df_analysis |> filter(!obese_before_threshold), dob_threshold_date, threshold_date, 365*2, "obese_gp_first_date_ever", "Obesity")
-
 }

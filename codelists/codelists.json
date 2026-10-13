@@ -1,11 +1,5 @@
 {
   "files": {
-    "nhsd-primary-care-domain-refsets-shvacgp_cod.csv": {
-      "id": "nhsd-primary-care-domain-refsets/shvacgp_cod/20260630",
-      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/shvacgp_cod/20260630/",
-      "downloaded_at": "2026-10-07 17:02:57.947100+00:00Z",
-      "sha": "33f75a6d8adc6f3444ee67da01e4296e08259d33"
-    },
     "opensafely-incident-dementia-based-on-charlson.csv": {
       "id": "opensafely/incident-dementia-based-on-charlson/2af6cddc",
       "url": "https://www.opencodelists.org/codelist/opensafely/incident-dementia-based-on-charlson/2af6cddc/",
@@ -341,6 +335,12 @@
       "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/bmival_cod/20260630/",
       "downloaded_at": "2026-09-03 15:22:03.412654+00:00Z",
       "sha": "2fc9695c0029388d5d4741e821688e0c4a1b19ee"
+    },
+    "nhsd-primary-care-domain-refsets-shvacgp_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/shvacgp_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/shvacgp_cod/20260630/",
+      "downloaded_at": "2026-10-13 14:19:17.280527+00:00Z",
+      "sha": "33f75a6d8adc6f3444ee67da01e4296e08259d33"
     }
   }
 }
