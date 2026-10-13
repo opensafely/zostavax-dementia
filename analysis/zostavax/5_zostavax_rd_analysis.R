@@ -147,7 +147,7 @@ for (i in seq_len(nrow(analyses))) {
   )
 
   index_date <- as.Date(
-       paste0("01-02-", analyses$threshold_year[i]),
+       paste0("01-02-", analyses$threshold_year[i] + 1),
     format = "%d-%m-%Y"
   ) 
 
