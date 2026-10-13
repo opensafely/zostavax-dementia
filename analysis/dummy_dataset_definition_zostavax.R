@@ -52,7 +52,7 @@ dag <- empty_dag() +
   # demographics
 
   node("date_of_birth", type=dob_node, min = -bandwidth_days, max = bandwidth_days, origin_date = dob_threshold_date) +
-  node("age", type="identity", formula = ~as.integer(floor(time_length(interval(date_of_birth, index_date), "year")))) + # ehrQL returns age as an integer in years
+  node("age", type="identity", formula = ~as.integer(floor(time_length(interval(date_of_birth, threshold_date), "year")))) + # ehrQL returns age as an integer in years
   node("sex", type="rcategorical", prob=c(0.5,0.5), labels=c("female", "male"), output="rcategorical") +
   node(
     "imd_quintile", type="rcategorical", 
@@ -76,8 +76,8 @@ dag <- empty_dag() +
   ) +
   node("date_of_death", type=dod_node, rate_per_day = 0.0001, max_date = latest_date, origin_date = threshold_date) +
   node("date_of_death_gp", type=dod_node, rate_per_day = 0.0001, max_date = latest_date, origin_date = threshold_date) +
-  node("reg_start_date", type="identity", formula = ~ as.Date(-runif(n = N, max=365*15), origin = threshold_date))+
-  node("reg_end_date", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.5, min_date = threshold_date, max_date = latest_date))+
+  node("reg_start_date", type="identity", formula = ~ as.Date(-runif(n = N, max=365*15), origin = threshold_date)) +
+  node("reg_end_date", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.5, min_date = threshold_date, max_date = latest_date)) +
   node(
     "region", type="rcategorical", 
     prob = c(0.2, 0.2, 0.3, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05),
@@ -94,19 +94,19 @@ dag <- empty_dag() +
     ), 
     output="rcategorical"
   ) +
-  
+
   # outcomes
 
   node("dementia_exclude_gp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.01, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("dementia_gp_first_date_ever", type="identity", formula = ~ if_else(rbernoulli(n = N, 0.1), as.Date(NA), dementia_exclude_gp_first_date_ever))+
-  node("dementia_charlson_gp_first_date_ever", type="identity", formula = ~ if_else(rbernoulli(n = N, 0.1), as.Date(NA), dementia_gp_first_date_ever))+
-  node("alzheimers_gp_first_date_ever", type="identity", formula = ~ if_else(rbernoulli(n = N, 0.3), as.Date(NA), dementia_gp_first_date_ever))+
-  node("vascular_gp_first_date_ever", type="identity", formula = ~ if_else(rbernoulli(n = N, 0.3), as.Date(NA), dementia_gp_first_date_ever))+
+  node("dementia_gp_first_date_ever", type="identity", formula = ~ if_else(rbernoulli(n = N, 0.1), as.Date(NA), dementia_exclude_gp_first_date_ever)) +
+  node("dementia_charlson_gp_first_date_ever", type="identity", formula = ~ if_else(rbernoulli(n = N, 0.1), as.Date(NA), dementia_gp_first_date_ever)) +
+  node("alzheimers_gp_first_date_ever", type="identity", formula = ~ if_else(rbernoulli(n = N, 0.3), as.Date(NA), dementia_gp_first_date_ever)) +
+  node("vascular_gp_first_date_ever", type="identity", formula = ~ if_else(rbernoulli(n = N, 0.3), as.Date(NA), dementia_gp_first_date_ever)) +
   node("neuralgia_gp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  
+
   node("shingles_gp_last_date_before", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.01, min_date = date_of_birth + years(60), max_date = threshold_date)) +
   node("shingles_gp_first_date_after", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = threshold_date, max_date = latest_date)) +
-    
+
   node("dementia_hosp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
   node("alzheimers_hosp_first_date_ever", type="identity", formula = ~ if_else(rbernoulli(n = N, 0.3), as.Date(NA), dementia_hosp_first_date_ever)) +
   node("vascular_hosp_first_date_ever", type="identity", formula = ~ if_else(rbernoulli(n = N, 0.3), as.Date(NA), dementia_hosp_first_date_ever)) +
@@ -114,27 +114,28 @@ dag <- empty_dag() +
 
   node("shingles_hosp_last_date_before", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = threshold_date)) +
   node("shingles_hosp_first_date_after", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = threshold_date, max_date = latest_date)) +
-  
+
   node("dementia_ons_date", type="identity", formula = ~ if_else(runif(n = N)<0.1, date_of_death, as.Date(NA))) +
   node("alzheimers_ons_date", type="identity", formula = ~ if_else(rbernoulli(n = N, 0.3), as.Date(NA), dementia_ons_date)) +
   node("vascular_ons_date", type="identity", formula = ~ if_else(rbernoulli(n = N, 0.3), as.Date(NA), dementia_ons_date)) +
   node("immunosupp_gp_any_before", type="rbernoulli", p=0.05) +
 
   # vaccines
-    
+
   node("zostavax_eligible", type="identity", 
     formula = ~ if_else(
       between(date_of_birth, as.Date("1933-09-02"), as.Date("1934-09-01")), TRUE, FALSE
     )
-  ) +    
+  ) +
   node("zostavax_date_1", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = if_else(zostavax_eligible, 0.5, 0.01), min_date = threshold_date, max_date = threshold_date + years(2))) +
   #node("zostavax_date_2", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = if_else(!is.na(zostavax_date_1), 0.1, 0), min_date = zostavax_date_1, max_date = zostavax_date_1 + years(2)))
   node("shingrix_date_1", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = if_else(age<80, 0.01, 0.5), min_date = threshold_date, max_date = threshold_date + years(2))) +
-  node("shingrix_date_2", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = if_else(!is.na(shingrix_date_1), 0.1, 0), min_date = shingrix_date_1, max_date = shingrix_date_1 + years(2)))+
-  node("varicella_first_date_after", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.4, min_date = threshold_date, max_date = threshold_date + years(2)))+
-
+  node("shingrix_date_2", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = if_else(!is.na(shingrix_date_1), 0.1, 0), min_date = shingrix_date_1, max_date = shingrix_date_1 + years(2))) +
+  node("varicella_first_date_after", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.4, min_date = threshold_date, max_date = threshold_date + years(2))) +
+  node("shvacgp_first_date_ever", type="identity", formula = ~ zostavax_date_1 + as.integer(rcauchy(n = N, 0.5, 0.2)) + sample(c(NA,0L), size=N, replace=TRUE, prob=c(0.2, 0.8))) +
+  node("shvacgp_first_date_after", type="identity", formula = ~ if_else(shvacgp_first_date_ever >= threshold_date, shvacgp_first_date_ever, as.Date(NA))) +
   # health status and health care
-    
+
   node("asthma_gp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
   node("afib_gp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
   node("chd_gp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
