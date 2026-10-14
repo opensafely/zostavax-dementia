@@ -6,12 +6,6 @@
       "downloaded_at": "2026-09-03 14:48:49.073318+00:00Z",
       "sha": "b21f23a5fcf38a9e69f0c88d3545694a6026f118"
     },
-    "opensafely-incident-dementia.csv": {
-      "id": "opensafely/incident-dementia/4153811b",
-      "url": "https://www.opencodelists.org/codelist/opensafely/incident-dementia/4153811b/",
-      "downloaded_at": "2026-09-03 14:48:49.217711+00:00Z",
-      "sha": "392b7a8d7b1ace0208b995176f191300b88c5691"
-    },
     "opensafely-incident-dementia-icd-10.csv": {
       "id": "opensafely/incident-dementia-icd-10/28440de6",
       "url": "https://www.opencodelists.org/codelist/opensafely/incident-dementia-icd-10/28440de6/",
@@ -341,6 +335,12 @@
       "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/shvacgp_cod/20260630/",
       "downloaded_at": "2026-10-13 14:19:17.280527+00:00Z",
       "sha": "33f75a6d8adc6f3444ee67da01e4296e08259d33"
+    },
+    "opensafely-incident-dementia.csv": {
+      "id": "opensafely/incident-dementia/2f6ff645",
+      "url": "https://www.opencodelists.org/codelist/opensafely/incident-dementia/2f6ff645/",
+      "downloaded_at": "2026-09-03 14:48:49.217711+00:00Z",
+      "sha": "392b7a8d7b1ace0208b995176f191300b88c5691"
     }
   }
 }
