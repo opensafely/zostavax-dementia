@@ -20,7 +20,7 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
   )
   
   df <- read_feather(
-    here::here("output","zostavax",paste0("dataset_",vaccine_name,"_",analysis,".arrow"))
+    here::here("output", vaccine_name, paste0("dataset_",vaccine_name,"_",analysis,".arrow"))
     )
   
   processed_df <- df %>%
@@ -129,7 +129,7 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
         FALSE
       ),
       dementia_exclude_bw_threshold_index = coalesce(
-        dementia_first_date_ever > threshold_date & #TOCHECK
+        dementia_first_date_ever > threshold_date & 
           dementia_first_date_ever <= index_date,
         FALSE
       ),
