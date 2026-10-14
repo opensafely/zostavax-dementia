@@ -118,7 +118,8 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
       exclude_immunosuppressed = immunosupp_gp_any_before,
       exclude_past_vax = coalesce(
         zostavax_date_1 < threshold_date |
-          shingrix_date_1 < threshold_date,
+          shingrix_date_1 < threshold_date |
+            shvacgp_first_date_ever < threshold_date,
         FALSE
       ),
 
