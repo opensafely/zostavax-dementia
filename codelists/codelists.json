@@ -325,10 +325,10 @@
       "sha": "f6d9ed905842cc16d1b9c30c77faa1c2135e57df"
     },
     "opensafely-cognitive-impairment.csv": {
-      "id": "opensafely/cognitive-impairment/3ac8a857",
-      "url": "https://www.opencodelists.org/codelist/opensafely/cognitive-impairment/3ac8a857/",
-      "downloaded_at": "2026-09-03 14:48:56.634553+00:00Z",
-      "sha": "135c210c98c0b36aa6846159b0ead8eed4ab5723"
+      "id": "opensafely/cognitive-impairment/4c1e80f3",
+      "url": "https://www.opencodelists.org/codelist/opensafely/cognitive-impairment/4c1e80f3/",
+      "downloaded_at": "2026-10-13 21:03:40.774609+00:00Z",
+      "sha": "78171f0203b8ae6f65323a9f0a3d105782b4d015"
     },
     "nhsd-primary-care-domain-refsets-bmival_cod.csv": {
       "id": "nhsd-primary-care-domain-refsets/bmival_cod/20260630",

@@ -52,6 +52,6 @@ nhsd-primary-care-domain-refsets/rarth_cod/20260630/
 nhsd-primary-care-domain-refsets/strk_cod/20260630/
 nhsd-primary-care-domain-refsets/tia_cod/20260630/
 nhsd-primary-care-domain-refsets/chd_cod/20260630/
-opensafely/cognitive-impairment/3ac8a857/
+opensafely/cognitive-impairment/4c1e80f3/
 nhsd-primary-care-domain-refsets/bmival_cod/20260630/
 nhsd-primary-care-domain-refsets/shvacgp_cod/20260630/
