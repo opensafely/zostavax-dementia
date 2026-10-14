@@ -7,7 +7,7 @@ library(here)
 exclusion_flow_chart <- function(vaccine_name, analysis){
   
   df <- read_feather(
-    here::here("output","zostavax","processed",
+    here::here("output", vaccine_name, "processed",
                paste0("dataset_processed_", vaccine_name, "_", analysis, ".arrow")
     )
   )
@@ -26,7 +26,7 @@ exclusion_flow_chart <- function(vaccine_name, analysis){
   
   flow_chart <- add_row(
     flow_chart,
-    step = "Non M/F sex",
+    step = "Non male/female sex",
     excluded = n_before - nrow(df),
     remaining = nrow(df)
   )
@@ -57,6 +57,19 @@ exclusion_flow_chart <- function(vaccine_name, analysis){
     remaining = nrow(df)
   )
   
+  ### Recent shingles ###
+  n_before <- nrow(df)
+
+  df <- df %>%
+    filter(!shingles_before_threshold)
+
+  flow_chart <- add_row(
+    flow_chart,
+    step = "Shingles 28 days before threshold",
+    excluded = n_before - nrow(df),
+    remaining = nrow(df)
+  )
+
   ### Previous shingles vaccine ###
   n_before <- nrow(df)
   
