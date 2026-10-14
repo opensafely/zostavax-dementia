@@ -1,11 +1,5 @@
 {
   "files": {
-    "opensafely-incident-dementia-based-on-charlson.csv": {
-      "id": "opensafely/incident-dementia-based-on-charlson/2af6cddc",
-      "url": "https://www.opencodelists.org/codelist/opensafely/incident-dementia-based-on-charlson/2af6cddc/",
-      "downloaded_at": "2026-09-03 14:48:49.073318+00:00Z",
-      "sha": "b21f23a5fcf38a9e69f0c88d3545694a6026f118"
-    },
     "opensafely-incident-dementia-icd-10.csv": {
       "id": "opensafely/incident-dementia-icd-10/28440de6",
       "url": "https://www.opencodelists.org/codelist/opensafely/incident-dementia-icd-10/28440de6/",
@@ -341,6 +335,12 @@
       "url": "https://www.opencodelists.org/codelist/opensafely/incident-dementia/2f6ff645/",
       "downloaded_at": "2026-09-03 14:48:49.217711+00:00Z",
       "sha": "392b7a8d7b1ace0208b995176f191300b88c5691"
+    },
+    "opensafely-incident-dementia-based-on-charlson.csv": {
+      "id": "opensafely/incident-dementia-based-on-charlson/64419ca5",
+      "url": "https://www.opencodelists.org/codelist/opensafely/incident-dementia-based-on-charlson/64419ca5/",
+      "downloaded_at": "2026-10-14 18:50:47.006557+00:00Z",
+      "sha": "02ae533280a728b85387dda4ab661577e87d5d81"
     }
   }
 }
