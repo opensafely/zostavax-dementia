@@ -129,8 +129,8 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
         FALSE
       ),
       dementia_exclude_bw_threshold_index = coalesce(
-        dementia_first_date_ever > threshold_date & 
-          dementia_first_date_ever <= index_date,
+        dementia_exclude_first_date_ever > threshold_date & 
+          dementia_exclude_first_date_ever <= index_date,
         FALSE
       ),
       shingles_before_threshold = coalesce(
