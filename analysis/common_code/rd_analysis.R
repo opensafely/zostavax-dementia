@@ -12,6 +12,7 @@ rd_analysis <- function(
   dependent,
   running,
   fuzzy_date = NULL,
+  index,
   end
 ) {
   ## Validate function inputs ----
@@ -31,7 +32,7 @@ rd_analysis <- function(
 
   ## Make fuzzy ----
   data$fuzzy <- dplyr::if_else(
-    dplyr::between(data[[fuzzy_date]], threshold, index_date),
+    dplyr::between(data[[fuzzy_date]], threshold, index),
     1L,
     0L,
     missing = 0L
@@ -41,7 +42,7 @@ rd_analysis <- function(
   data <- data |>
     dplyr::mutate(
       dependent_binary = !is.na(.data[[dependent]]) &
-        .data[[dependent]] >= index_date &
+        .data[[dependent]] >= index &
         .data[[dependent]] <= pmin(pat_end_date, end)
     )
 
