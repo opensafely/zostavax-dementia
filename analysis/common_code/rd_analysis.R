@@ -31,7 +31,7 @@ rd_analysis <- function(
 
   ## Make fuzzy ----
   data$fuzzy <- dplyr::if_else(
-    dplyr::between(data[[fuzzy_date]], threshold, end),
+    dplyr::between(data[[fuzzy_date]], threshold, index_date),
     1L,
     0L,
     missing = 0L
