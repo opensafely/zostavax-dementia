@@ -10,8 +10,14 @@ exclusion_flow_chart <- function(vaccine_name, analysis){
     here::here("output", vaccine_name, "processed",
                paste0("dataset_processed_", vaccine_name, "_", analysis, ".arrow")
     )
-  )
-  
+    ) %>% 
+    mutate(
+      across(
+        starts_with("exclude_"),
+        ~ coalesce(.x, FALSE)
+      )
+    )
+
   flow_chart <- tibble(
     step = "Full population",
     excluded = NA_integer_,

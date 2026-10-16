@@ -110,12 +110,12 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
       ),
 
       # Missing data
-      exclude_not_mf_sex = !sex %in% c("male", "female"),
-      exclude_missing_imd = (imd_quintile == "unknown" | is.na(imd_quintile)),
-      exclude_missing_region = is.na(region),
+      exclude_not_mf_sex = coalesce(!sex %in% c("male", "female"), FALSE),
+      exclude_missing_imd = coalesce(imd_quintile == "unknown" | is.na(imd_quintile), FALSE),
+      exclude_missing_region = coalesce(is.na(region), FALSE),
 
       # Previous immunosuppression / vaccination
-      exclude_immunosuppressed = immunosupp_gp_any_before,
+      exclude_immunosuppressed = coalesce(immunosupp_gp_any_before, FALSE),
       exclude_past_vax = coalesce(
         zostavax_date_1 < threshold_date |
           shingrix_date_1 < threshold_date |
