@@ -146,8 +146,8 @@ for (i in seq_len(nrow(analyses))) {
     format = "%d-%m-%Y"
   )
 
-  index_date <- as.Date(
-       paste0("01-02-", analyses$threshold_year[i] + 1),
+  index <- as.Date(
+    paste0("01-02-", analyses$threshold_year[i] + 1),
     format = "%d-%m-%Y"
   ) 
 
@@ -191,6 +191,7 @@ for (i in seq_len(nrow(analyses))) {
     dependent = outcome,
     running = "month_diff_threshold",
     fuzzy_date = glue("{vaccine_name}_date_1"),
+    index = index,
     end = end
   )
 

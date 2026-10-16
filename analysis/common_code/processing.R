@@ -20,7 +20,7 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
   )
   
   df <- read_feather(
-    here::here("output","zostavax",paste0("dataset_",vaccine_name,"_",analysis,".arrow"))
+    here::here("output", vaccine_name, paste0("dataset_",vaccine_name,"_",analysis,".arrow"))
     )
   
   processed_df <- df %>%
@@ -110,26 +110,30 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
       ),
 
       # Missing data
-      exclude_not_mf_sex = !sex %in% c("male", "female"),
-      exclude_missing_imd = (imd_quintile == "unknown" | is.na(imd_quintile)),
-      exclude_missing_region = is.na(region),
+      exclude_not_mf_sex = coalesce(!sex %in% c("male", "female"), FALSE),
+      exclude_missing_imd = coalesce(imd_quintile == "unknown" | is.na(imd_quintile), FALSE),
+      exclude_missing_region = coalesce(is.na(region), FALSE),
 
       # Previous immunosuppression / vaccination
-      exclude_immunosuppressed = immunosupp_gp_any_before,
+      exclude_immunosuppressed = coalesce(immunosupp_gp_any_before, FALSE),
       exclude_past_vax = coalesce(
         zostavax_date_1 < threshold_date |
-          shingrix_date_1 < threshold_date,
+          shingrix_date_1 < threshold_date |
+            shvacgp_first_date_ever < threshold_date,
         FALSE
       ),
 
       # Outcomes before threshold
       dementia_exclude_before_threshold = coalesce(
-        dementia_exclude_first_date_ever <= threshold_date,
+        dementia_exclude_first_date_ever <= threshold_date |
+        dementia_hosp_first_date_ever <= threshold_date,
         FALSE
       ),
       dementia_exclude_bw_threshold_index = coalesce(
-        dementia_first_date_ever > threshold_date & #TOCHECK
-          dementia_first_date_ever <= index_date,
+        (dementia_exclude_first_date_ever > threshold_date & 
+          dementia_exclude_first_date_ever <= index_date) |
+        (dementia_hosp_first_date_ever > threshold_date &
+          dementia_hosp_first_date_ever <= index_date),
         FALSE
       ),
       shingles_before_threshold = coalesce(
