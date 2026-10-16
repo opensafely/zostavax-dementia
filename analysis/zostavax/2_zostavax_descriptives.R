@@ -52,6 +52,8 @@ df_processed <- read_feather(here(
 df_processed <-
   df_processed |>
   mutate(
+    age = as.numeric(age),
+    age_fct = as.factor(age),
     eligibility = .data[[glue("zostavax_eligibility_{analysis}")]],
     month_of_birth = floor_date(date_of_birth, "month"), # this should be an identity because currently in OS birth dates are rounded down to 1st of the month
     month_of_birth_fct = fct_reorder(
@@ -107,6 +109,7 @@ variable_labels <-
 
     # demographics
     age = "Age",
+    age_fct = "Age (cat)",
     sex = "Sex",
     ethnicity6 = "Ethnicity",
     imd_quintile = "Deprivation (by IMD quintile)",
