@@ -11,6 +11,9 @@ library("survival")
 vaccine_name <- "zostavax"
 analysis <- "main" # main, 2010, 2016
 
+# ensure skim outputs do not wrap to new line
+options(width = 200)
+
 # define threshold dates
 if (analysis == "main") {
   dob_threshold_date <- as.Date("1933-09-01")
