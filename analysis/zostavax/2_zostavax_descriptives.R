@@ -11,20 +11,26 @@ library("survival")
 vaccine_name <- "zostavax"
 analysis <- "main" # main, 2010, 2016
 
+# ensure skim outputs do not wrap to new line
+options(width = 200)
+
 # define threshold dates
 if (analysis == "main") {
   dob_threshold_date <- as.Date("1933-09-01")
   threshold_date <- as.Date("2013-09-01")
+  end_date <- threshold_date + years(12) - days(1)
 }
 
 if (analysis == "2010") {
   dob_threshold_date <- as.Date("1933-09-01") + years(-3)
   threshold_date <- as.Date("2013-09-01") + years(-3)
+  end_date <- threshold_date + years(12) - days(1)
 }
 
 if (analysis == "2016") {
   dob_threshold_date <- as.Date("1933-09-01") + years(3)
   threshold_date <- as.Date("2013-09-01") + years(3)
+  end_date <- threshold_date + years(12) - days(1)
 }
 
 index_date <- threshold_date + months(5)
@@ -49,6 +55,8 @@ df_processed <- read_feather(here(
 df_processed <-
   df_processed |>
   mutate(
+    age = as.numeric(age),
+    age_fct = as.factor(age),
     eligibility = .data[[glue("zostavax_eligibility_{analysis}")]],
     month_of_birth = floor_date(date_of_birth, "month"), # this should be an identity because currently in OS birth dates are rounded down to 1st of the month
     month_of_birth_fct = fct_reorder(
@@ -61,7 +69,10 @@ df_processed <-
     )),
     day_diff_threshold = as.integer(date_of_birth - dob_threshold_date),
     registration_duration = as.integer(threshold_date - reg_start_date + 1L),
-    censor_date = pmin(reg_end_date, date_of_death, na.rm = TRUE)
+    censor_date = pmin(reg_end_date, date_of_death, na.rm = TRUE),
+    fup_availability = as.numeric(
+      pmin(censor_date, end_date, na.rm = TRUE) - index_date + 1L
+    )
   )
 
 # print summary of processed dataset - not disclosure controlled, not for release
@@ -104,6 +115,7 @@ variable_labels <-
 
     # demographics
     age = "Age",
+    age_fct = "Age (cat)",
     sex = "Sex",
     ethnicity6 = "Ethnicity",
     imd_quintile = "Deprivation (by IMD quintile)",
@@ -206,6 +218,36 @@ write_csv(
   table_balance_keep_prior_dementia_wide,
   fs::path(output_dir, "table_balance_keep_prior_dementia.csv")
 )
+
+
+# create a table of follow-up availability (time to deregistration, death or end of follow up) after index date
+table_followup <-
+  df_analysis |>
+  group_by(age_fct) |>
+  summarise(
+    N = n(),
+    mean = mean(fup_availability),
+    sd = sd(fup_availability),
+    p10 = quantile(fup_availability, 0.1),
+    p25 = quantile(fup_availability, 0.25),
+    median = quantile(fup_availability, 0.5),
+    p75 = quantile(fup_availability, 0.75),
+    p90 = quantile(fup_availability, 0.90),
+  ) |>
+  mutate(
+    N = sdc.rounding(N, sdc.threshold),
+    mean = if_else(N == 0, NA_real_, mean),
+    sd = if_else(N == 0, NA_real_, sd),
+    p10 = if_else(N == 0, NA_real_, p10),
+    p25 = if_else(N == 0, NA_real_, p25),
+    median = if_else(N == 0, NA_real_, median),
+    p75 = if_else(N == 0, NA_real_, p75),
+    p90 = if_else(N == 0, NA_real_, p90)
+  )
+
+# save to disk
+write_csv(table_followup, fs::path(output_dir, "table_followup.csv"))
+
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Check pre-index date discontinuities: report rate of event X by month of birth ----

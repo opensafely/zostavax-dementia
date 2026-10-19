@@ -1,4 +1,4 @@
-from ehrql import create_dataset, case, when, minimum_of, maximum_of, months, years
+from ehrql import create_dataset, case, when, minimum_of, maximum_of, months, years, days
 from ehrql.tables.tpp import (
     patients, 
     practice_registrations, 
@@ -53,7 +53,7 @@ def vaccinations(threshold_date):
     
     shingrix_products = ["Shingrix","Shingles (Herpes Zoster) adjuvanted rcmb vacc powder and suspension for suspension inj 0.5ml vials"]
     dataset.shingrix_date_1  = first_vax_event_ever(product_name=shingrix_products).date
-    dataset.shingrix_date_2  = first_vax_event_after(dataset.shingrix_date_1, product_name=shingrix_products).date
+    dataset.shingrix_date_2  = first_vax_event_after(dataset.shingrix_date_1 + days(1), product_name=shingrix_products).date
 
     varicella_products = [
         "Chicken pox",
