@@ -338,7 +338,7 @@ check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, days_t
 # we have confirmed empirically that we can see a discontinuity in vaccine coverage
 # and therefore the code is behaving as expected.
 
-reveal_post_baseline_outcomes <- FALSE
+reveal_post_baseline_outcomes <- TRUE
 
 if (reveal_post_baseline_outcomes) {
   # Cumulative coverage of all other outcomes by eligibility (born either side of threshold date)
