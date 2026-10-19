@@ -120,9 +120,9 @@ for (i in seq_len(nrow(analyses))) {
           outcome == "ra_gp_first_date_ever" ~ ra_before_threshold == 0,
           outcome == "smi_gp_first_date_ever" ~ smi_before_threshold == 0,
           outcome == "obese_gp_first_date_ever" ~ obese_before_threshold == 0,
-          outcome == "stroke_gp_first_date_after" ~
-            stroke_before_threshold == 0,
-          outcome == "tia_gp_first_date_after" ~ tia_before_threshold == 0,
+    #      outcome == "stroke_gp_first_date_after" ~
+    #       stroke_before_threshold == 0,
+    #    outcome == "tia_gp_first_date_after" ~ tia_before_threshold == 0,
           TRUE ~ TRUE
         )
       )

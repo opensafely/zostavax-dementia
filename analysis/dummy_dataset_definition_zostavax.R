@@ -102,19 +102,22 @@ dag <- empty_dag() +
   node("dementia_charlson_gp_first_date_ever", type="identity", formula = ~ if_else(rbernoulli(n = N, 0.1), as.Date(NA), dementia_gp_first_date_ever)) +
   node("alzheimers_gp_first_date_ever", type="identity", formula = ~ if_else(rbernoulli(n = N, 0.3), as.Date(NA), dementia_gp_first_date_ever)) +
   node("vascular_gp_first_date_ever", type="identity", formula = ~ if_else(rbernoulli(n = N, 0.3), as.Date(NA), dementia_gp_first_date_ever)) +
-  node("neuralgia_gp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
 
   node("shingles_gp_last_date_before", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.01, min_date = date_of_birth + years(60), max_date = threshold_date)) +
+  node("neuralgia_gp_last_date_before", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = threshold_date)) +
+  
   node("shingles_gp_first_date_after", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = threshold_date, max_date = latest_date)) +
-
+  node("neuralgia_gp_first_date_after", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = threshold_date, max_date = latest_date)) +
+  
   node("dementia_hosp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
   node("alzheimers_hosp_first_date_ever", type="identity", formula = ~ if_else(rbernoulli(n = N, 0.3), as.Date(NA), dementia_hosp_first_date_ever)) +
   node("vascular_hosp_first_date_ever", type="identity", formula = ~ if_else(rbernoulli(n = N, 0.3), as.Date(NA), dementia_hosp_first_date_ever)) +
-  node("neuralgia_hosp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
 
   node("shingles_hosp_last_date_before", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = threshold_date)) +
+  node("neuralgia_hosp_last_date_before", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = threshold_date)) +
   node("shingles_hosp_first_date_after", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = threshold_date, max_date = latest_date)) +
-
+  node("neuralgia_hosp_first_date_after", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date =  threshold_date, max_date = latest_date)) +
+  
   node("dementia_ons_date", type="identity", formula = ~ if_else(runif(n = N)<0.1, date_of_death, as.Date(NA))) +
   node("alzheimers_ons_date", type="identity", formula = ~ if_else(rbernoulli(n = N, 0.3), as.Date(NA), dementia_ons_date)) +
   node("vascular_ons_date", type="identity", formula = ~ if_else(rbernoulli(n = N, 0.3), as.Date(NA), dementia_ons_date)) +

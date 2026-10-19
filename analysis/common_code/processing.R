@@ -103,9 +103,14 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
         shingles_hosp_last_date_before,
         na.rm = TRUE
       ),
-      neuralgia_first_date_ever = pmin(
-        neuralgia_gp_first_date_ever,
-        neuralgia_hosp_first_date_ever,
+      neuralgia_first_date_after = pmin(
+        neuralgia_gp_first_date_after,
+        neuralgia_hosp_first_date_after,
+        na.rm = TRUE
+      ),
+      neuralgia_last_date_before = pmax(
+        neuralgia_gp_last_date_before,
+        neuralgia_hosp_last_date_before,
         na.rm = TRUE
       ),
 
@@ -141,10 +146,9 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
         FALSE
       ),
       neuralgia_before_threshold = coalesce(
-        neuralgia_first_date_ever <= threshold_date,
+        neuralgia_last_date_before < threshold_date,
         FALSE
       ),
-
       # Flag for exclusions common to all analyses
       common_exclusions_w_dementia = coalesce(
         shingles_before_threshold |
@@ -242,7 +246,8 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
         vascular_hosp_first_date_ever,
         dementia_exclude_gp_first_date_ever,
         dementia_hosp_first_date_ever,
-        neuralgia_hosp_first_date_ever,
+        neuralgia_hosp_first_date_after,
+        neuralgia_hosp_last_date_before,
         shingles_hosp_first_date_after,
         shingles_hosp_last_date_before,
         dementia_ons_date,
