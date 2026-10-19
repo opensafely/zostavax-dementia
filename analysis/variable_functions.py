@@ -79,7 +79,7 @@ def primary_care_outcomes(threshold_date):
     dataset.alzheimers_gp_first_date_ever = first_gp_event_ever(codelists.alzheimers_snomed).date
     dataset.vascular_gp_first_date_ever = first_gp_event_ever(codelists.vascular_snomed).date
     dataset.shingles_gp_first_date_after = first_gp_event_after(threshold_date, codelists.shingles_snomed).date
-    dataset.neuralgia_gp_first_date_ever = first_gp_event_ever(codelists.neuralgia_snomed).date
+    dataset.neuralgia_gp_first_date_after = first_gp_event_after(threshold_date, codelists.neuralgia_snomed).date
 
     return dataset
 
@@ -146,7 +146,8 @@ def primary_care_controls_assumptions(threshold_date):
         "past_smoker": codelists.past_smoker_snomed,
         "cognitive_impair": codelists.cognitive_impairment_snomed,
         "stroke": codelists.stroke_snomed,
-        "tia": codelists.tia_snomed
+        "tia": codelists.tia_snomed,
+        "neuralgia": codelists.neuralgia_snomed
     }
 
     for name, codelist in covariate_balance.items():
@@ -169,8 +170,8 @@ def secondary_care_outcomes(threshold_date):
     dataset.dementia_hosp_first_date_ever = first_hosp_event_ever(codelists.dementia_icd10).admission_date
     dataset.alzheimers_hosp_first_date_ever = first_hosp_event_ever(codelists.alzheimers_icd10).admission_date
     dataset.vascular_hosp_first_date_ever = first_hosp_event_ever(codelists.vascular_icd10).admission_date
-    dataset.neuralgia_hosp_first_date_ever = first_hosp_event_ever(codelists.neuralgia_icd10).admission_date
-
+ 
+    dataset.neuralgia_hosp_first_date_after = first_hosp_event_after(threshold_date, codelists.neuralgia_icd10).admission_date
     dataset.shingles_hosp_first_date_after = first_hosp_event_after(threshold_date, codelists.shingles_icd10).admission_date
 
     dataset.dementia_ons_date = ons_event_ever(codelists.dementia_icd10)
@@ -182,5 +183,6 @@ def secondary_care_outcomes(threshold_date):
 def secondary_care_exclusions(threshold_date):
 
     dataset.shingles_hosp_last_date_before = last_hosp_event_before(threshold_date, codelists.shingles_icd10).admission_date
+    dataset.neuralgia_hosp_last_date_before = last_hosp_event_before(threshold_date, codelists.neuralgia_icd10).admission_date
 
     return dataset

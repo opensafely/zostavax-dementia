@@ -140,7 +140,7 @@ df_analysis <- df_population |>
     # Outcomes: primary
     dementia_first_date_ever,
     shingles_first_date_after,
-    neuralgia_first_date_ever,
+    neuralgia_first_date_after,
     date_of_death,
     # Outcomes: alternative definitions
     dementia_charlson_gp_first_date_ever,
@@ -150,7 +150,7 @@ df_analysis <- df_population |>
     # Outcomes: GP-only
     dementia_gp_first_date_ever,
     shingles_gp_first_date_after,
-    neuralgia_gp_first_date_ever,
+    neuralgia_gp_first_date_after,
     date_of_death_gp,
     # Outcomes: control
     asthma_gp_first_date_ever,
