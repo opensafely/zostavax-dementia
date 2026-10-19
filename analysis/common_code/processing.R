@@ -146,10 +146,9 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
         FALSE
       ),
       neuralgia_before_threshold = coalesce(
-        neuralgia_last_date_before >= threshold_date,
+        neuralgia_last_date_before < threshold_date,
         FALSE
       ),
-
       # Flag for exclusions common to all analyses
       common_exclusions_w_dementia = coalesce(
         shingles_before_threshold |
