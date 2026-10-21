@@ -405,7 +405,11 @@ check_discontinuity_post <- function(
         ) -
           threshold_date
       ),
-      event_indicator = event_time < time_horizon
+      event_indicator = coalesce(
+        event_date <=
+          pmin(censor_date, threshold_date + time_horizon, na.rm = TRUE),
+        FALSE
+      )
     ) |>
     group_by(month_of_birth) |>
     summarise(
