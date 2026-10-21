@@ -437,7 +437,8 @@ check_discontinuity_post <- function(
 
       name = "Date of birth",
       labels = ~ scales::label_date("%e %b %y")(.),
-      breaks = dob_threshold_date + months(seq(-10, 10) * 12),
+      breaks = dob_threshold_date + months(seq(-15, 15) * 12),
+      guide = guide_axis(angle = 90)
       #name = glue("Month of birth (relative to {scales::label_date('%e %b %y')(dob_threshold_date)})"), labels = ~ interval(dob_threshold_date, .) %/% months(1), breaks = dob_threshold_date + months(seq(-10,10)*6),
       #name = glue("Age at {scales::label_date('%e %b %y')(threshold_date)}"), labels = ~ (interval(., threshold_date) %/% (months(1))/12, breaks = dob_threshold_date + months(seq(-10,10)*6),
 
