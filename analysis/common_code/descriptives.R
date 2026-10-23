@@ -257,6 +257,14 @@ check_discontinuity_pre <- function(.data, dob_threshold_date, threshold_date, e
       event_rate = event_n / n
     ) 
 
+  write_csv(
+    dat_summary,  
+    fs::path(
+      output_dir,
+      glue("discontinuity_pre_{event_name}.csv")
+    )
+  )
+
   plot_summary <-
     ggplot(dat_summary) +
     geom_point(aes(x = month_of_birth, y = event_rate)) +
@@ -427,6 +435,14 @@ check_discontinuity_post <- function(
       n = sdc.rounding(n, sdc.threshold),
       cmlinc = sdc.rounding(cmlinc * n, sdc.threshold) / n,
     )
+
+  write_csv(
+    dat_summary,  
+    fs::path(
+      output_dir,
+      glue("discontinuity_{event_name}_{time_horizon}.csv")
+    )
+  )
 
   plot_summary <-
     ggplot(dat_summary) +
