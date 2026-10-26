@@ -500,7 +500,7 @@ yearly_cumulative_incidence_by_dob <- function(
   
   km_plot <-
     ggplot(km_data) +
-    geom_point(aes(x = group, y = cmlinc)) +
+    geom_point(aes(x = month_of_birth, y = cmlinc)) +
     geom_vline(aes(xintercept = dob_threshold_date), linetype = "dashed") +
     scale_x_date(
       name = "Date of birth",
