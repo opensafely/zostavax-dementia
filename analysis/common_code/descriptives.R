@@ -467,3 +467,67 @@ check_discontinuity_post <- function(
     path = output_dir
   )
 }
+
+
+
+# report any discontinuities in events occurring either side of the threhold_date, by reporting outcome rates by month_of_birth ----
+# use the "X_first_date_after" column as the event_date_col, or the "X_first_date_ever" column with a filter on the inputted data to ensure this event did not occur prior to baseline
+yearly_cumulative_incidence_by_dob <- function(
+  .data,
+  dob_threshold_date,
+  threshold_date,
+  time_horizon_years,
+  event_date_col,
+  event_name
+) {
+
+  km_data <-
+    km(
+      .data = .data,
+      group_col = "month_of_birth",
+      start_date = threshold_date - 1L, # so that events occurring on the threshold date are not excluded
+      time_horizon = floor(time_horizon_years*365.25),
+      event_date_col = event_date_col,
+      censor_date_col = "censor_date",
+    ) |>
+    filter(time %in% floor(seq_len(time_horizon_years) * 365.25)) |>
+    mutate(
+      year = ceiling(time / 365.25),
+    ) |>
+    rename(
+      month_of_birth = group
+    )
+  
+  km_plot <-
+    ggplot(km_data) +
+    geom_point(aes(x = group, y = cmlinc)) +
+    geom_vline(aes(xintercept = dob_threshold_date), linetype = "dashed") +
+    scale_x_date(
+      name = "Date of birth",
+      labels = ~ scales::label_date("%e %b %y")(.),
+      breaks = dob_threshold_date + months(seq(-15, 15) * 12),
+      guide = guide_axis(angle = 90)
+    ) +
+    facet_grid(rows = vars(year)) +
+    scale_y_continuous(labels = scales::label_percent()) +
+    labs(
+      y = glue("Cumulative incidence"),
+    ) +
+    theme_bw()
+
+  print(km_plot)
+
+  ggsave(
+    km_plot,
+    filename = glue("yearly_cumulative_incidence_by_dob_{event_name}.png"),
+    path = output_dir
+  )
+
+  write_csv(
+    km_data,
+    fs::path(
+      output_dir,
+      glue("yearly_cumulative_incidence_by_dob_{event_name}.csv")
+    )
+  )
+}
