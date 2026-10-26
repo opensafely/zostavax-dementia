@@ -306,14 +306,6 @@ cumulative_events <- function(
     "censor_date"
   )
 
-  write_csv(
-    df_km,
-    fs::path(
-      output_dir,
-      glue("cumulative_incidence_{event_name}_{time_horizon}.csv")
-    )
-  )
-
   df_time0 <-
     df_km |>
     mutate(
@@ -352,7 +344,7 @@ cumulative_events <- function(
     labs(
       x = "Time",
       y = "Cumulative Incidence",
-      colour = NULL,
+      colour = group,
       fill = NULL,
       title = NULL
     ) +
@@ -374,6 +366,17 @@ cumulative_events <- function(
     width = 15,
     height = 15,
     units = "cm"
+  )
+
+  # rename group column with actual variable name
+  names(df_km)[names(df_km) == "group"] <- group
+
+  write_csv(
+    df_km,
+    fs::path(
+      output_dir,
+      glue("cumulative_incidence_{event_name}_{time_horizon}.csv")
+    )
   )
 }
 
