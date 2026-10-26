@@ -292,20 +292,30 @@ cumulative_events <- function(
   .data,
   group,
   precision,
+  start_date,
+  index_date,
   time_horizon,
   event_date_col,
   event_name
 ) {
-  df_km <- km(
-    .data,
-    group,
-    threshold_date,
-    precision,
-    time_horizon,
-    event_date_col,
-    "censor_date"
-  )
+  df_km <-
+    .data |>
+    # remove people experiencing the event or censoring before the landmark index date
+    filter(
+      pmin(.data[["censor_date"]], .data[[event_date_col]], na.rm = TRUE) >=
+        index_date
+    ) |>
+    # generate kaplan-meier estimates
+    km(
+      group,
+      start_date,
+      precision,
+      time_horizon,
+      event_date_col,
+      "censor_date"
+    )
 
+  # add estimate at time zero (where cml_inc=0 - this helps with plotting)
   df_time0 <-
     df_km |>
     mutate(
@@ -323,6 +333,7 @@ cumulative_events <- function(
       )
     )
 
+  # plot cumulative incidence of events up to the time horizon
   plot_km <-
     ggplot(df_time0, aes(group = group, colour = group, fill = group)) +
     geom_step(aes(x = time, y = cmlinc), direction = "vh") +
@@ -359,6 +370,7 @@ cumulative_events <- function(
 
   print(plot_km)
 
+  # save plot
   ggsave(
     plot_km,
     filename = glue("cumulative_incidence_{event_name}_{time_horizon}.png"),
@@ -371,6 +383,7 @@ cumulative_events <- function(
   # rename group column with actual variable name
   names(df_km)[names(df_km) == "group"] <- group
 
+  # save data
   write_csv(
     df_km,
     fs::path(
@@ -385,15 +398,18 @@ cumulative_events <- function(
 check_discontinuity_post <- function(
   .data,
   dob_threshold_date,
-  threshold_date,
+  start_date,
+  index_date,
   time_horizon,
   event_date_col,
   event_name
 ) {
-  threshold_date <- threshold_date - 1L # so that events occurring on the threshold date are not excluded
+  start_date <- start_date - 1L # so that events occurring on the threshold date are not excluded
 
   dat_summary <-
     .data |>
+
+    # derive event times and censoring indicator
     transmute(
       month_of_birth,
       day_diff_threshold,
@@ -403,16 +419,20 @@ check_discontinuity_post <- function(
         pmin(
           event_date,
           censor_date,
-          threshold_date + time_horizon,
+          start_date + time_horizon,
           na.rm = TRUE
         ) -
-          threshold_date
+          start_date
       ),
       event_indicator = coalesce(
         event_date <=
-          pmin(censor_date, threshold_date + time_horizon, na.rm = TRUE),
+          pmin(censor_date, start_date + time_horizon, na.rm = TRUE),
         FALSE
       )
+    ) |>
+    # remove people experiencing the event before the landmark index date
+    filter(
+      pmin(censor_date, event_date, na.rm = TRUE) >= index_date
     ) |>
     group_by(month_of_birth) |>
     summarise(
@@ -431,6 +451,7 @@ check_discontinuity_post <- function(
       cmlinc = sdc.rounding(cmlinc * n, sdc.threshold) / n,
     )
 
+  # plot cumulative incidence at the desired time horizon
   plot_summary <-
     ggplot(dat_summary) +
     geom_point(aes(x = month_of_birth, y = cmlinc)) +
@@ -442,16 +463,6 @@ check_discontinuity_post <- function(
       labels = ~ scales::label_date("%e %b %y")(.),
       breaks = dob_threshold_date + months(seq(-15, 15) * 12),
       guide = guide_axis(angle = 90)
-      #name = glue("Month of birth (relative to {scales::label_date('%e %b %y')(dob_threshold_date)})"), labels = ~ interval(dob_threshold_date, .) %/% months(1), breaks = dob_threshold_date + months(seq(-10,10)*6),
-      #name = glue("Age at {scales::label_date('%e %b %y')(threshold_date)}"), labels = ~ (interval(., threshold_date) %/% (months(1))/12, breaks = dob_threshold_date + months(seq(-10,10)*6),
-
-      ## For some reason using a secondary axis like this doesn't work! very frustrating
-      #sec.axis = sec_axis(
-      #  name = glue("Age at {scales::label_date('%e %b %y')(threshold_date)}"),
-      #  transform = ~ . ,
-      #  labels = ~ (interval(., threshold_date) %/% (months(1)))/12,
-      #  breaks = dob_threshold_date + months(seq(-10,10)*6)
-      #)
     ) +
     scale_y_continuous(labels = scales::label_percent()) +
     labs(
@@ -461,6 +472,7 @@ check_discontinuity_post <- function(
 
   print(plot_summary)
 
+  # save plot
   ggsave(
     plot_summary,
     filename = glue("discontinuity_{event_name}_{time_horizon}.png"),
@@ -470,34 +482,38 @@ check_discontinuity_post <- function(
 
 
 
-# report any discontinuities in events occurring either side of the threhold_date, by reporting outcome rates by month_of_birth ----
+# report outcome rates by month_of_birth, at yearly snapshot dates ----
 # use the "X_first_date_after" column as the event_date_col, or the "X_first_date_ever" column with a filter on the inputted data to ensure this event did not occur prior to baseline
 yearly_cumulative_incidence_by_dob <- function(
   .data,
   dob_threshold_date,
-  threshold_date,
+  start_date,
+  index_date,
   time_horizon_years,
   event_date_col,
   event_name
 ) {
-
   km_data <-
+    .data |>
+    # remove people experiencing the event or censoring before the landmark index date
+    filter(
+      pmin(.data[["censor_date"]], .data[[event_date_col]], na.rm = TRUE) >=
+        index_date
+    ) |>
+    # generate kaplan-meier estimates
     km(
-      .data = .data,
       group_col = "month_of_birth",
-      start_date = threshold_date - 1L, # so that events occurring on the threshold date are not excluded
-      time_horizon = floor(time_horizon_years*365.25),
+      start_date = start_date - 1L, # so that events occurring on the threshold date are not excluded
+      time_horizon = floor(time_horizon_years * 365.25),
       event_date_col = event_date_col,
       censor_date_col = "censor_date",
     ) |>
+    # select only at yearly snapshots
     filter(time %in% floor(seq_len(time_horizon_years) * 365.25)) |>
-    mutate(
-      year = ceiling(time / 365.25),
-    ) |>
-    rename(
-      month_of_birth = group
-    )
-  
+    mutate(year = ceiling(time / 365.25)) |>
+    rename(month_of_birth = group)
+
+  # plot rates at yearly snapshots
   km_plot <-
     ggplot(km_data) +
     geom_point(aes(x = month_of_birth, y = cmlinc)) +
@@ -517,12 +533,14 @@ yearly_cumulative_incidence_by_dob <- function(
 
   print(km_plot)
 
+  # save plot
   ggsave(
     km_plot,
     filename = glue("yearly_cumulative_incidence_by_dob_{event_name}.png"),
     path = output_dir
   )
 
+  # save data
   write_csv(
     km_data,
     fs::path(
