@@ -18,15 +18,35 @@ actions:
       highly_sensitive:
         data: output/zostavax/dataset_zostavax_main.arrow
 
+  generate_dataset_zostavax_2010:
+    run: ehrql:v1 generate-dataset analysis/dataset_definition.py --output output/zostavax/dataset_zostavax_2010.arrow
+      --
+      --threshold_date 2010-09-01 --min_dob 1920-09-01 --max_dob 1948-09-01
+      --vaccine_name zostavax
+    outputs:
+      highly_sensitive:
+        data: output/zostavax/dataset_zostavax_2010.arrow
+  
+  generate_dataset_zostavax_2016:
+    run: ehrql:v1 generate-dataset analysis/dataset_definition.py --output output/zostavax/dataset_zostavax_2016.arrow
+      --
+      --threshold_date 2016-09-01 --min_dob 1920-09-01 --max_dob 1948-09-01
+      --vaccine_name zostavax
+    outputs:
+      highly_sensitive:
+        data: output/zostavax/dataset_zostavax_2016.arrow
+
   ## Process dataset 
 
   process_zostavax:
     run: r:v2 analysis/zostavax/0_zostavax_processing.R
     needs:
-    - generate_dataset_zostavax_main
+    - generate_dataset_zostavax_main 
+    - generate_dataset_zostavax_2010
+    - generate_dataset_zostavax_2016
     outputs:
       highly_sensitive:
-        processed_data: output/zostavax/processed/dataset_processed_zostavax_main.arrow
+        processed_data: output/zostavax/processed/dataset_processed_zostavax_*.arrow
 
   ## Flow chart 
 
@@ -36,7 +56,7 @@ actions:
     - process_zostavax
     outputs:
       moderately_sensitive:
-        flow_chart: output/zostavax/processed/flow_chart_zostavax_main.csv
+        flow_chart: output/zostavax/processed/flow_chart_zostavax_*.csv
 
   ## Descriptives 
 
