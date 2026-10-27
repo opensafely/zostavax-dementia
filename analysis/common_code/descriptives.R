@@ -257,6 +257,14 @@ check_discontinuity_pre <- function(.data, dob_threshold_date, threshold_date, e
       event_rate = event_n / n
     ) 
 
+  write_csv(
+    dat_summary,  
+    fs::path(
+      output_dir,
+      glue("discontinuity_pre_{event_name}.csv")
+    )
+  )
+
   plot_summary <-
     ggplot(dat_summary) +
     geom_point(aes(x = month_of_birth, y = event_rate)) +
@@ -478,6 +486,16 @@ check_discontinuity_post <- function(
     filename = glue("discontinuity_{event_name}_{time_horizon}.png"),
     path = output_dir
   )
+  
+  # save data
+  write_csv(
+    dat_summary,  
+    fs::path(
+      output_dir,
+      glue("discontinuity_{event_name}_{time_horizon}.csv")
+    )
+  )
+
 }
 
 
