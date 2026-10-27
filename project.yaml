@@ -40,7 +40,7 @@ actions:
 
   ## Descriptives 
 
-  descriptives_zostavax:
+  descriptive_analysis_zostavax:
     run: r:v2 analysis/zostavax/2_zostavax_descriptives.R
     needs:
     - process_zostavax
