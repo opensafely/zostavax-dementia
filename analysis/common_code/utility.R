@@ -24,6 +24,7 @@ ceiling_any <- function(x, to = 1) {
 
 # rounding precision
 sdc.threshold <- 5
+
 # ggplot styling
 library(ggplot2)
 theme_bespoke <- function(base_size = 11, base_family = "Arial") {
