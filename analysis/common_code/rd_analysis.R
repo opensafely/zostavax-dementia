@@ -6,6 +6,7 @@ rd_analysis <- function(
   data,
   design = c("sharp", "fuzzy"),
   bandwidth,
+  bias_bandwidth,
   threshold,
   kernel = "triangular",
   polynomial = 1,
@@ -21,6 +22,7 @@ rd_analysis <- function(
     data = data,
     design = design,
     bandwidth = bandwidth,
+    bias_bandwidth = bias_bandwidth,
     threshold = threshold,
     kernel = kernel,
     polynomial = polynomial,
@@ -58,7 +60,8 @@ rd_analysis <- function(
       kernel = kernel,
       vce = "hc0",
       c = 0,
-      h = bandwidth
+      h = bandwidth,
+      b = bias_bandwidth
     )
     results[["sharp"]] <- extract_rd_results(rd = rd_sharp, design = "sharp")
   }
@@ -73,7 +76,8 @@ rd_analysis <- function(
       kernel = kernel,
       vce = "hc0",
       c = 0,
-      h = bandwidth
+      h = bandwidth,
+      b = bias_bandwidth
     )
     results[["fuzzy"]] <- extract_rd_results(rd = rd_fuzzy, design = "fuzzy")
   }
