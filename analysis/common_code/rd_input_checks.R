@@ -7,6 +7,7 @@ rd_input_checks <- function(
   data,
   design,
   bandwidth,
+  bias_bandwidth,
   threshold,
   kernel,
   polynomial,
@@ -54,6 +55,18 @@ rd_input_checks <- function(
       max.len = 2
     )
     assert_true(all(bandwidth > 0))
+    
+    ### Check bias_bandwidth is NULL or a positive numeric value of length 1 or 2 ----
+    if (!is.null(bias_bandwidth)) {
+      assert_numeric(
+        bias_bandwidth,
+        finite = TRUE,
+        any.missing = FALSE,
+        min.len = 1,
+        max.len = 2
+      )
+      assert_true(all(bias_bandwidth > 0))
+    }
 
     ### Check threshold and end are non-missing single date values ----
     for (x in c("threshold", "end")) {
