@@ -24,3 +24,61 @@ ceiling_any <- function(x, to = 1) {
 
 # rounding precision
 sdc.threshold <- 5
+# ggplot styling
+library(ggplot2)
+theme_bespoke <- function(base_size = 11, base_family = "Arial") {
+  
+  theme_classic(base_size = base_size, 
+                base_family = base_family) +
+    
+    theme(
+      # Background
+      plot.background = element_rect(
+        fill = "white", colour = NA
+      ),
+      panel.background = element_rect(
+        fill = "white", colour = NA
+      ),
+      
+      # Axes
+      axis.line = element_line(
+        colour = "black", linewidth = 0.5
+      ),
+      axis.ticks = element_line(
+        colour = "black", linewidth = 0.4
+      ),
+      axis.text = element_text(
+        colour = "black", size = base_size
+      ),
+      axis.title = element_text(
+        colour = "black", size = base_size
+      ),
+      
+      # Titles
+      plot.title = element_text(
+        face = "bold", size = base_size + 2,
+        colour = "black", hjust = 0
+      ),
+      plot.subtitle = element_text(
+        size = base_size, colour = "black"
+      ),
+      
+      # Legend
+      legend.position = "bottom",
+      legend.title = element_text(
+        face = "bold", size = base_size
+      ),
+      legend.text = element_text(
+        size = base_size - 1, colour = "black"
+      ),
+      legend.key = element_blank(),
+      
+      # Grid
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      
+      # Margins
+      plot.margin = margin(10, 12, 10, 10)
+    )
+}
+
