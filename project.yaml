@@ -69,6 +69,27 @@ actions:
         txt: output/zostavax/descriptives/main/*.txt
         csv: output/zostavax/descriptives/main/*.csv
         png: output/zostavax/descriptives/main/*.png
+  
+  descriptive_analysis_zostavax_2010:
+    run: r:v2 analysis/zostavax/7_zostavax_2010_descriptives.R
+    needs:
+    - process_zostavax
+    outputs:
+      moderately_sensitive:
+        txt: output/zostavax/descriptives/2010/*.txt
+        csv: output/zostavax/descriptives/2010/*.csv
+        png: output/zostavax/descriptives/2010/*.png
+  
+  descriptive_analysis_zostavax_2016:
+    run: r:v2 analysis/zostavax/8_zostavax_2016_descriptives.R
+    needs:
+    - process_zostavax
+    outputs:
+      moderately_sensitive:
+        txt: output/zostavax/descriptives/2016/*.txt
+        csv: output/zostavax/descriptives/2016/*.csv
+        png: output/zostavax/descriptives/2016/*.png
+  
 
   ## Define populations 
 

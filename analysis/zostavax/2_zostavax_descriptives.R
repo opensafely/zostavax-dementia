@@ -23,13 +23,13 @@ if (analysis == "main") {
 
 if (analysis == "2010") {
   dob_threshold_date <- as.Date("1933-09-01") + years(-3)
-  threshold_date <- as.Date("2013-09-01") + years(-3)
+  threshold_date <- as.Date("2010-09-01") + years(-3)
   end_date <- threshold_date + years(12) - days(1)
 }
 
 if (analysis == "2016") {
   dob_threshold_date <- as.Date("1933-09-01") + years(3)
-  threshold_date <- as.Date("2013-09-01") + years(3)
+  threshold_date <- as.Date("2016-09-01") + years(3)
   end_date <- threshold_date + years(12) - days(1)
 }
 
