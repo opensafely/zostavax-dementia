@@ -20,6 +20,7 @@ actions:
 
   generate_dataset_zostavax_2010:
     run: ehrql:v1 generate-dataset analysis/dataset_definition.py --output output/zostavax/dataset_zostavax_2010.arrow
+      --dummy-data-file analysis/dummy_data/dummy_dataset_zostavax.arrow 
       --
       --threshold_date 2010-09-01 --min_dob 1920-09-01 --max_dob 1948-09-01
       --vaccine_name zostavax
@@ -29,6 +30,7 @@ actions:
   
   generate_dataset_zostavax_2016:
     run: ehrql:v1 generate-dataset analysis/dataset_definition.py --output output/zostavax/dataset_zostavax_2016.arrow
+      --dummy-data-file analysis/dummy_data/dummy_dataset_zostavax.arrow 
       --
       --threshold_date 2016-09-01 --min_dob 1920-09-01 --max_dob 1948-09-01
       --vaccine_name zostavax
@@ -60,7 +62,7 @@ actions:
 
   ## Descriptives 
 
-  descriptive_analysis_zostavax:
+  descriptive_analysis_zostavax_main:
     run: r:v2 analysis/zostavax/2_zostavax_descriptives.R
     needs:
     - process_zostavax
