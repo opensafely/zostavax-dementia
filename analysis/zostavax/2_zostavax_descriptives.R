@@ -354,7 +354,7 @@ if (analysis == "main") {
   cumulative_events(df_analysis |> filter(!dementia_exclude_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "vascular_first_date_ever", "Vascular dementia")
   cumulative_events(df_analysis |> filter(!dementia_exclude_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "dementia_charlson_first_date_ever", "Dementia (Charlson)")
   cumulative_events(df_analysis |> filter(!dementia_exclude_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "dementia_gp_first_date_ever", "Dementia (GP only)")
-} else if (analysis %in% C("2010", "2016")) {
+} else if (analysis %in% c("2010", "2016")) {
   cumulative_events(df_analysis, "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "alzheimers_first_date_ever", "Alzheimers dementia")
   cumulative_events(df_analysis, "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "vascular_first_date_ever", "Vascular dementia")
   cumulative_events(df_analysis, "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "dementia_charlson_first_date_ever", "Dementia (Charlson)")
