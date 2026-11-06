@@ -310,7 +310,12 @@ cumulative_events <- function(
     .data |>
     # remove people experiencing the event or censoring before the landmark index date
     filter(
-      pmin(.data[["censor_date"]], .data[[event_date_col]], na.rm = TRUE) >=
+      pmin(
+        .data[["censor_date"]],
+        .data[[event_date_col]],
+        start_date + time_horizon,
+        na.rm = TRUE
+      ) >=
         index_date
     ) |>
     # generate kaplan-meier estimates
