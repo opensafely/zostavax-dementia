@@ -416,3 +416,4 @@ if (analysis == "main") {
   yearly_cumulative_incidence_by_dob(df_analysis |> filter(!smi_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=7, "smi_gp_first_date_ever", "Serious mental illness")
   yearly_cumulative_incidence_by_dob(df_analysis |> filter(!obese_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=7, "obese_gp_first_date_ever", "Obesity")
 }
+
