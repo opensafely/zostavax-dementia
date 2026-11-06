@@ -181,7 +181,11 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
           !exclude_missing_region,
         FALSE
       ),
-
+      no_exclusions_control = coalesce(
+          !exclude_not_mf_sex &
+          !exclude_missing_imd &
+          !exclude_missing_region
+      ),
       # Control conditions before threshold
       across(
         all_of(control_date_cols),
