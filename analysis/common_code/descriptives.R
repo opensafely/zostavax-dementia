@@ -310,7 +310,12 @@ cumulative_events <- function(
     .data |>
     # remove people experiencing the event or censoring before the landmark index date
     filter(
-      pmin(.data[["censor_date"]], .data[[event_date_col]], na.rm = TRUE) >=
+      pmin(
+        .data[["censor_date"]],
+        .data[[event_date_col]],
+        start_date + time_horizon,
+        na.rm = TRUE
+      ) >=
         index_date
     ) |>
     # generate kaplan-meier estimates
@@ -400,105 +405,6 @@ cumulative_events <- function(
     )
   )
 }
-
-# report any discontinuities in events occurring either side of the threhold_date, by reporting outcome rates by month_of_birth ----
-# use the "X_first_date_after" column as the event_date_col, or the "X_first_date_ever" column with a filter on the inputted data to ensure this event did not occur prior to baseline
-check_discontinuity_post <- function(
-  .data,
-  dob_threshold_date,
-  start_date,
-  index_date,
-  time_horizon,
-  event_date_col,
-  event_name
-) {
-  start_date <- start_date - 1L # so that events occurring on the threshold date are not excluded
-
-  dat_summary <-
-    .data |>
-
-    # derive event times and censoring indicator
-    transmute(
-      month_of_birth,
-      day_diff_threshold,
-      event_date = .data[[event_date_col]],
-      censor_date = pmin(reg_end_date, date_of_death, na.rm = TRUE),
-      event_time = as.integer(
-        pmin(
-          event_date,
-          censor_date,
-          start_date + time_horizon,
-          na.rm = TRUE
-        ) -
-          start_date
-      ),
-      event_indicator = coalesce(
-        event_date <=
-          pmin(censor_date, start_date + time_horizon, na.rm = TRUE),
-        FALSE
-      )
-    ) |>
-    # remove people experiencing the event before the landmark index date
-    filter(
-      pmin(censor_date, event_date, na.rm = TRUE) >= index_date
-    ) |>
-    group_by(month_of_birth) |>
-    summarise(
-      n = n(),
-      cmlinc = 1 -
-        km_at_t(
-          event_time = event_time,
-          event_indicator = event_indicator,
-          time_horizon = time_horizon
-        )
-    ) |>
-    ungroup() |>
-    # apply SDC
-    mutate(
-      n = sdc.rounding(n, sdc.threshold),
-      cmlinc = sdc.rounding(cmlinc * n, sdc.threshold) / n,
-    )
-
-  # plot cumulative incidence at the desired time horizon
-  plot_summary <-
-    ggplot(dat_summary) +
-    geom_point(aes(x = month_of_birth, y = cmlinc)) +
-    geom_vline(aes(xintercept = dob_threshold_date), linetype = "dashed") +
-    scale_x_date(
-      # Three possible options for scale of horizontal axis
-
-      name = "Date of birth",
-      labels = ~ scales::label_date("%e %b %y")(.),
-      breaks = dob_threshold_date + months(seq(-15, 15) * 12),
-      guide = guide_axis(angle = 90)
-    ) +
-    scale_y_continuous(labels = scales::label_percent()) +
-    labs(
-      y = glue("Cumulative incidence of event within {time_horizon} days")
-    ) +
-    theme_bw()
-
-  print(plot_summary)
-
-  # save plot
-  ggsave(
-    plot_summary,
-    filename = glue("discontinuity_{event_name}_{time_horizon}.png"),
-    path = output_dir
-  )
-  
-  # save data
-  write_csv(
-    dat_summary,  
-    fs::path(
-      output_dir,
-      glue("discontinuity_{event_name}_{time_horizon}.csv")
-    )
-  )
-
-}
-
-
 
 # report outcome rates by month_of_birth, at yearly snapshot dates ----
 # use the "X_first_date_after" column as the event_date_col, or the "X_first_date_ever" column with a filter on the inputted data to ensure this event did not occur prior to baseline
