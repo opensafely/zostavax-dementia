@@ -383,37 +383,37 @@ if (analysis == "main") {
 # Cumulative incidence of outcomes by month of birth, up to 7 years after threshold
 
 # zostavax - start follow up immeidately after threshold
-yearly_cumulative_incidence_by_dob(df_analysis, dob_threshold_date, threshold_date, threshold_date, time_horizon_years=7, "zostavax_date_1", "Zostavax")
+yearly_cumulative_incidence_by_dob(df_analysis, dob_threshold_date, threshold_date, threshold_date, time_horizon_years=12, "zostavax_date_1", "Zostavax")
 
 # outcomes - start follow up from index date
-yearly_cumulative_incidence_by_dob(df_analysis, dob_threshold_date, threshold_date, index_date, time_horizon_years=7, "shingles_first_date_after", "Shingles")
-yearly_cumulative_incidence_by_dob(df_analysis, dob_threshold_date, threshold_date, index_date, time_horizon_years=7, "varicella_first_date_after", "Varicella vaccine")
-yearly_cumulative_incidence_by_dob(df_analysis, dob_threshold_date, threshold_date, index_date, time_horizon_years=7, "neuralgia_first_date_after", "Neuralgia")
-yearly_cumulative_incidence_by_dob(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=7, "alzheimers_first_date_ever", "Alzheimers dementia")
-yearly_cumulative_incidence_by_dob(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=7, "vascular_first_date_ever", "Vascular dementia")
-yearly_cumulative_incidence_by_dob(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=7, "dementia_first_date_ever", "Dementia")
-yearly_cumulative_incidence_by_dob(df_analysis, dob_threshold_date, threshold_date, index_date, time_horizon_years=7, "date_of_death", "All-cause death")
-yearly_cumulative_incidence_by_dob(df_analysis, dob_threshold_date, threshold_date, index_date, time_horizon_years=7, "date_of_death_gp", "All-cause death (TPP only)")
+yearly_cumulative_incidence_by_dob(df_analysis, dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "shingles_first_date_after", "Shingles")
+yearly_cumulative_incidence_by_dob(df_analysis, dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "varicella_first_date_after", "Varicella vaccine")
+yearly_cumulative_incidence_by_dob(df_analysis, dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "neuralgia_first_date_after", "Neuralgia")
+yearly_cumulative_incidence_by_dob(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "alzheimers_first_date_ever", "Alzheimers dementia")
+yearly_cumulative_incidence_by_dob(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "vascular_first_date_ever", "Vascular dementia")
+yearly_cumulative_incidence_by_dob(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "dementia_first_date_ever", "Dementia")
+yearly_cumulative_incidence_by_dob(df_analysis, dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "date_of_death", "All-cause death")
+yearly_cumulative_incidence_by_dob(df_analysis, dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "date_of_death_gp", "All-cause death (TPP only)")
 
 
 if (analysis == "main") {
   # other covariates - start follow-up from index date
-  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!asthma_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=7, "asthma_gp_first_date_ever", "Asthma")
-  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!afib_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=7, "afib_gp_first_date_ever", "Atrial fibrillation")
-  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!chd_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=7, "chd_gp_first_date_ever", "Coronary heart disease")
-  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!ckd_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=7, "ckd_gp_first_date_ever", "Chronic kidney disease")
-  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!copd_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=7, "copd_gp_first_date_ever", "Chronic obstructive pulmonary disease")
-  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!depression_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=7, "depression_gp_first_date_ever", "Depression")
-  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!t2dm_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=7, "t2dm_gp_first_date_ever", "Type 2 diabetes")
-  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!epilepsy_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=7, "epilepsy_gp_first_date_ever", "Epilepsy")
-  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!hf_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=7, "hf_gp_first_date_ever", "Heart Failure")
-  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!hypothyroid_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=7, "hypothyroid_gp_first_date_ever", "Hypothyroidism")
-  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!osteoporosis_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=7, "osteoporosis_gp_first_date_ever", "Osteoporosis")
-  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!pad_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=7, "pad_gp_first_date_ever", "Peripheral artery disease")
-  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!ra_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=7, "ra_gp_first_date_ever", "Rheumatoid arthritis")
-  yearly_cumulative_incidence_by_dob(df_analysis, dob_threshold_date, threshold_date, index_date, time_horizon_years=7, "stroke_gp_first_date_after", "Stroke")
-  yearly_cumulative_incidence_by_dob(df_analysis, dob_threshold_date, threshold_date, index_date, time_horizon_years=7, "tia_gp_first_date_after", "Transient ischaemic attack")
-  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!smi_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=7, "smi_gp_first_date_ever", "Serious mental illness")
-  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!obese_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=7, "obese_gp_first_date_ever", "Obesity")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!asthma_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "asthma_gp_first_date_ever", "Asthma")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!afib_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "afib_gp_first_date_ever", "Atrial fibrillation")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!chd_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "chd_gp_first_date_ever", "Coronary heart disease")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!ckd_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "ckd_gp_first_date_ever", "Chronic kidney disease")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!copd_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "copd_gp_first_date_ever", "Chronic obstructive pulmonary disease")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!depression_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "depression_gp_first_date_ever", "Depression")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!t2dm_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "t2dm_gp_first_date_ever", "Type 2 diabetes")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!epilepsy_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "epilepsy_gp_first_date_ever", "Epilepsy")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!hf_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "hf_gp_first_date_ever", "Heart Failure")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!hypothyroid_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "hypothyroid_gp_first_date_ever", "Hypothyroidism")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!osteoporosis_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "osteoporosis_gp_first_date_ever", "Osteoporosis")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!pad_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "pad_gp_first_date_ever", "Peripheral artery disease")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!ra_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "ra_gp_first_date_ever", "Rheumatoid arthritis")
+  yearly_cumulative_incidence_by_dob(df_analysis, dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "stroke_gp_first_date_after", "Stroke")
+  yearly_cumulative_incidence_by_dob(df_analysis, dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "tia_gp_first_date_after", "Transient ischaemic attack")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!smi_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "smi_gp_first_date_ever", "Serious mental illness")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!obese_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "obese_gp_first_date_ever", "Obesity")
 }
 

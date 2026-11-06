@@ -19,7 +19,7 @@ dataset = vaccinations(threshold_date)
 # Note - we are extracting a broad population and will apply further exclusions downstream 
 dataset.define_population(
     (dataset.reg_start_date.is_on_or_before(threshold_date - days(90)))
-    & (dataset.reg_end_date.is_on_or_after(threshold_date))
+    & ((dataset.reg_end_date.is_on_or_after(threshold_date)) | dataset.reg_end_date.is_null())
     & (dataset.date_of_birth.is_on_or_between(min_dob, max_dob))
     & (dataset.date_of_death.is_after(threshold_date) | (dataset.date_of_death.is_null()))
 )
