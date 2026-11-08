@@ -176,7 +176,7 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
           exclude_not_mf_sex |
           exclude_past_vax |
           exclude_deregister |
-          exclude_not_mf_sex, 
+          exclude_died, 
         FALSE
       ),
       no_common_exclusions = coalesce(
