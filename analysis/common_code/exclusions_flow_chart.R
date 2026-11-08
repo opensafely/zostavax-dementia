@@ -10,7 +10,9 @@ exclusion_flow_chart <- function(vaccine_name, analysis = "main") {
   exclusions <- c(
     exclude_not_mf_sex = "Non male/female sex",
     exclude_missing_imd = "Missing IMD",
-    exclude_missing_region = "Missing region"
+    exclude_missing_region = "Missing region",
+    exclude_died = "Died before index date",
+    exclude_deregister = "Deregistered before index date"
   )
 
   # Additional exclusions for main population

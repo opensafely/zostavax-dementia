@@ -149,11 +149,18 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
         neuralgia_last_date_before < threshold_date,
         FALSE
       ),
+
+      # Died / deregistered between threshold and index date
+      exclude_died = coalesce(!is.na(date_of_death) & (date_of_death <= index_date), FALSE),
+      exclude_deregister = coalesce(!is.na(reg_end_date) & (reg_end_date <= index_date), FALSE),
+
       # Flag for exclusions common to all analyses
       common_exclusions_w_dementia = coalesce(
         shingles_before_threshold |
           dementia_exclude_before_threshold |
           dementia_exclude_bw_threshold_index |
+          exclude_died |
+          exclude_deregister |
           exclude_not_mf_sex |
           exclude_past_vax |
           exclude_immunosuppressed |
@@ -167,7 +174,9 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
           exclude_missing_imd |
           exclude_missing_region |
           exclude_not_mf_sex |
-          exclude_past_vax,
+          exclude_past_vax |
+          exclude_deregister |
+          exclude_died, 
         FALSE
       ),
       no_common_exclusions = coalesce(
@@ -178,13 +187,18 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
           !exclude_past_vax &
           !exclude_immunosuppressed &
           !exclude_missing_imd &
-          !exclude_missing_region,
+          !exclude_missing_region &
+          !exclude_died &
+          !exclude_deregister,
         FALSE
       ),
       no_exclusions_control = coalesce(
           !exclude_not_mf_sex &
           !exclude_missing_imd &
-          !exclude_missing_region
+          !exclude_missing_region &
+          !exclude_died &
+          !exclude_deregister,
+        FALSE
       ),
       # Control conditions before threshold
       across(

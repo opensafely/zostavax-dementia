@@ -75,10 +75,8 @@ df_processed <-
     )),
     day_diff_threshold = as.integer(date_of_birth - dob_threshold_date),
     registration_duration = as.integer(threshold_date - reg_start_date + 1L),
-    censor_date = pmin(reg_end_date, date_of_death, na.rm = TRUE),
-    fup_availability = as.numeric(
-      pmin(censor_date, end_date, na.rm = TRUE) - index_date + 1L
-    )
+    censor_date = pmin(reg_end_date, end_date, date_of_death, na.rm = TRUE),
+    fup_availability = as.numeric(censor_date - index_date + 1L)
   )
 
 # print summary of processed dataset - not disclosure controlled, not for release
