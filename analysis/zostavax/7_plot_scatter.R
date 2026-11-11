@@ -30,7 +30,7 @@ df_msebw <- read.csv(glue::glue(
 ))
 
 # Define plot_rd function ----
-plot_rd <- function(vaccine_name = "zostavax", outcome = "dementia", dob_threshold_date = as.Date("1933-09-01"), bandwidth = df_msebw$h_left, time_horizon = 7, ymin = 15, ymax = 30, ytxt = 23) {
+plot_rd <- function(rd = "fuzzy", vaccine_name = "zostavax", outcome = "dementia", dob_threshold_date = as.Date("1933-09-01"), bandwidth = df_msebw$h_left, time_horizon = 7, ymin = 15, ymax = 30, ytxt = 23) {
   
   ## Load incidence ----
   outcome_title <- stringr::str_to_title(outcome)
@@ -59,7 +59,7 @@ plot_rd <- function(vaccine_name = "zostavax", outcome = "dementia", dob_thresho
     !is.na(df_est$end_date_years) &
       df_est$end_date_years == time_horizon &
       df_est$outcome == labels[labels$name == outcome, ]$variable &
-      df_est$rd == "fuzzy",
+      df_est$rd == rd,
   ]
   effect <- round(plot_est$robust_coef * 100, 1)
   lci <- round(
@@ -69,6 +69,7 @@ plot_rd <- function(vaccine_name = "zostavax", outcome = "dementia", dob_thresho
     (plot_est$robust_coef + qnorm(0.975) * plot_est$robust_se) * 100, 1
   )
   p <- signif(plot_est$robust_p, 2)
+  title <- ifelse(rd=="sharp","being eligible for ","")
     
   # Define plot ----
   plot <- ggplot(
@@ -91,36 +92,36 @@ plot_rd <- function(vaccine_name = "zostavax", outcome = "dementia", dob_thresho
       x = 3,
       y = ytxt,
       label = glue::glue(
-        "Effect of being eligible, {effect}\n95% CI = {lci} to {uci}\nP = {p}"
+        "Effect of {title}{vaccine_name} on {outcome}\n{effect} (95% CI = {lci} to {uci}), P = {p}"
       ),
       hjust = 0,
       vjust = 1,
       size = 4,
       colour = "black"
     ) +
-    annotate(
-      "segment",
-      x = -16, xend = -24,
-      y = ymax - 0.5, yend = ymax - 0.5,
-      arrow = grid::arrow(length = grid::unit(0.2, "cm")),
-      colour = "grey50"
-    ) +
+    # annotate(
+    #   "segment",
+    #   x = -16, xend = -24,
+    #   y = ymax - 0.5, yend = ymax - 0.5,
+    #   arrow = grid::arrow(length = grid::unit(0.2, "cm")),
+    #   colour = "grey50"
+    # ) +
     annotate(
       "text",
       x = -20, y = ymax,
-      label = "Older age"
+      label = "Earlier date of birth\n(ineligible)"
     ) +
-    annotate(
-      "segment",
-      x = 16, xend = 24,
-      y = ymax - 0.5, yend = ymax - 0.5,
-      arrow = grid::arrow(length = grid::unit(0.2, "cm")),
-      colour = "grey50"
-    ) +
+    # annotate(
+    #   "segment",
+    #   x = 16, xend = 24,
+    #   y = ymax - 0.5, yend = ymax - 0.5,
+    #   arrow = grid::arrow(length = grid::unit(0.2, "cm")),
+    #   colour = "grey50"
+    # ) +
     annotate(
       "text",
       x = 20, y = ymax,
-      label = "Younger age"
+      label = "Later date of birth\n(eligible)"
     ) +
     geom_smooth(
       data = subset(df_points, relative_month < 0),
@@ -145,9 +146,6 @@ plot_rd <- function(vaccine_name = "zostavax", outcome = "dementia", dob_thresho
       ),
       y = glue::glue(
         "Probability of a new {outcome} diagnosis over a {time_horizon} year follow-up period (%)"
-      ),
-      title = glue::glue(
-        "Effect of being eligible for {vaccine_name} on {outcome}"
       )
     ) +
     scale_fill_gradient(
@@ -167,7 +165,7 @@ plot_rd <- function(vaccine_name = "zostavax", outcome = "dementia", dob_thresho
   
   # Save plot ----
   ggsave(
-    filename = file.path(output_dir, glue::glue("scatter_{outcome}.png")),
+    filename = file.path(output_dir, glue::glue("scatter_{rd}_{outcome}.png")),
     plot = plot,
     height = 210,
     width = 1.5 * 210,
@@ -182,7 +180,12 @@ plot_rd <- function(vaccine_name = "zostavax", outcome = "dementia", dob_thresho
 
 # Make plots ----
 
-plot_rd(outcome = "dementia", ymin = 15, ymax = 30, ytxt = 25)
-plot_rd(outcome = "shingles", ymin = 2, ymax = 10, ytxt = 6)
-plot_rd(outcome = "all-cause death", ymin = 25, ymax = 50, ytxt = 40)
-plot_rd(outcome = "neuralgia", ymin = 0, ymax = 3, ytxt = 2)
+plot_rd(rd = "sharp", outcome = "dementia", ymin = 15, ymax = 30, ytxt = 24)
+plot_rd(rd = "sharp", outcome = "shingles", ymin = 2, ymax = 10, ytxt = 5.5)
+plot_rd(rd = "sharp", outcome = "all-cause death", ymin = 25, ymax = 50, ytxt = 40)
+plot_rd(rd = "sharp", outcome = "neuralgia", ymin = 0, ymax = 3, ytxt = 1)
+
+plot_rd(rd = "fuzzy", outcome = "dementia", ymin = 15, ymax = 30, ytxt = 24)
+plot_rd(rd = "fuzzy", outcome = "shingles", ymin = 2, ymax = 10, ytxt = 5.5)
+plot_rd(rd = "fuzzy", outcome = "all-cause death", ymin = 25, ymax = 50, ytxt = 40)
+plot_rd(rd = "fuzzy", outcome = "neuralgia", ymin = 0, ymax = 3, ytxt = 1)

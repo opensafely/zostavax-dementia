@@ -6,8 +6,6 @@ library("lubridate")
 
 # Specify parameters ----
 vaccine_name <- "zostavax"
-outcome <- "dementia"
-
 # Create rd_plots directory ----
 output_dir <- here::here("output", vaccine_name, "rd_plots")
 fs::dir_create(output_dir)
@@ -24,11 +22,11 @@ df <- read.csv(glue::glue(
   "{vaccine_name}/output/rd_results_rounded.csv"
 ))
 
-# Filter ----
-df <- df[df$analysis_group %in% c("annual_fup") & df$rd=="fuzzy",]
-
 # Define plot_annual_fup function ----
-plot_annual_fup <- function(vaccine_name = "zostavax", outcome = "dementia") {
+plot_annual_fup <- function(rd = "fuzzy", vaccine_name = "zostavax", outcome = "dementia", ymin = -3, ymax = 2) {
+  
+  # Filter ----
+  df <- df[df$analysis_group %in% c("annual_fup") & df$rd==rd,]
   
   # Restrict to outcome ----
   outcome_var <- labels[labels$name==outcome,]$variable
@@ -39,7 +37,8 @@ plot_annual_fup <- function(vaccine_name = "zostavax", outcome = "dementia") {
   df$robust_est <- df$robust_coef * 100
   df$robust_coef_lci <- (df$robust_coef - qnorm(0.975) * df$robust_se) * 100
   df$robust_coef_uci <- (df$robust_coef + qnorm(0.975) * df$robust_se) * 100
-  
+  title <- ifelse(rd=="sharp","being eligible for ","")
+
   # Define plot ----
   plot <- ggplot(df, mapping = aes(
     x = end_date_years,
@@ -64,18 +63,18 @@ plot_annual_fup <- function(vaccine_name = "zostavax", outcome = "dementia") {
       size = 2.5
     ) +
     labs(
-      y = glue("Effect of being eligible for {vaccine_name} on {outcome}"),
+      y = glue("Effect of {title}{vaccine_name} on {outcome}"),
       x = "Follow-up period (years)"
     ) +
     scale_x_continuous(breaks = seq(min(df$end_date_years), max(df$end_date_years), 1), 
                        lim = c(min(df$end_date_years), max(df$end_date_years))) +
-    scale_y_continuous(lim = c(-3,2), breaks = seq(-100,100,1)) +
+    scale_y_continuous(lim = c(ymin, ymax), breaks = seq(-100,100,0.5)) +
     guides(shape = "none") +
     theme_classic()
   
   # Save plot ----
   ggsave(
-    filename = file.path(output_dir, glue::glue("annual_fup_{outcome}.png")),
+    filename = file.path(output_dir, glue::glue("annual_fup_{rd}_{outcome}.png")),
     plot = plot,
     height = 210,
     width = 297,
@@ -91,7 +90,12 @@ plot_annual_fup <- function(vaccine_name = "zostavax", outcome = "dementia") {
 
 # Make plots ----
 
-plot_annual_fup(outcome = "dementia")
-plot_annual_fup(outcome = "shingles")
-plot_annual_fup(outcome = "all-cause death")
-plot_annual_fup(outcome = "neuralgia")
+plot_annual_fup(rd = "sharp", outcome = "shingles", ymin = -2.5, ymax = 0.5)
+plot_annual_fup(rd = "sharp", outcome = "dementia", ymin = -2, ymax = 2)
+plot_annual_fup(rd = "sharp", outcome = "neuralgia", ymin = -1, ymax = 0.5)
+plot_annual_fup(rd = "sharp", outcome = "all-cause death", ymin = -3, ymax = 2)
+
+plot_annual_fup(rd = "fuzzy", outcome = "shingles", ymin = -2.5, ymax = 0.5)
+plot_annual_fup(rd = "fuzzy", outcome = "dementia", ymin = -2, ymax = 2)
+plot_annual_fup(rd = "fuzzy", outcome = "neuralgia", ymin = -1, ymax = 0.5)
+plot_annual_fup(rd = "fuzzy", outcome = "all-cause death", ymin = -3, ymax = 2)

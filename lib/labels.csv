@@ -1,41 +1,41 @@
-﻿variable,name,type,group
-date_of_death,all-cause death,outcome,
-dementia_first_date_ever,dementia,outcome,
-neuralgia_first_date_after,neuralgia,outcome,
-shingles_first_date_after,shingles,outcome,
-afib_gp_first_date_ever,atrial filbrillation,outcome,
-alzheimers_first_date_ever,Alzheimer's disease,outcome,
-asthma_gp_first_date_ever,asthma,outcome,
-chd_gp_first_date_ever,coronary heart disease,outcome,
-ckd_gp_first_date_ever,chronic kidney disease,outcome,
-copd_gp_first_date_ever,chronic obstructive pulmonary disease,outcome,
-dementia_charlson_gp_first_date_ever,dementia (Charlson),outcome,
-dementia_gp_first_date_ever,dementia (primary care only),outcome,
-depression_gp_first_date_ever,depression (primary care only),outcome,
-epilepsy_gp_first_date_ever,epilepsy (primary care only),outcome,
-hf_gp_first_date_ever,heart failure (primary care only),outcome,
-hypothyroid_gp_first_date_ever,hypothyroidism (primary care only),outcome,
-obese_gp_first_date_ever,obesity (primary care only),outcome,
-osteoporosis_gp_first_date_ever,osteoporosis (primary care only),outcome,
-pad_gp_first_date_ever,peripheral artery disease (primary care only),outcome,
-ra_gp_first_date_ever,rheumatoid arthritis (primary care only),outcome,
-smi_gp_first_date_ever,serious mental illness (primary care only),outcome,
-stroke_gp_first_date_after,stroke (primary care only),outcome,
-t2dm_gp_first_date_ever,type 2 diabetes (primary care only),outcome,
-tia_gp_first_date_after,transient ischaemic attack (primary care only),outcome,
-vascular_first_date_ever,vascular dementia,outcome,
-date_of_death_gp,all-cause death (primary care only),outcome,
-neuralgia_gp_first_date_after,neuralgia (primary care only),outcome,
-shingles_gp_first_date_after,shingles (primary care only),outcome,
-alt_kernel,Alternative kernel,analysis_group,Alternative kernel
-alt_msebw,Alternative MSE bandwidths,analysis_group,Alternative MSE bandwidths
-alt_outcome,Alternative outcomes,analysis_group,Alternative outcomes
-alt_polynomial,Alternative polynomial,analysis_group,Alternative polynomial
-fixed_bw_aged77_82,2 years,analysis_group,Fixed bandwidth
-fixed_bw_aged78_81,1 year,analysis_group,Fixed bandwidth
-primary,Primary,analysis_group,Primary
-sub_cogimp_no,No history of cognitive impairment,analysis_group,Subgroup: cognitive impairment
-sub_cogimp_yes,History of cognitive impairment,analysis_group,Subgroup: cognitive impairment
-sub_sex_men,Men,analysis_group,Subgroup: sex
-sub_sex_women,Women,analysis_group,Subgroup: sex
-thresholdm_no,Excluding threshold month,analysis_group,Excluding threshold month
+﻿variable,name,type,analysis_group_order,outcome_group
+date_of_death,all-cause death,outcome,,primary
+dementia_first_date_ever,dementia,outcome,,primary
+neuralgia_first_date_after,neuralgia,outcome,,primary
+shingles_first_date_after,shingles,outcome,,primary
+afib_gp_first_date_ever,atrial filbrillation,outcome,,control
+alzheimers_first_date_ever,Alzheimer's disease,outcome,,subtype
+asthma_gp_first_date_ever,asthma,outcome,,control
+chd_gp_first_date_ever,coronary heart disease,outcome,,control
+ckd_gp_first_date_ever,chronic kidney disease,outcome,,control
+copd_gp_first_date_ever,chronic obstructive pulmonary disease,outcome,,control
+dementia_charlson_gp_first_date_ever,dementia (Charlson),outcome,,alternative
+dementia_gp_first_date_ever,dementia (primary care only),outcome,,alternative
+depression_gp_first_date_ever,depression (primary care only),outcome,,control
+epilepsy_gp_first_date_ever,epilepsy (primary care only),outcome,,control
+hf_gp_first_date_ever,heart failure (primary care only),outcome,,control
+hypothyroid_gp_first_date_ever,hypothyroidism (primary care only),outcome,,control
+obese_gp_first_date_ever,obesity (primary care only),outcome,,control
+osteoporosis_gp_first_date_ever,osteoporosis (primary care only),outcome,,control
+pad_gp_first_date_ever,peripheral artery disease (primary care only),outcome,,control
+ra_gp_first_date_ever,rheumatoid arthritis (primary care only),outcome,,control
+smi_gp_first_date_ever,serious mental illness (primary care only),outcome,,control
+stroke_gp_first_date_after,stroke (primary care only),outcome,,control
+t2dm_gp_first_date_ever,type 2 diabetes (primary care only),outcome,,control
+tia_gp_first_date_after,transient ischaemic attack (primary care only),outcome,,control
+vascular_first_date_ever,vascular dementia,outcome,,subtype
+date_of_death_gp,all-cause death (primary care only),outcome,,alternative
+neuralgia_gp_first_date_after,neuralgia (primary care only),outcome,,alternative
+shingles_gp_first_date_after,shingles (primary care only),outcome,,alternative
+alt_kernel,Uniform kernel,analysis_group,3,
+alt_msebw,"MSE bandwidth, x",analysis_group,2,
+alt_outcome,,analysis_group,,
+alt_polynomial,Quadratic polynomial,analysis_group,4,
+fixed_bw_aged77_82,"Fixed bandwidth, 2 years",analysis_group,6,
+fixed_bw_aged78_81,"Fixed bandwidth, 1 years",analysis_group,5,
+primary,Primary,analysis_group,1,
+sub_cogimp_no,Subgroup: No history of cognitive impairment,analysis_group,10,
+sub_cogimp_yes,Subgroup: History of cognitive impairment,analysis_group,11,
+sub_sex_men,Subgroup: Men,analysis_group,9,
+sub_sex_women,Subgroup: Women,analysis_group,8,
+thresholdm_no,Excluding threshold month,analysis_group,7,
