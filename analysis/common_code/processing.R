@@ -34,6 +34,7 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
         as.Date("1934-09-01")
       ) |
         between(date_of_birth, as.Date("1942-09-02"), as.Date("1943-09-01")),
+
       zostavax_eligibility_20140901 = between(
         date_of_birth,
         as.Date("1934-09-02"),

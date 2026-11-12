@@ -18,6 +18,13 @@ df_processed_main <- processing(
   "main"
 )
 
+df_processed_1yr_index <- processing(
+  as.Date("2013-09-01"),
+  as.Date("2014-09-01"),
+  "zostavax",
+  "1yr_index"
+)
+
 df_processed_2010 <- processing(
   as.Date("2010-09-01"),
   as.Date("2011-02-01"),

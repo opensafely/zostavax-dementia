@@ -24,22 +24,31 @@ options(width = 200)
 if (analysis == "main") {
   dob_threshold_date <- as.Date("1933-09-01")
   threshold_date <- as.Date("2013-09-01")
+  index_date <- threshold_date + months(5)
+  end_date <- threshold_date + years(12) - days(1)
+}
+
+if (analysis == "1yr_index") {
+  dob_threshold_date <- as.Date("1933-09-01")
+  threshold_date <- as.Date("2013-09-01")
+  index_date <- threshold_date + years(1)
   end_date <- threshold_date + years(12) - days(1)
 }
 
 if (analysis == "2010") {
   dob_threshold_date <- as.Date("1933-09-01") + years(-3)
   threshold_date <- as.Date("2013-09-01") + years(-3)
+  index_date <- threshold_date + months(5)
   end_date <- threshold_date + years(12) - days(1)
 }
 
 if (analysis == "2016") {
   dob_threshold_date <- as.Date("1933-09-01") + years(3)
   threshold_date <- as.Date("2013-09-01") + years(3)
+  index_date <- threshold_date + months(5)
   end_date <- threshold_date + years(12) - days(1)
 }
 
-index_date <- threshold_date + months(5)
 
 # run functions ----
 source(here::here("analysis", "common_code", "utility.R"))
@@ -87,7 +96,7 @@ capture.output(
 )
 
 # create core analysis dataset with exclusions applied
-if (analysis == "main") {
+if (analysis %in% c("main", "1yr_index")) {
   df_analysis <-
     df_processed |>
     filter(no_common_exclusions)
@@ -230,7 +239,6 @@ if (analysis == "main") {
 }
 
 
-
 # create a table of follow-up availability (time to deregistration, death or end of follow up) after index date
 table_followup <-
   df_analysis |>
@@ -318,7 +326,7 @@ df_analysis |>
 # Cumulative incidence of vaccination since index date ----
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-if (analysis %in% c("main", "2010")) {
+if (analysis %in% c("main", "1yr_index", "2010", "2016")) {
   # Cumulative uptake of Zostavax by age in months up to one year after the threshold date
   cumulative_events(df_analysis |> filter(between(age, 79, 80)), "month_of_birth_fct", precision=7, start_date = threshold_date, index_date = threshold_date, 52*7, "zostavax_date_1", "Zostavax by month")
 
@@ -347,7 +355,7 @@ cumulative_events(df_analysis, "eligibility", precision=7, start_date = threshol
 cumulative_events(df_analysis, "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "neuralgia_first_date_after", "Neuralgia")
 cumulative_events(df_analysis, "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "neuralgia_gp_first_date_after", "Neuralgia (GP only)")
 
-if (analysis == "main") {
+if (analysis %in% c("main", "1yr_index")) {
   cumulative_events(df_analysis |> filter(!dementia_exclude_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "alzheimers_first_date_ever", "Alzheimers dementia")
   cumulative_events(df_analysis |> filter(!dementia_exclude_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "vascular_first_date_ever", "Vascular dementia")
   cumulative_events(df_analysis |> filter(!dementia_exclude_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "dementia_charlson_first_date_ever", "Dementia (Charlson)")
@@ -358,7 +366,7 @@ if (analysis == "main") {
   cumulative_events(df_analysis, "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "dementia_charlson_first_date_ever", "Dementia (Charlson)")
   cumulative_events(df_analysis, "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "dementia_gp_first_date_ever", "Dementia (GP only)")
 }
-if (analysis == "main") {
+if (analysis %in% c("main")) {
   cumulative_events(df_analysis |> filter(!asthma_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "asthma_gp_first_date_ever", "Asthma")
   cumulative_events(df_analysis |> filter(!afib_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "afib_gp_first_date_ever", "Atrial fibrillation")
   cumulative_events(df_analysis |> filter(!chd_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "chd_gp_first_date_ever", "Coronary heart disease")
