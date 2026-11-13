@@ -1,0 +1,19 @@
+code,term
+I10,Essential (primary) hypertension
+I11,Hypertensive heart disease
+I110,Hypertensive heart disease with (congestive) heart failure
+I119,Hypertensive heart disease without (congestive) heart failure
+I12,Hypertensive renal disease
+I120,Hypertensive renal disease with renal failure
+I129,Hypertensive renal disease without renal failure
+I13,Hypertensive heart and renal disease
+I130,Hypertensive heart and renal disease with (congestive) heart failure
+I131,Hypertensive heart and renal disease with renal failure
+I132,Hypertensive heart and renal disease with both (congestive) heart failure and renal failure
+I139,"Hypertensive heart and renal disease, unspecified"
+I15,Secondary hypertension
+I150,Renovascular hypertension
+I151,Hypertension secondary to other renal disorders
+I152,Hypertension secondary to endocrine disorders
+I158,Other secondary hypertension
+I159,"Secondary hypertension, unspecified"

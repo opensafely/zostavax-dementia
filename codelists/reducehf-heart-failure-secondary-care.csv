@@ -1,0 +1,24 @@
+code,term
+I110,Hypertensive heart disease with (congestive) heart failure
+I130,Hypertensive heart and renal disease with (congestive) heart failure
+I132,Hypertensive heart and renal disease with both (congestive) heart failure and renal failure
+I255,Ischaemic cardiomyopathy
+I42,Cardiomyopathy
+I420,Dilated cardiomyopathy
+I423,Endomyocardial (eosinophilic) disease
+I424,Endocardial fibroelastosis
+I425,Other restrictive cardiomyopathy
+I426,Alcoholic cardiomyopathy
+I427,Cardiomyopathy due to drugs and other external agents
+I428,Other cardiomyopathies
+I429,"Cardiomyopathy, unspecified"
+I43,Cardiomyopathy in diseases classified elsewhere
+I430,Cardiomyopathy in infectious and parasitic diseases classified elsewhere
+I431,Cardiomyopathy in metabolic diseases
+I432,Cardiomyopathy in nutritional diseases
+I438,Cardiomyopathy in other diseases classified elsewhere
+I50,Heart failure
+I500,Congestive heart failure
+I501,Left ventricular failure
+I509,"Heart failure, unspecified"
+O903,Cardiomyopathy in the puerperium

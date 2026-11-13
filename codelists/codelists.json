@@ -144,12 +144,6 @@
       "downloaded_at": "2026-05-28 16:38:28.108715Z",
       "sha": "d95a2f826299563aa57f6fa99009e6e13a65151b"
     },
-    "opensafely-ischaemic-heart-disease.csv": {
-      "id": "opensafely/ischaemic-heart-disease/10a53b71",
-      "url": "https://www.opencodelists.org/codelist/opensafely/ischaemic-heart-disease/10a53b71/",
-      "downloaded_at": "2026-05-29 09:58:02.510880Z",
-      "sha": "ffc00dbf1ba6852e23130689247ae117cb691206"
-    },
     "nhsd-primary-care-domain-refsets-copd_cod.csv": {
       "id": "nhsd-primary-care-domain-refsets/copd_cod/20260630",
       "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/copd_cod/20260630/",
@@ -161,12 +155,6 @@
       "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/dmtype2_cod/20260630/",
       "downloaded_at": "2026-09-03 14:48:53.243949+00:00Z",
       "sha": "9ae4e751ad57000010c2aa0122b778a2d1b6c6ba"
-    },
-    "reducehf-type-2-diabetes-icd10.csv": {
-      "id": "reducehf/type-2-diabetes-icd10/53c432c4",
-      "url": "https://www.opencodelists.org/codelist/reducehf/type-2-diabetes-icd10/53c432c4/",
-      "downloaded_at": "2026-09-03 14:48:53.365222+00:00Z",
-      "sha": "44b8f1f210c8af12a54d56a5ad2399849090e7af"
     },
     "nhsd-primary-care-domain-refsets-hyp_cod.csv": {
       "id": "nhsd-primary-care-domain-refsets/hyp_cod/20250912",
@@ -341,6 +329,60 @@
       "url": "https://www.opencodelists.org/codelist/opensafely/incident-dementia-based-on-charlson/64419ca5/",
       "downloaded_at": "2026-10-14 18:50:47.006557+00:00Z",
       "sha": "02ae533280a728b85387dda4ab661577e87d5d81"
+    },
+    "bristol-copd.csv": {
+      "id": "bristol/copd/0031c5f4",
+      "url": "https://www.opencodelists.org/codelist/bristol/copd/0031c5f4/",
+      "downloaded_at": "2026-11-13 13:07:45.683456+00:00Z",
+      "sha": "a22188470aba78989a9b8133adc5b9b89a5df090"
+    },
+    "reducehf-type-2-diabetes-icd10.csv": {
+      "id": "reducehf/type-2-diabetes-icd10/53c432c4",
+      "url": "https://www.opencodelists.org/codelist/reducehf/type-2-diabetes-icd10/53c432c4/",
+      "downloaded_at": "2026-09-03 14:48:53.365222+00:00Z",
+      "sha": "44b8f1f210c8af12a54d56a5ad2399849090e7af"
+    },
+    "reducehf-hypertension-icd10.csv": {
+      "id": "reducehf/hypertension-icd10/6834d99c",
+      "url": "https://www.opencodelists.org/codelist/reducehf/hypertension-icd10/6834d99c/",
+      "downloaded_at": "2026-11-13 13:31:23.368172+00:00Z",
+      "sha": "56d8f08dde92ca53786ff87fc4515495ee29bc23"
+    },
+    "opensafely-lower-respiratory-tract-infection-icd10.csv": {
+      "id": "opensafely/lower-respiratory-tract-infection-icd10/3e71b434",
+      "url": "https://www.opencodelists.org/codelist/opensafely/lower-respiratory-tract-infection-icd10/3e71b434/",
+      "downloaded_at": "2026-11-13 13:12:02.669632+00:00Z",
+      "sha": "ff0ef04341679919528d8fff9693b794853574ad"
+    },
+    "opensafely-chronic-kidney-disease-icd10.csv": {
+      "id": "opensafely/chronic-kidney-disease-icd10/256240ff",
+      "url": "https://www.opencodelists.org/codelist/opensafely/chronic-kidney-disease-icd10/256240ff/",
+      "downloaded_at": "2026-11-13 13:17:56.265404+00:00Z",
+      "sha": "3b1e55d4d5a13b9663b53fe50203090b211a3e20"
+    },
+    "reducehf-heart-failure-secondary-care.csv": {
+      "id": "reducehf/heart-failure-secondary-care/64d82c75",
+      "url": "https://www.opencodelists.org/codelist/reducehf/heart-failure-secondary-care/64d82c75/",
+      "downloaded_at": "2026-11-13 13:22:13.496998+00:00Z",
+      "sha": "eaab30231bc84903cad49566bdd4bbc6b01c5ab8"
+    },
+    "user-markdrussell-rheumatoid-arthritis-secondary-care.csv": {
+      "id": "user/markdrussell/rheumatoid-arthritis-secondary-care/245780e9",
+      "url": "https://www.opencodelists.org/codelist/user/markdrussell/rheumatoid-arthritis-secondary-care/245780e9/",
+      "downloaded_at": "2026-11-13 13:28:02.930058+00:00Z",
+      "sha": "d074444b6ba473ff132e2b8e00ee3c9ec61dc138"
+    },
+    "opensafely-stroke-excluding-tia-icd10-new.csv": {
+      "id": "opensafely/stroke-excluding-tia-icd10-new/11b84db6",
+      "url": "https://www.opencodelists.org/codelist/opensafely/stroke-excluding-tia-icd10-new/11b84db6/",
+      "downloaded_at": "2026-11-13 13:28:49.513659+00:00Z",
+      "sha": "bf66135ca3b34ae1ce4bc5471aee6ec087f2a9bf"
+    },
+    "user-markdrussell-coronary-heart-disease-secondary-care.csv": {
+      "id": "user/markdrussell/coronary-heart-disease-secondary-care/11159be6",
+      "url": "https://www.opencodelists.org/codelist/user/markdrussell/coronary-heart-disease-secondary-care/11159be6/",
+      "downloaded_at": "2026-11-13 13:33:06.859468+00:00Z",
+      "sha": "6b582a29db957e91c27947957a6e4fe2809a1e58"
     }
   }
 }

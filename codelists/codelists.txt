@@ -22,10 +22,8 @@ nhsd-primary-care-domain-refsets/imtemp_cod/20260630/
 nhsd-primary-care-domain-refsets/imtrtatrisk1_cod/20260630/
 nhs-drug-refsets/imtrtatriskdrug_cod/20260630/
 opensafely/ethnicity-snomed-0removed/22911876/ 
-opensafely/ischaemic-heart-disease/10a53b71/
 nhsd-primary-care-domain-refsets/copd_cod/20260630/
 nhsd-primary-care-domain-refsets/dmtype2_cod/20260630/
-reducehf/type-2-diabetes-icd10/53c432c4/
 nhsd-primary-care-domain-refsets/hyp_cod/20250912/
 nhs-drug-refsets/stat_cod/20260630/
 nhs-drug-refsets/antihyp_cod/20250912/
@@ -55,3 +53,12 @@ nhsd-primary-care-domain-refsets/bmival_cod/20260630/
 nhsd-primary-care-domain-refsets/shvacgp_cod/20260630/
 opensafely/incident-dementia/2f6ff645/
 opensafely/incident-dementia-based-on-charlson/64419ca5/
+bristol/copd/0031c5f4/
+reducehf/type-2-diabetes-icd10/53c432c4/
+reducehf/hypertension-icd10/6834d99c/
+opensafely/lower-respiratory-tract-infection-icd10/3e71b434/
+opensafely/chronic-kidney-disease-icd10/256240ff/
+reducehf/heart-failure-secondary-care/64d82c75/
+user/markdrussell/rheumatoid-arthritis-secondary-care/245780e9/
+opensafely/stroke-excluding-tia-icd10-new/11b84db6/
+user/markdrussell/coronary-heart-disease-secondary-care/11159be6/

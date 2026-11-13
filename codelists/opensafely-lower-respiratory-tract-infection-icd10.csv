@@ -1,0 +1,58 @@
+code,term
+J100,"Influenza with pneumonia, seasonal influenza virus identified"
+J110,"Influenza with pneumonia, virus not identified"
+J12,"Viral pneumonia, not elsewhere classified"
+J120,Adenoviral pneumonia
+J121,Respiratory syncytial virus pneumonia
+J122,Parainfluenza virus pneumonia
+J123,Human metapneumovirus pneumonia
+J128,Other viral pneumonia
+J129,"Viral pneumonia, unspecified"
+J13,Pneumonia due to Streptococcus pneumoniae
+J14,Pneumonia due to Haemophilus influenzae
+J15,"Bacterial pneumonia, not elsewhere classified"
+J150,Pneumonia due to Klebsiella pneumoniae
+J151,Pneumonia due to Pseudomonas
+J152,Pneumonia due to staphylococcus
+J153,"Pneumonia due to streptococcus, group B"
+J154,Pneumonia due to other streptococci
+J155,Pneumonia due to Escherichia coli
+J156,Pneumonia due to other Gram-negative bacteria
+J157,Pneumonia due to Mycoplasma pneumoniae
+J158,Other bacterial pneumonia
+J159,"Bacterial pneumonia, unspecified"
+J16,"Pneumonia due to other infectious organisms, not elsewhere classified"
+J160,Chlamydial pneumonia
+J168,Pneumonia due to other specified infectious organisms
+J17,Pneumonia in diseases classified elsewhere
+J170,Pneumonia in bacterial diseases classified elsewhere
+J171,Pneumonia in viral diseases classified elsewhere
+J172,Pneumonia in mycoses
+J173,Pneumonia in parasitic diseases
+J178,Pneumonia in other diseases classified elsewhere
+J18,"Pneumonia, organism unspecified"
+J180,"Bronchopneumonia, unspecified"
+J181,"Lobar pneumonia, unspecified"
+J182,"Hypostatic pneumonia, unspecified"
+J188,"Other pneumonia, organism unspecified"
+J189,"Pneumonia, unspecified"
+J20,Acute bronchitis
+J20-J22,Other acute lower respiratory infections
+J200,Acute bronchitis due to Mycoplasma pneumoniae
+J201,Acute bronchitis due to Haemophilus influenzae
+J202,Acute bronchitis due to streptococcus
+J203,Acute bronchitis due to coxsackievirus
+J204,Acute bronchitis due to parainfluenza virus
+J205,Acute bronchitis due to respiratory syncytial virus
+J206,Acute bronchitis due to rhinovirus
+J207,Acute bronchitis due to echovirus
+J208,Acute bronchitis due to other specified organisms
+J209,"Acute bronchitis, unspecified"
+J21,Acute bronchiolitis
+J210,Acute bronchiolitis due to respiratory syncytial virus
+J211,Acute bronchiolitis due to human metapneumovirus
+J218,Acute bronchiolitis due to other specified organisms
+J219,"Acute bronchiolitis, unspecified"
+J22,Unspecified acute lower respiratory infection
+J440,Chronic obstructive pulmonary disease with acute lower respiratory infection
+J851,Abscess of lung with pneumonia

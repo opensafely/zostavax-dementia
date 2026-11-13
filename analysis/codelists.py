@@ -117,12 +117,24 @@ lrti_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-c19flurti_cod.csv",
     column = "code"
 )
+lrti_icd10 = codelist_from_csv(
+    "codelists/opensafely-lower-respiratory-tract-infection-icd10.csv",
+    column = "code"
+)
 asthma_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-ast_cod.csv",
     column = "code"
 )
+asthma_icd10 = codelist_from_csv(
+    "codelists/bristol-asthma.csv",
+    column = "code"
+)
 afib_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-afib_cod.csv",
+    column = "code"
+)
+afib_icd10 = codelist_from_csv(
+    "codelists/reducehf-atrial-fibrillation-and-flutter-icd10.csv",
     column = "code"
 )
 ckd12_snomed = codelist_from_csv(
@@ -134,6 +146,10 @@ ckd345_snomed = codelist_from_csv(
     column = "code"
 )
 ckd_snomed = ckd12_snomed + ckd345_snomed
+cvd_icd10 = codelist_from_csv(
+    "codelists/opensafely-chronic-kidney-disease-icd10.csv",
+    column = "code"
+)
 depression_snomed = codelist_from_csv(
     "codelists/opensafely-incident-depression.csv",
     column = "code"
@@ -144,6 +160,10 @@ epilepsy_snomed = codelist_from_csv(
 )
 hf_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-hf_cod.csv",
+    column = "code"
+)
+hf_icd10 = codelist_from_csv(
+    "codelists/reducehf-heart-failure-secondary-care.csv",
     column = "code"
 )
 hypothyroid_snomed = codelist_from_csv(
@@ -170,10 +190,17 @@ ra_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-rarth_cod.csv",
     column = "code"
 )
+ra_icd10 = codelist_from_csv(
+    "codelists/user/markdrussell/rheumatoid-arthritis-secondary-care.csv",
+    column = "code"
+)
 stroke_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-strk_cod.csv",
     column = "code"
 )
+stroke_icd10 = codelist_from_csv(
+    "codelists/opensafely-stroke-excluding-tia-icd10-new.csv",
+    column = "code")
 tia_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-tia_cod.csv",
     column = "code"
@@ -182,8 +209,8 @@ chd_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-chd_cod.csv",
     column = "code"
 )
-ihd_snomed = codelist_from_csv(
-    "codelists/opensafely-ischaemic-heart-disease.csv",
+chd_icd10 = codelist_from_csv(
+    "codelists/user-markdrussell/coronary-heart-disease-secondary-care.csv",
     column = "code"
 )
 
@@ -217,12 +244,24 @@ hypertension_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-hyp_cod.csv",
     column = "code"
 )
+hypertension_snomed = codelist_from_csv(
+    "codelist/reducehf-hypertension-icd10.csv",
+    column = "code"
+)
 t2dm_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-dmtype2_cod.csv",
     column = "code"
 )
+t2dm_icd10 = codelist_from_csv(
+    "codelists/reducehf-type-2-diabetes-icd10.csv",
+    column = "code"
+)
 copd_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-copd_cod.csv",
+    column = "code"
+)
+copd_icd10 = codelist_from_csv(
+    "codelists/bristol-copd.csv",
     column = "code"
 )
 antihypertensives_dmd = codelist_from_csv(
