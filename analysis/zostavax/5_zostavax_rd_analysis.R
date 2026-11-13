@@ -162,6 +162,8 @@ for (i in seq_len(nrow(analyses))) {
   if (!is.na(analyses$msebw_multiplier[i])) {
     h_left <- analyses$msebw_multiplier[i] * rd_msebw$h_left
     h_right <- analyses$msebw_multiplier[i] * rd_msebw$h_right
+    b_left <- analyses$msebw_multiplier[i] * rd_msebw$b_left
+    b_right <- analyses$msebw_multiplier[i] * rd_msebw$b_right
   } else if (grepl("fixed_bw", analysis_group_arg)) {
     bw <- case_match(
       analysis_group_arg,
@@ -171,6 +173,8 @@ for (i in seq_len(nrow(analyses))) {
     )
     h_left <- bw
     h_right <- bw
+    b_left <- NULL # will be determined by rdrobust()
+    b_right <- NULL # will be determined by rdrobust()
   }
 
   ## Set design ----
@@ -185,6 +189,7 @@ for (i in seq_len(nrow(analyses))) {
     data = df_analysis,
     design = design,
     bandwidth = c(h_left, h_right),
+    bias_bandwidth = c(b_left, b_right),
     threshold = threshold,
     kernel = analyses$kernel[i],
     polynomial = analyses$polynomial[i],

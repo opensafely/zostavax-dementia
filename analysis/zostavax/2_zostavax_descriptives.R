@@ -7,9 +7,15 @@ library("survival")
 
 # Specify analysis parameters ----
 
-# analysis specific parameters
 vaccine_name <- "zostavax"
-analysis <- "main" # main, 2010, 2016
+
+# get command-line parameters ----
+args <- commandArgs(trailingOnly = TRUE)
+if (length(args) == 0) {
+  analysis <- "main" # main, 2010, 2016
+} else {
+  analysis <- args[[1]]
+}
 
 # ensure skim outputs do not wrap to new line
 options(width = 200)
@@ -69,10 +75,8 @@ df_processed <-
     )),
     day_diff_threshold = as.integer(date_of_birth - dob_threshold_date),
     registration_duration = as.integer(threshold_date - reg_start_date + 1L),
-    censor_date = pmin(reg_end_date, date_of_death, na.rm = TRUE),
-    fup_availability = as.numeric(
-      pmin(censor_date, end_date, na.rm = TRUE) - index_date + 1L
-    )
+    censor_date = pmin(reg_end_date, end_date, date_of_death, na.rm = TRUE),
+    fup_availability = as.numeric(censor_date - index_date + 1L)
   )
 
 # print summary of processed dataset - not disclosure controlled, not for release
@@ -83,9 +87,15 @@ capture.output(
 )
 
 # create core analysis dataset with exclusions applied
-df_analysis <-
-  df_processed |> 
-  filter(no_common_exclusions)
+if (analysis == "main") {
+  df_analysis <-
+    df_processed |>
+    filter(no_common_exclusions)
+} else if (analysis %in% c("2010", "2016")) {
+  df_analysis <-
+    df_processed |>
+    filter(no_exclusions_control)
+}
 
 # print summary of analysis dataset - not disclosure controlled, not for release
 capture.output(
@@ -93,11 +103,6 @@ capture.output(
   file = fs::path(output_dir, "df_analysis_skim.txt"),
   split = FALSE
 )
-
-# create dataset same as analysis dataset but without excluding prior dementia
-df_analysis_keep_prior_dementia <-
-  df_processed |> 
-  filter(!common_exclusions_wo_dementia)
 
 # many variables names are as follows:
 # - [name]_first_date_ever - for outcomes where we are only interested in the very first event (i.e. exclude people with the event before threshold);
@@ -189,35 +194,41 @@ table_balance_wide <-
 write_csv(table_balance_wide, fs::path(output_dir, "table_balance.csv"))
 
 
-# as table of baseline differences above, but INCLUDING people who may have prior dementia diagnosis
-table_balance_keep_prior_dementia <-
-  df_analysis_keep_prior_dementia |>
-  mutate(
-    N = 1L,
-  ) %>%
-  table1_summary(
-    group = eligibility,
-    label = variable_labels,
-    threshold = sdc.threshold
-  )
+if (analysis == "main") {
+  # For main analysis only
+  # as table of baseline differences above, but INCLUDING people who may have prior dementia diagnosis
 
-# reformat to wide
-table_balance_keep_prior_dementia_wide <-
-  table_balance_keep_prior_dementia |>
-  filter(!is.na(group1_level)) |>
-  pivot_wider(
-    id_cols = c(variable, variable_label, variable_level, context),
-    names_from = group1_level,
-    names_sep = "_",
-    values_from = c(n, N, p, mean, sd, p10, p25, median, p75, p90),
-    names_vary = "slowest"
-  )
+  table_balance_keep_prior_dementia <-
+    df_processed |>
+    filter(!common_exclusions_wo_dementia) |>
+    mutate(
+      N = 1L,
+    ) %>%
+    table1_summary(
+      group = eligibility,
+      label = variable_labels,
+      threshold = sdc.threshold
+    )
 
-# save to disk
-write_csv(
-  table_balance_keep_prior_dementia_wide,
-  fs::path(output_dir, "table_balance_keep_prior_dementia.csv")
-)
+  # reformat to wide
+  table_balance_keep_prior_dementia_wide <-
+    table_balance_keep_prior_dementia |>
+    filter(!is.na(group1_level)) |>
+    pivot_wider(
+      id_cols = c(variable, variable_label, variable_level, context),
+      names_from = group1_level,
+      names_sep = "_",
+      values_from = c(n, N, p, mean, sd, p10, p25, median, p75, p90),
+      names_vary = "slowest"
+    )
+
+  # save to disk
+  write_csv(
+    table_balance_keep_prior_dementia_wide,
+    fs::path(output_dir, "table_balance_keep_prior_dementia.csv")
+  )
+}
+
 
 
 # create a table of follow-up availability (time to deregistration, death or end of follow up) after index date
@@ -307,294 +318,100 @@ df_analysis |>
 # Cumulative incidence of vaccination since index date ----
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-# Cumulative coverage of Zostavax by age in months up to one year after the threshold date
-cumulative_events(df_analysis |> filter(between(age, 79, 80)), "month_of_birth_fct", precision=7, 52*7, "zostavax_date_1", "Zostavax by month")
+if (analysis %in% c("main", "2010")) {
+  # Cumulative uptake of Zostavax by age in months up to one year after the threshold date
+  cumulative_events(df_analysis |> filter(between(age, 79, 80)), "month_of_birth_fct", precision=7, start_date = threshold_date, index_date = threshold_date, 52*7, "zostavax_date_1", "Zostavax by month")
 
-# Cumulative coverage of Zostavax by eligibility (born either side of threshold date)
-cumulative_events(df_analysis, "eligibility", precision=7, 52*7, "zostavax_date_1", "Zostavax")
+  # Cumulative uptake of Zostavax by eligibility (born either side of threshold date)
+  cumulative_events(df_analysis, "eligibility", precision=7, start_date = threshold_date, index_date = threshold_date, 52*7, "zostavax_date_1", "Zostavax")
 
-# Cumulative coverage of "shingles vaccine snomed code" by age in months up to one year after the threshold date
-cumulative_events(df_analysis |> filter(between(age, 79, 80)), "month_of_birth_fct", precision=7, 52*7, "shvacgp_first_date_after", "Shingles vaccine snomed code by month")
+  # Cumulative uptake of "shingles vaccine snomed code" by age in months up to one year after the threshold date
+  cumulative_events(df_analysis |> filter(between(age, 79, 80)), "month_of_birth_fct", precision=7, start_date = threshold_date, index_date = threshold_date, 52*7, "shvacgp_first_date_after", "Shingles vaccine snomed code by month")
 
-# Cumulative coverage of "shingles vaccine snomed code" by eligibility (born either side of threshold date)
-cumulative_events(df_analysis, "eligibility", precision=7, 52*7, "shvacgp_first_date_after", "Shingles vaccine snomed code")
+  # Cumulative uptake of "shingles vaccine snomed code" by eligibility (born either side of threshold date)
+  cumulative_events(df_analysis, "eligibility", precision=7, start_date = threshold_date, index_date = threshold_date, 52*7, "shvacgp_first_date_after", "Shingles vaccine snomed code")
 
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# Check post-index date discontinuities: report rate of event X at time T by month of birth ----
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-## Outcome rates at index date (5 months after threshold)
-days_to_index_date <- as.numeric(index_date - threshold_date + 1)
-
-check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, days_to_index_date, "zostavax_date_1", "Zostavax")
-
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-## Post-baseline information --- DO NOT RUN BEFORE VACCINE UPTAKE DISCONTINUITY CONFIRMED
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-# Do not run until the protocol is locked down and
-# we have confirmed empirically that we can see a discontinuity in vaccine coverage
-# and therefore the code is behaving as expected.
-
-reveal_post_baseline_outcomes <- TRUE
-
-if (reveal_post_baseline_outcomes) {
-  # Cumulative coverage of all other outcomes by eligibility (born either side of threshold date)
-
-  cumulative_events(df_analysis, "eligibility", precision=7, 365, "shingles_first_date_after", "Shingles")
-  cumulative_events(df_analysis, "eligibility", precision=7, 365, "shingles_gp_first_date_after", "Shingles (GP only)")
-  cumulative_events(df_analysis, "eligibility", precision=7, 365, "dementia_first_date_ever", "Dementia")
-  cumulative_events(df_analysis, "eligibility", precision=7, 365, "neuralgia_first_date_after", "Neuralgia")
-  cumulative_events(df_analysis, "eligibility", precision=7, 365, "neuralgia_gp_first_date_after", "Neuralgia (GP only)")
-
-  cumulative_events(df_analysis |> filter(!dementia_exclude_before_threshold), "eligibility", precision=7, 365, "alzheimers_first_date_ever", "Alzheimers dementia")
-  cumulative_events(df_analysis |> filter(!dementia_exclude_before_threshold), "eligibility", precision=7, 365, "vascular_first_date_ever", "Vascular dementia")
-  cumulative_events(df_analysis |> filter(!dementia_exclude_before_threshold), "eligibility", precision=7, 365, "dementia_charlson_first_date_ever", "Dementia (Charlson)")
-  cumulative_events(df_analysis |> filter(!dementia_exclude_before_threshold), "eligibility", precision=7, 365, "dementia_gp_first_date_ever", "Dementia (GP only)")
-
-  cumulative_events(df_analysis, "eligibility", precision=7, 365, "varicella_first_date_after", "Varicella vaccine")
-
-  cumulative_events(df_analysis |> filter(!asthma_before_threshold), "eligibility", precision=7, 365, "asthma_gp_first_date_ever", "Asthma")
-  cumulative_events(df_analysis |> filter(!afib_before_threshold), "eligibility", precision=7, 365, "afib_gp_first_date_ever", "Atrial fibrillation")
-  cumulative_events(df_analysis |> filter(!chd_before_threshold), "eligibility", precision=7, 365, "chd_gp_first_date_ever", "Coronary heart disease")
-  cumulative_events(df_analysis |> filter(!ckd_before_threshold), "eligibility", precision=7, 365, "ckd_gp_first_date_ever", "Chronic kidney disease")
-  cumulative_events(df_analysis |> filter(!copd_before_threshold), "eligibility", precision=7, 365, "copd_gp_first_date_ever", "Chronic obstructive pulmonary disease")
-  cumulative_events(df_analysis |> filter(!depression_before_threshold), "eligibility", precision=7, 365, "depression_gp_first_date_ever", "Depression")
-  cumulative_events(df_analysis |> filter(!t2dm_before_threshold), "eligibility", precision=7, 365, "t2dm_gp_first_date_ever", "Type 2 diabetes")
-  cumulative_events(df_analysis |> filter(!epilepsy_before_threshold), "eligibility", precision=7, 365, "epilepsy_gp_first_date_ever", "Epilepsy")
-  cumulative_events(df_analysis |> filter(!hf_before_threshold), "eligibility", precision=7, 365, "hf_gp_first_date_ever", "Heart Failure")
-  cumulative_events(df_analysis |> filter(!hypothyroid_before_threshold), "eligibility", precision=7, 365, "hypothyroid_gp_first_date_ever", "Hypothyroidism")
-  cumulative_events(df_analysis |> filter(!osteoporosis_before_threshold), "eligibility", precision=7, 365, "osteoporosis_gp_first_date_ever", "Osteoporosis")
-  cumulative_events(df_analysis |> filter(!pad_before_threshold), "eligibility", precision=7, 365, "pad_gp_first_date_ever", "Peripheral artery disease")
-  cumulative_events(df_analysis |> filter(!ra_before_threshold), "eligibility", precision=7, 365, "ra_gp_first_date_ever", "Rheumatoid arthritis")
-  cumulative_events(df_analysis, "eligibility", precision=7, 365, "stroke_gp_first_date_after", "Stroke")
-  cumulative_events(df_analysis, "eligibility", precision=7, 365, "tia_gp_first_date_after", "Transient ischaemic attack")
-  cumulative_events(df_analysis |> filter(!smi_before_threshold), "eligibility", precision=7, 365, "smi_gp_first_date_ever", "Serious mental illness")
-  cumulative_events(df_analysis |> filter(!obese_before_threshold), "eligibility", precision=7, 365, "obese_gp_first_date_ever", "Obesity")
-
-  ## 1 year after
-
-  # outcomes
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365, "zostavax_date_1", "Zostavax")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365, "shingles_first_date_after", "Shingles")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365, "varicella_first_date_after", "Varicella vaccine")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365, "neuralgia_first_date_after", "Neuralgia")
-  check_discontinuity_post(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, 365, "alzheimers_first_date_ever", "Alzheimers dementia")
-  check_discontinuity_post(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, 365, "vascular_first_date_ever", "Vascular dementia")
-  check_discontinuity_post(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, 365, "dementia_first_date_ever", "Dementia")
-  check_discontinuity_post(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, 365, "dementia_charlson_first_date_ever", "Dementia (Charlson)")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365, "date_of_death", "All-cause death")
-
-  # other covariates
-  check_discontinuity_post(df_analysis |> filter(!asthma_before_threshold), dob_threshold_date, threshold_date, 365, "asthma_gp_first_date_ever", "Asthma")
-  check_discontinuity_post(df_analysis |> filter(!afib_before_threshold), dob_threshold_date, threshold_date, 365, "afib_gp_first_date_ever", "Atrial fibrillation")
-  check_discontinuity_post(df_analysis |> filter(!chd_before_threshold), dob_threshold_date, threshold_date, 365, "chd_gp_first_date_ever", "Coronary heart disease")
-  check_discontinuity_post(df_analysis |> filter(!ckd_before_threshold), dob_threshold_date, threshold_date, 365, "ckd_gp_first_date_ever", "Chronic kidney disease")
-  check_discontinuity_post(df_analysis |> filter(!copd_before_threshold), dob_threshold_date, threshold_date, 365, "copd_gp_first_date_ever", "Chronic obstructive pulmonary disease")
-  check_discontinuity_post(df_analysis |> filter(!depression_before_threshold), dob_threshold_date, threshold_date, 365, "depression_gp_first_date_ever", "Depression")
-  check_discontinuity_post(df_analysis |> filter(!t2dm_before_threshold), dob_threshold_date, threshold_date, 365, "t2dm_gp_first_date_ever", "Type 2 diabetes")
-  check_discontinuity_post(df_analysis |> filter(!epilepsy_before_threshold), dob_threshold_date, threshold_date, 365, "epilepsy_gp_first_date_ever", "Epilepsy")
-  check_discontinuity_post(df_analysis |> filter(!hf_before_threshold), dob_threshold_date, threshold_date, 365, "hf_gp_first_date_ever", "Heart Failure")
-  check_discontinuity_post(df_analysis |> filter(!hypothyroid_before_threshold), dob_threshold_date, threshold_date, 365, "hypothyroid_gp_first_date_ever", "Hypothyroidism")
-  check_discontinuity_post(df_analysis |> filter(!osteoporosis_before_threshold), dob_threshold_date, threshold_date, 365, "osteoporosis_gp_first_date_ever", "Osteoporosis")
-  check_discontinuity_post(df_analysis |> filter(!pad_before_threshold), dob_threshold_date, threshold_date, 365, "pad_gp_first_date_ever", "Peripheral artery disease")
-  check_discontinuity_post(df_analysis |> filter(!ra_before_threshold), dob_threshold_date, threshold_date, 365, "ra_gp_first_date_ever", "Rheumatoid arthritis")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365, "stroke_gp_first_date_after", "Stroke")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365, "tia_gp_first_date_after", "Transient ischaemic attack")
-  check_discontinuity_post(df_analysis |> filter(!smi_before_threshold), dob_threshold_date, threshold_date, 365, "smi_gp_first_date_ever", "Serious mental illness")
-  check_discontinuity_post(df_analysis |> filter(!obese_before_threshold), dob_threshold_date, threshold_date, 365, "obese_gp_first_date_ever", "Obesity")
-
-  ## 2 years after
-
-  #outcomes
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*2, "zostavax_date_1", "Zostavax")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*2, "shingles_first_date_after", "Shingles")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*2, "varicella_first_date_after", "Varicella vaccine")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*2, "neuralgia_first_date_after", "Neuralgia")
-  check_discontinuity_post(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, 365*2, "alzheimers_first_date_ever", "Alzheimers dementia")
-  check_discontinuity_post(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, 365*2, "vascular_first_date_ever", "Vascular dementia")
-  check_discontinuity_post(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, 365*2, "dementia_first_date_ever", "Dementia")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*2, "date_of_death", "All-cause death")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*2, "date_of_death_gp", "All-cause death (TPP only)")
-
-  # other covariates
-  check_discontinuity_post(df_analysis |> filter(!asthma_before_threshold), dob_threshold_date, threshold_date, 365*2, "asthma_gp_first_date_ever", "Asthma")
-  check_discontinuity_post(df_analysis |> filter(!afib_before_threshold), dob_threshold_date, threshold_date, 365*2, "afib_gp_first_date_ever", "Atrial fibrillation")
-  check_discontinuity_post(df_analysis |> filter(!chd_before_threshold), dob_threshold_date, threshold_date, 365*2, "chd_gp_first_date_ever", "Coronary heart disease")
-  check_discontinuity_post(df_analysis |> filter(!ckd_before_threshold), dob_threshold_date, threshold_date, 365*2, "ckd_gp_first_date_ever", "Chronic kidney disease")
-  check_discontinuity_post(df_analysis |> filter(!copd_before_threshold), dob_threshold_date, threshold_date, 365*2, "copd_gp_first_date_ever", "Chronic obstructive pulmonary disease")
-  check_discontinuity_post(df_analysis |> filter(!depression_before_threshold), dob_threshold_date, threshold_date, 365*2, "depression_gp_first_date_ever", "Depression")
-  check_discontinuity_post(df_analysis |> filter(!t2dm_before_threshold), dob_threshold_date, threshold_date, 365*2, "t2dm_gp_first_date_ever", "Type 2 diabetes")
-  check_discontinuity_post(df_analysis |> filter(!epilepsy_before_threshold), dob_threshold_date, threshold_date, 365*2, "epilepsy_gp_first_date_ever", "Epilepsy")
-  check_discontinuity_post(df_analysis |> filter(!hf_before_threshold), dob_threshold_date, threshold_date, 365*2, "hf_gp_first_date_ever", "Heart Failure")
-  check_discontinuity_post(df_analysis |> filter(!hypothyroid_before_threshold), dob_threshold_date, threshold_date, 365*2, "hypothyroid_gp_first_date_ever", "Hypothyroidism")
-  check_discontinuity_post(df_analysis |> filter(!osteoporosis_before_threshold), dob_threshold_date, threshold_date, 365*2, "osteoporosis_gp_first_date_ever", "Osteoporosis")
-  check_discontinuity_post(df_analysis |> filter(!pad_before_threshold), dob_threshold_date, threshold_date, 365*2, "pad_gp_first_date_ever", "Peripheral artery disease")
-  check_discontinuity_post(df_analysis |> filter(!ra_before_threshold), dob_threshold_date, threshold_date, 365*2, "ra_gp_first_date_ever", "Rheumatoid arthritis")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*2, "stroke_gp_first_date_after", "Stroke")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*2, "tia_gp_first_date_after", "Transient ischaemic attack")
-  check_discontinuity_post(df_analysis |> filter(!smi_before_threshold), dob_threshold_date, threshold_date, 365*2, "smi_gp_first_date_ever", "Serious mental illness")
-  check_discontinuity_post(df_analysis |> filter(!obese_before_threshold), dob_threshold_date, threshold_date, 365*2, "obese_gp_first_date_ever", "Obesity")
-
-  ## 3 years after
-
-  #outcomes
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*3, "zostavax_date_1", "Zostavax")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*3, "shingles_first_date_after", "Shingles")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*3, "varicella_first_date_after", "Varicella vaccine")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*3, "neuralgia_first_date_after", "Neuralgia")
-  check_discontinuity_post(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, 365*3, "alzheimers_first_date_ever", "Alzheimers dementia")
-  check_discontinuity_post(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, 365*3, "vascular_first_date_ever", "Vascular dementia")
-  check_discontinuity_post(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, 365*3, "dementia_first_date_ever", "Dementia")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*3, "date_of_death", "All-cause death")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*3, "date_of_death_gp", "All-cause death (TPP only)")
-
-  # other covariates
-  check_discontinuity_post(df_analysis |> filter(!asthma_before_threshold), dob_threshold_date, threshold_date, 365*3, "asthma_gp_first_date_ever", "Asthma")
-  check_discontinuity_post(df_analysis |> filter(!afib_before_threshold), dob_threshold_date, threshold_date, 365*3, "afib_gp_first_date_ever", "Atrial fibrillation")
-  check_discontinuity_post(df_analysis |> filter(!chd_before_threshold), dob_threshold_date, threshold_date, 365*3, "chd_gp_first_date_ever", "Coronary heart disease")
-  check_discontinuity_post(df_analysis |> filter(!ckd_before_threshold), dob_threshold_date, threshold_date, 365*3, "ckd_gp_first_date_ever", "Chronic kidney disease")
-  check_discontinuity_post(df_analysis |> filter(!copd_before_threshold), dob_threshold_date, threshold_date, 365*3, "copd_gp_first_date_ever", "Chronic obstructive pulmonary disease")
-  check_discontinuity_post(df_analysis |> filter(!depression_before_threshold), dob_threshold_date, threshold_date, 365*3, "depression_gp_first_date_ever", "Depression")
-  check_discontinuity_post(df_analysis |> filter(!t2dm_before_threshold), dob_threshold_date, threshold_date, 365*3, "t2dm_gp_first_date_ever", "Type 2 diabetes")
-  check_discontinuity_post(df_analysis |> filter(!epilepsy_before_threshold), dob_threshold_date, threshold_date, 365*3, "epilepsy_gp_first_date_ever", "Epilepsy")
-  check_discontinuity_post(df_analysis |> filter(!hf_before_threshold), dob_threshold_date, threshold_date, 365*3, "hf_gp_first_date_ever", "Heart Failure")
-  check_discontinuity_post(df_analysis |> filter(!hypothyroid_before_threshold), dob_threshold_date, threshold_date, 365*3, "hypothyroid_gp_first_date_ever", "Hypothyroidism")
-  check_discontinuity_post(df_analysis |> filter(!osteoporosis_before_threshold), dob_threshold_date, threshold_date, 365*3, "osteoporosis_gp_first_date_ever", "Osteoporosis")
-  check_discontinuity_post(df_analysis |> filter(!pad_before_threshold), dob_threshold_date, threshold_date, 365*3, "pad_gp_first_date_ever", "Peripheral artery disease")
-  check_discontinuity_post(df_analysis |> filter(!ra_before_threshold), dob_threshold_date, threshold_date, 365*3, "ra_gp_first_date_ever", "Rheumatoid arthritis")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*3, "stroke_gp_first_date_after", "Stroke")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*3, "tia_gp_first_date_after", "Transient ischaemic attack")
-  check_discontinuity_post(df_analysis |> filter(!smi_before_threshold), dob_threshold_date, threshold_date, 365*3, "smi_gp_first_date_ever", "Serious mental illness")
-  check_discontinuity_post(df_analysis |> filter(!obese_before_threshold), dob_threshold_date, threshold_date, 365*3, "obese_gp_first_date_ever", "Obesity")
-
-  ## 4 years after
-
-  #outcomes
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*4, "zostavax_date_1", "Zostavax")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*4, "shingles_first_date_after", "Shingles")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*4, "varicella_first_date_after", "Varicella vaccine")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*4, "neuralgia_first_date_after", "Neuralgia")
-  check_discontinuity_post(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, 365*4, "alzheimers_first_date_ever", "Alzheimers dementia")
-  check_discontinuity_post(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, 365*4, "vascular_first_date_ever", "Vascular dementia")
-  check_discontinuity_post(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, 365*4, "dementia_first_date_ever", "Dementia")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*4, "date_of_death", "All-cause death")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*4, "date_of_death_gp", "All-cause death (TPP only)")
-
-  # other covariates
-  check_discontinuity_post(df_analysis |> filter(!asthma_before_threshold), dob_threshold_date, threshold_date, 365*4, "asthma_gp_first_date_ever", "Asthma")
-  check_discontinuity_post(df_analysis |> filter(!afib_before_threshold), dob_threshold_date, threshold_date, 365*4, "afib_gp_first_date_ever", "Atrial fibrillation")
-  check_discontinuity_post(df_analysis |> filter(!chd_before_threshold), dob_threshold_date, threshold_date, 365*4, "chd_gp_first_date_ever", "Coronary heart disease")
-  check_discontinuity_post(df_analysis |> filter(!ckd_before_threshold), dob_threshold_date, threshold_date, 365*4, "ckd_gp_first_date_ever", "Chronic kidney disease")
-  check_discontinuity_post(df_analysis |> filter(!copd_before_threshold), dob_threshold_date, threshold_date, 365*4, "copd_gp_first_date_ever", "Chronic obstructive pulmonary disease")
-  check_discontinuity_post(df_analysis |> filter(!depression_before_threshold), dob_threshold_date, threshold_date, 365*4, "depression_gp_first_date_ever", "Depression")
-  check_discontinuity_post(df_analysis |> filter(!t2dm_before_threshold), dob_threshold_date, threshold_date, 365*4, "t2dm_gp_first_date_ever", "Type 2 diabetes")
-  check_discontinuity_post(df_analysis |> filter(!epilepsy_before_threshold), dob_threshold_date, threshold_date, 365*4, "epilepsy_gp_first_date_ever", "Epilepsy")
-  check_discontinuity_post(df_analysis |> filter(!hf_before_threshold), dob_threshold_date, threshold_date, 365*4, "hf_gp_first_date_ever", "Heart Failure")
-  check_discontinuity_post(df_analysis |> filter(!hypothyroid_before_threshold), dob_threshold_date, threshold_date, 365*4, "hypothyroid_gp_first_date_ever", "Hypothyroidism")
-  check_discontinuity_post(df_analysis |> filter(!osteoporosis_before_threshold), dob_threshold_date, threshold_date, 365*4, "osteoporosis_gp_first_date_ever", "Osteoporosis")
-  check_discontinuity_post(df_analysis |> filter(!pad_before_threshold), dob_threshold_date, threshold_date, 365*4, "pad_gp_first_date_ever", "Peripheral artery disease")
-  check_discontinuity_post(df_analysis |> filter(!ra_before_threshold), dob_threshold_date, threshold_date, 365*4, "ra_gp_first_date_ever", "Rheumatoid arthritis")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*4, "stroke_gp_first_date_after", "Stroke")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*4, "tia_gp_first_date_after", "Transient ischaemic attack")
-  check_discontinuity_post(df_analysis |> filter(!smi_before_threshold), dob_threshold_date, threshold_date, 365*4, "smi_gp_first_date_ever", "Serious mental illness")
-  check_discontinuity_post(df_analysis |> filter(!obese_before_threshold), dob_threshold_date, threshold_date, 365*4, "obese_gp_first_date_ever", "Obesity")
-
-  ## 5 years after
-
-  #outcomes
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*5, "zostavax_date_1", "Zostavax")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*5, "shingles_first_date_after", "Shingles")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*5, "varicella_first_date_after", "Varicella vaccine")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*5, "neuralgia_first_date_after", "Neuralgia")
-  check_discontinuity_post(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, 365*5, "alzheimers_first_date_ever", "Alzheimers dementia")
-  check_discontinuity_post(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, 365*5, "vascular_first_date_ever", "Vascular dementia")
-  check_discontinuity_post(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, 365*5, "dementia_first_date_ever", "Dementia")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*5, "date_of_death", "All-cause death")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*5, "date_of_death_gp", "All-cause death (TPP only)")
-
-  # other covariates
-  check_discontinuity_post(df_analysis |> filter(!asthma_before_threshold), dob_threshold_date, threshold_date, 365*5, "asthma_gp_first_date_ever", "Asthma")
-  check_discontinuity_post(df_analysis |> filter(!afib_before_threshold), dob_threshold_date, threshold_date, 365*5, "afib_gp_first_date_ever", "Atrial fibrillation")
-  check_discontinuity_post(df_analysis |> filter(!chd_before_threshold), dob_threshold_date, threshold_date, 365*5, "chd_gp_first_date_ever", "Coronary heart disease")
-  check_discontinuity_post(df_analysis |> filter(!ckd_before_threshold), dob_threshold_date, threshold_date, 365*5, "ckd_gp_first_date_ever", "Chronic kidney disease")
-  check_discontinuity_post(df_analysis |> filter(!copd_before_threshold), dob_threshold_date, threshold_date, 365*5, "copd_gp_first_date_ever", "Chronic obstructive pulmonary disease")
-  check_discontinuity_post(df_analysis |> filter(!depression_before_threshold), dob_threshold_date, threshold_date, 365*5, "depression_gp_first_date_ever", "Depression")
-  check_discontinuity_post(df_analysis |> filter(!t2dm_before_threshold), dob_threshold_date, threshold_date, 365*5, "t2dm_gp_first_date_ever", "Type 2 diabetes")
-  check_discontinuity_post(df_analysis |> filter(!epilepsy_before_threshold), dob_threshold_date, threshold_date, 365*5, "epilepsy_gp_first_date_ever", "Epilepsy")
-  check_discontinuity_post(df_analysis |> filter(!hf_before_threshold), dob_threshold_date, threshold_date, 365*5, "hf_gp_first_date_ever", "Heart Failure")
-  check_discontinuity_post(df_analysis |> filter(!hypothyroid_before_threshold), dob_threshold_date, threshold_date, 365*5, "hypothyroid_gp_first_date_ever", "Hypothyroidism")
-  check_discontinuity_post(df_analysis |> filter(!osteoporosis_before_threshold), dob_threshold_date, threshold_date, 365*5, "osteoporosis_gp_first_date_ever", "Osteoporosis")
-  check_discontinuity_post(df_analysis |> filter(!pad_before_threshold), dob_threshold_date, threshold_date, 365*5, "pad_gp_first_date_ever", "Peripheral artery disease")
-  check_discontinuity_post(df_analysis |> filter(!ra_before_threshold), dob_threshold_date, threshold_date, 365*5, "ra_gp_first_date_ever", "Rheumatoid arthritis")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*5, "stroke_gp_first_date_after", "Stroke")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*5, "tia_gp_first_date_after", "Transient ischaemic attack")
-  check_discontinuity_post(df_analysis |> filter(!smi_before_threshold), dob_threshold_date, threshold_date, 365*5, "smi_gp_first_date_ever", "Serious mental illness")
-  check_discontinuity_post(df_analysis |> filter(!obese_before_threshold), dob_threshold_date, threshold_date, 365*5, "obese_gp_first_date_ever", "Obesity")
-
-  ## 6 years after
-
-  #outcomes
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*6, "zostavax_date_1", "Zostavax")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*6, "shingles_first_date_after", "Shingles")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*6, "varicella_first_date_after", "Varicella vaccine")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*6, "neuralgia_first_date_after", "Neuralgia")
-  check_discontinuity_post(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, 365*6, "alzheimers_first_date_ever", "Alzheimers dementia")
-  check_discontinuity_post(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, 365*6, "vascular_first_date_ever", "Vascular dementia")
-  check_discontinuity_post(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, 365*6, "dementia_first_date_ever", "Dementia")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*6, "date_of_death", "All-cause death")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*6, "date_of_death_gp", "All-cause death (TPP only)")
-
-  # other covariates
-  check_discontinuity_post(df_analysis |> filter(!asthma_before_threshold), dob_threshold_date, threshold_date, 365*6, "asthma_gp_first_date_ever", "Asthma")
-  check_discontinuity_post(df_analysis |> filter(!afib_before_threshold), dob_threshold_date, threshold_date, 365*6, "afib_gp_first_date_ever", "Atrial fibrillation")
-  check_discontinuity_post(df_analysis |> filter(!chd_before_threshold), dob_threshold_date, threshold_date, 365*6, "chd_gp_first_date_ever", "Coronary heart disease")
-  check_discontinuity_post(df_analysis |> filter(!ckd_before_threshold), dob_threshold_date, threshold_date, 365*6, "ckd_gp_first_date_ever", "Chronic kidney disease")
-  check_discontinuity_post(df_analysis |> filter(!copd_before_threshold), dob_threshold_date, threshold_date, 365*6, "copd_gp_first_date_ever", "Chronic obstructive pulmonary disease")
-  check_discontinuity_post(df_analysis |> filter(!depression_before_threshold), dob_threshold_date, threshold_date, 365*6, "depression_gp_first_date_ever", "Depression")
-  check_discontinuity_post(df_analysis |> filter(!t2dm_before_threshold), dob_threshold_date, threshold_date, 365*6, "t2dm_gp_first_date_ever", "Type 2 diabetes")
-  check_discontinuity_post(df_analysis |> filter(!epilepsy_before_threshold), dob_threshold_date, threshold_date, 365*6, "epilepsy_gp_first_date_ever", "Epilepsy")
-  check_discontinuity_post(df_analysis |> filter(!hf_before_threshold), dob_threshold_date, threshold_date, 365*6, "hf_gp_first_date_ever", "Heart Failure")
-  check_discontinuity_post(df_analysis |> filter(!hypothyroid_before_threshold), dob_threshold_date, threshold_date, 365*6, "hypothyroid_gp_first_date_ever", "Hypothyroidism")
-  check_discontinuity_post(df_analysis |> filter(!osteoporosis_before_threshold), dob_threshold_date, threshold_date, 365*6, "osteoporosis_gp_first_date_ever", "Osteoporosis")
-  check_discontinuity_post(df_analysis |> filter(!pad_before_threshold), dob_threshold_date, threshold_date, 365*6, "pad_gp_first_date_ever", "Peripheral artery disease")
-  check_discontinuity_post(df_analysis |> filter(!ra_before_threshold), dob_threshold_date, threshold_date, 365*6, "ra_gp_first_date_ever", "Rheumatoid arthritis")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*6, "stroke_gp_first_date_after", "Stroke")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*6, "tia_gp_first_date_after", "Transient ischaemic attack")
-  check_discontinuity_post(df_analysis |> filter(!smi_before_threshold), dob_threshold_date, threshold_date, 365*6, "smi_gp_first_date_ever", "Serious mental illness")
-  check_discontinuity_post(df_analysis |> filter(!obese_before_threshold), dob_threshold_date, threshold_date, 365*6, "obese_gp_first_date_ever", "Obesity")
-
-  ## 7 years after
-
-  #outcomes
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*7, "zostavax_date_1", "Zostavax")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*7, "shingles_first_date_after", "Shingles")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*7, "varicella_first_date_after", "Varicella vaccine")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*7, "neuralgia_first_date_after", "Neuralgia")
-  check_discontinuity_post(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, 365*7, "alzheimers_first_date_ever", "Alzheimers dementia")
-  check_discontinuity_post(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, 365*7, "vascular_first_date_ever", "Vascular dementia")
-  check_discontinuity_post(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, 365*7, "dementia_first_date_ever", "Dementia")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*7, "date_of_death", "All-cause death")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*7, "date_of_death_gp", "All-cause death (TPP only)")
-
-  # other covariates
-  check_discontinuity_post(df_analysis |> filter(!asthma_before_threshold), dob_threshold_date, threshold_date, 365*7, "asthma_gp_first_date_ever", "Asthma")
-  check_discontinuity_post(df_analysis |> filter(!afib_before_threshold), dob_threshold_date, threshold_date, 365*7, "afib_gp_first_date_ever", "Atrial fibrillation")
-  check_discontinuity_post(df_analysis |> filter(!chd_before_threshold), dob_threshold_date, threshold_date, 365*7, "chd_gp_first_date_ever", "Coronary heart disease")
-  check_discontinuity_post(df_analysis |> filter(!ckd_before_threshold), dob_threshold_date, threshold_date, 365*7, "ckd_gp_first_date_ever", "Chronic kidney disease")
-  check_discontinuity_post(df_analysis |> filter(!copd_before_threshold), dob_threshold_date, threshold_date, 365*7, "copd_gp_first_date_ever", "Chronic obstructive pulmonary disease")
-  check_discontinuity_post(df_analysis |> filter(!depression_before_threshold), dob_threshold_date, threshold_date, 365*7, "depression_gp_first_date_ever", "Depression")
-  check_discontinuity_post(df_analysis |> filter(!t2dm_before_threshold), dob_threshold_date, threshold_date, 365*7, "t2dm_gp_first_date_ever", "Type 2 diabetes")
-  check_discontinuity_post(df_analysis |> filter(!epilepsy_before_threshold), dob_threshold_date, threshold_date, 365*7, "epilepsy_gp_first_date_ever", "Epilepsy")
-  check_discontinuity_post(df_analysis |> filter(!hf_before_threshold), dob_threshold_date, threshold_date, 365*7, "hf_gp_first_date_ever", "Heart Failure")
-  check_discontinuity_post(df_analysis |> filter(!hypothyroid_before_threshold), dob_threshold_date, threshold_date, 365*7, "hypothyroid_gp_first_date_ever", "Hypothyroidism")
-  check_discontinuity_post(df_analysis |> filter(!osteoporosis_before_threshold), dob_threshold_date, threshold_date, 365*7, "osteoporosis_gp_first_date_ever", "Osteoporosis")
-  check_discontinuity_post(df_analysis |> filter(!pad_before_threshold), dob_threshold_date, threshold_date, 365*7, "pad_gp_first_date_ever", "Peripheral artery disease")
-  check_discontinuity_post(df_analysis |> filter(!ra_before_threshold), dob_threshold_date, threshold_date, 365*7, "ra_gp_first_date_ever", "Rheumatoid arthritis")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*7, "stroke_gp_first_date_after", "Stroke")
-  check_discontinuity_post(df_analysis, dob_threshold_date, threshold_date, 365*7, "tia_gp_first_date_after", "Transient ischaemic attack")
-  check_discontinuity_post(df_analysis |> filter(!smi_before_threshold), dob_threshold_date, threshold_date, 365*7, "smi_gp_first_date_ever", "Serious mental illness")
-  check_discontinuity_post(df_analysis |> filter(!obese_before_threshold), dob_threshold_date, threshold_date, 365*7, "obese_gp_first_date_ever", "Obesity")
+  # Cumulative uptake of "shingles vaccine snomed code" by eligibility (born either side of threshold date)
+  cumulative_events(df_analysis, "eligibility", precision=7, start_date = threshold_date, index_date = threshold_date, 365, "varicella_first_date_after", "Varicella vaccine")
 }
+  
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+## Post-baseline information
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# Cumulative incidence of all other outcomes by eligibility (born either side of threshold date)
+
+cumulative_events(df_analysis, "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "shingles_first_date_after", "Shingles")
+cumulative_events(df_analysis, "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "shingles_gp_first_date_after", "Shingles (GP only)")
+cumulative_events(df_analysis, "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "dementia_first_date_ever", "Dementia")
+cumulative_events(df_analysis, "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "neuralgia_first_date_after", "Neuralgia")
+cumulative_events(df_analysis, "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "neuralgia_gp_first_date_after", "Neuralgia (GP only)")
+
+if (analysis == "main") {
+  cumulative_events(df_analysis |> filter(!dementia_exclude_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "alzheimers_first_date_ever", "Alzheimers dementia")
+  cumulative_events(df_analysis |> filter(!dementia_exclude_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "vascular_first_date_ever", "Vascular dementia")
+  cumulative_events(df_analysis |> filter(!dementia_exclude_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "dementia_charlson_first_date_ever", "Dementia (Charlson)")
+  cumulative_events(df_analysis |> filter(!dementia_exclude_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "dementia_gp_first_date_ever", "Dementia (GP only)")
+} else if (analysis %in% c("2010", "2016")) {
+  cumulative_events(df_analysis, "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "alzheimers_first_date_ever", "Alzheimers dementia")
+  cumulative_events(df_analysis, "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "vascular_first_date_ever", "Vascular dementia")
+  cumulative_events(df_analysis, "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "dementia_charlson_first_date_ever", "Dementia (Charlson)")
+  cumulative_events(df_analysis, "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "dementia_gp_first_date_ever", "Dementia (GP only)")
+}
+if (analysis == "main") {
+  cumulative_events(df_analysis |> filter(!asthma_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "asthma_gp_first_date_ever", "Asthma")
+  cumulative_events(df_analysis |> filter(!afib_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "afib_gp_first_date_ever", "Atrial fibrillation")
+  cumulative_events(df_analysis |> filter(!chd_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "chd_gp_first_date_ever", "Coronary heart disease")
+  cumulative_events(df_analysis |> filter(!ckd_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "ckd_gp_first_date_ever", "Chronic kidney disease")
+  cumulative_events(df_analysis |> filter(!copd_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "copd_gp_first_date_ever", "Chronic obstructive pulmonary disease")
+  cumulative_events(df_analysis |> filter(!depression_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "depression_gp_first_date_ever", "Depression")
+  cumulative_events(df_analysis |> filter(!t2dm_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "t2dm_gp_first_date_ever", "Type 2 diabetes")
+  cumulative_events(df_analysis |> filter(!epilepsy_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "epilepsy_gp_first_date_ever", "Epilepsy")
+  cumulative_events(df_analysis |> filter(!hf_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "hf_gp_first_date_ever", "Heart Failure")
+  cumulative_events(df_analysis |> filter(!hypothyroid_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "hypothyroid_gp_first_date_ever", "Hypothyroidism")
+  cumulative_events(df_analysis |> filter(!osteoporosis_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "osteoporosis_gp_first_date_ever", "Osteoporosis")
+  cumulative_events(df_analysis |> filter(!pad_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "pad_gp_first_date_ever", "Peripheral artery disease")
+  cumulative_events(df_analysis |> filter(!ra_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "ra_gp_first_date_ever", "Rheumatoid arthritis")
+  cumulative_events(df_analysis, "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "stroke_gp_first_date_after", "Stroke")
+  cumulative_events(df_analysis, "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "tia_gp_first_date_after", "Transient ischaemic attack")
+  cumulative_events(df_analysis |> filter(!smi_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "smi_gp_first_date_ever", "Serious mental illness")
+  cumulative_events(df_analysis |> filter(!obese_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "obese_gp_first_date_ever", "Obesity")
+}
+
+# Cumulative incidence of outcomes by month of birth, up to 7 years after threshold
+
+# zostavax - start follow up immeidately after threshold
+yearly_cumulative_incidence_by_dob(df_analysis, dob_threshold_date, threshold_date, threshold_date, time_horizon_years=12, "zostavax_date_1", "Zostavax")
+
+# outcomes - start follow up from index date
+yearly_cumulative_incidence_by_dob(df_analysis, dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "shingles_first_date_after", "Shingles")
+yearly_cumulative_incidence_by_dob(df_analysis, dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "varicella_first_date_after", "Varicella vaccine")
+yearly_cumulative_incidence_by_dob(df_analysis, dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "neuralgia_first_date_after", "Neuralgia")
+yearly_cumulative_incidence_by_dob(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "alzheimers_first_date_ever", "Alzheimers dementia")
+yearly_cumulative_incidence_by_dob(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "vascular_first_date_ever", "Vascular dementia")
+yearly_cumulative_incidence_by_dob(df_analysis |> filter(!dementia_exclude_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "dementia_first_date_ever", "Dementia")
+yearly_cumulative_incidence_by_dob(df_analysis, dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "date_of_death", "All-cause death")
+yearly_cumulative_incidence_by_dob(df_analysis, dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "date_of_death_gp", "All-cause death (TPP only)")
+
+
+if (analysis == "main") {
+  # other covariates - start follow-up from index date
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!asthma_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "asthma_gp_first_date_ever", "Asthma")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!afib_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "afib_gp_first_date_ever", "Atrial fibrillation")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!chd_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "chd_gp_first_date_ever", "Coronary heart disease")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!ckd_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "ckd_gp_first_date_ever", "Chronic kidney disease")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!copd_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "copd_gp_first_date_ever", "Chronic obstructive pulmonary disease")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!depression_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "depression_gp_first_date_ever", "Depression")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!t2dm_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "t2dm_gp_first_date_ever", "Type 2 diabetes")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!epilepsy_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "epilepsy_gp_first_date_ever", "Epilepsy")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!hf_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "hf_gp_first_date_ever", "Heart Failure")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!hypothyroid_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "hypothyroid_gp_first_date_ever", "Hypothyroidism")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!osteoporosis_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "osteoporosis_gp_first_date_ever", "Osteoporosis")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!pad_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "pad_gp_first_date_ever", "Peripheral artery disease")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!ra_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "ra_gp_first_date_ever", "Rheumatoid arthritis")
+  yearly_cumulative_incidence_by_dob(df_analysis, dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "stroke_gp_first_date_after", "Stroke")
+  yearly_cumulative_incidence_by_dob(df_analysis, dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "tia_gp_first_date_after", "Transient ischaemic attack")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!smi_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "smi_gp_first_date_ever", "Serious mental illness")
+  yearly_cumulative_incidence_by_dob(df_analysis |> filter(!obese_before_threshold), dob_threshold_date, threshold_date, index_date, time_horizon_years=12, "obese_gp_first_date_ever", "Obesity")
+}
+
