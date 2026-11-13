@@ -7,33 +7,28 @@ actions:
   ## This file is created by create_project_actions.R 
   ## Edit and run create_project_actions.R to update the project.yaml 
   ## # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-  ## Generate dataset 
+  ## Generate datasets 
 
   generate_dataset_zostavax_main:
     run: ehrql:v1 generate-dataset analysis/dataset_definition.py --output output/zostavax/dataset_zostavax_main.arrow
       --dummy-data-file analysis/dummy_data/dummy_dataset_zostavax.arrow -- --threshold_date
-      2013-09-01 --min_dob 1920-09-01 --max_dob 1948-09-01
-      --vaccine_name zostavax
+      2013-09-01 --min_dob 1920-09-01 --max_dob 1948-09-01 --vaccine_name zostavax
     outputs:
       highly_sensitive:
         data: output/zostavax/dataset_zostavax_main.arrow
 
   generate_dataset_zostavax_2010:
     run: ehrql:v1 generate-dataset analysis/dataset_definition.py --output output/zostavax/dataset_zostavax_2010.arrow
-      --dummy-data-file analysis/dummy_data/dummy_dataset_zostavax.arrow 
-      --
-      --threshold_date 2010-09-01 --min_dob 1920-09-01 --max_dob 1948-09-01
-      --vaccine_name zostavax
+      --dummy-data-file analysis/dummy_data/dummy_dataset_zostavax.arrow -- --threshold_date
+      2010-09-01 --min_dob 1920-09-01 --max_dob 1948-09-01 --vaccine_name zostavax
     outputs:
       highly_sensitive:
         data: output/zostavax/dataset_zostavax_2010.arrow
-  
+
   generate_dataset_zostavax_2016:
     run: ehrql:v1 generate-dataset analysis/dataset_definition.py --output output/zostavax/dataset_zostavax_2016.arrow
-      --dummy-data-file analysis/dummy_data/dummy_dataset_zostavax.arrow 
-      --
-      --threshold_date 2016-09-01 --min_dob 1920-09-01 --max_dob 1948-09-01
-      --vaccine_name zostavax
+      --dummy-data-file analysis/dummy_data/dummy_dataset_zostavax.arrow -- --threshold_date
+      2016-09-01 --min_dob 1920-09-01 --max_dob 1948-09-01 --vaccine_name zostavax
     outputs:
       highly_sensitive:
         data: output/zostavax/dataset_zostavax_2016.arrow
@@ -43,7 +38,7 @@ actions:
   process_zostavax:
     run: r:v3 analysis/zostavax/0_zostavax_processing.R
     needs:
-    - generate_dataset_zostavax_main 
+    - generate_dataset_zostavax_main
     - generate_dataset_zostavax_2010
     - generate_dataset_zostavax_2016
     outputs:
@@ -71,7 +66,7 @@ actions:
         txt: output/zostavax/descriptives/main/*.txt
         csv: output/zostavax/descriptives/main/*.csv
         png: output/zostavax/descriptives/main/*.png
-  
+
   descriptive_analysis_zostavax_2010:
     run: r:v3 analysis/zostavax/2_zostavax_descriptives.R 2010
     needs:
@@ -81,7 +76,7 @@ actions:
         txt: output/zostavax/descriptives/2010/*.txt
         csv: output/zostavax/descriptives/2010/*.csv
         png: output/zostavax/descriptives/2010/*.png
-  
+
   descriptive_analysis_zostavax_2016:
     run: r:v3 analysis/zostavax/2_zostavax_descriptives.R 2016
     needs:
@@ -91,7 +86,6 @@ actions:
         txt: output/zostavax/descriptives/2016/*.txt
         csv: output/zostavax/descriptives/2016/*.csv
         png: output/zostavax/descriptives/2016/*.png
-  
 
   ## Define populations 
 
@@ -305,6 +299,15 @@ actions:
       moderately_sensitive:
         results: output/zostavax/results/rd_results_thresholdm_no.csv
 
+  rd_analysis_pre_outcome:
+    run: r:v3 analysis/zostavax/5_zostavax_rd_analysis.R general pre_outcome
+    needs:
+    - rd_populations_general
+    - rd_msebw_zostavax
+    outputs:
+      moderately_sensitive:
+        results: output/zostavax/results/rd_results_pre_outcome.csv
+
   ## Make output 
 
   rd_output_zostavax:
@@ -324,6 +327,7 @@ actions:
     - rd_analysis_sub_sex_men
     - rd_analysis_sub_sex_women
     - rd_analysis_thresholdm_no
+    - rd_analysis_pre_outcome
     outputs:
       moderately_sensitive:
         output: output/zostavax/output/rd_results.csv
