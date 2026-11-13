@@ -7,33 +7,28 @@ actions:
   ## This file is created by create_project_actions.R 
   ## Edit and run create_project_actions.R to update the project.yaml 
   ## # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-  ## Generate dataset 
+  ## Generate datasets 
 
   generate_dataset_zostavax_main:
     run: ehrql:v1 generate-dataset analysis/dataset_definition.py --output output/zostavax/dataset_zostavax_main.arrow
       --dummy-data-file analysis/dummy_data/dummy_dataset_zostavax.arrow -- --threshold_date
-      2013-09-01 --min_dob 1920-09-01 --max_dob 1948-09-01
-      --vaccine_name zostavax
+      2013-09-01 --min_dob 1920-09-01 --max_dob 1948-09-01 --vaccine_name zostavax
     outputs:
       highly_sensitive:
         data: output/zostavax/dataset_zostavax_main.arrow
 
   generate_dataset_zostavax_2010:
     run: ehrql:v1 generate-dataset analysis/dataset_definition.py --output output/zostavax/dataset_zostavax_2010.arrow
-      --dummy-data-file analysis/dummy_data/dummy_dataset_zostavax.arrow 
-      --
-      --threshold_date 2010-09-01 --min_dob 1920-09-01 --max_dob 1948-09-01
-      --vaccine_name zostavax
+      --dummy-data-file analysis/dummy_data/dummy_dataset_zostavax.arrow -- --threshold_date
+      2010-09-01 --min_dob 1920-09-01 --max_dob 1948-09-01 --vaccine_name zostavax
     outputs:
       highly_sensitive:
         data: output/zostavax/dataset_zostavax_2010.arrow
-  
+
   generate_dataset_zostavax_2016:
     run: ehrql:v1 generate-dataset analysis/dataset_definition.py --output output/zostavax/dataset_zostavax_2016.arrow
-      --dummy-data-file analysis/dummy_data/dummy_dataset_zostavax.arrow 
-      --
-      --threshold_date 2016-09-01 --min_dob 1920-09-01 --max_dob 1948-09-01
-      --vaccine_name zostavax
+      --dummy-data-file analysis/dummy_data/dummy_dataset_zostavax.arrow -- --threshold_date
+      2016-09-01 --min_dob 1920-09-01 --max_dob 1948-09-01 --vaccine_name zostavax
     outputs:
       highly_sensitive:
         data: output/zostavax/dataset_zostavax_2016.arrow
@@ -41,9 +36,9 @@ actions:
   ## Process dataset 
 
   process_zostavax:
-    run: r:v2 analysis/zostavax/0_zostavax_processing.R
+    run: r:v3 analysis/zostavax/0_zostavax_processing.R
     needs:
-    - generate_dataset_zostavax_main 
+    - generate_dataset_zostavax_main
     - generate_dataset_zostavax_2010
     - generate_dataset_zostavax_2016
     outputs:
@@ -53,7 +48,7 @@ actions:
   ## Flow chart 
 
   flow_chart_zostavax:
-    run: r:v2 analysis/zostavax/1_zostavax_flow_chart.R
+    run: r:v3 analysis/zostavax/1_zostavax_flow_chart.R
     needs:
     - process_zostavax
     outputs:
@@ -63,7 +58,7 @@ actions:
   ## Descriptives 
 
   descriptive_analysis_zostavax_main:
-    run: r:v2 analysis/zostavax/2_zostavax_descriptives.R main
+    run: r:v3 analysis/zostavax/2_zostavax_descriptives.R main
     needs:
     - process_zostavax
     outputs:
@@ -71,9 +66,9 @@ actions:
         txt: output/zostavax/descriptives/main/*.txt
         csv: output/zostavax/descriptives/main/*.csv
         png: output/zostavax/descriptives/main/*.png
-  
+
   descriptive_analysis_zostavax_2010:
-    run: r:v2 analysis/zostavax/2_zostavax_descriptives.R 2010
+    run: r:v3 analysis/zostavax/2_zostavax_descriptives.R 2010
     needs:
     - process_zostavax
     outputs:
@@ -81,9 +76,9 @@ actions:
         txt: output/zostavax/descriptives/2010/*.txt
         csv: output/zostavax/descriptives/2010/*.csv
         png: output/zostavax/descriptives/2010/*.png
-  
+
   descriptive_analysis_zostavax_2016:
-    run: r:v2 analysis/zostavax/2_zostavax_descriptives.R 2016
+    run: r:v3 analysis/zostavax/2_zostavax_descriptives.R 2016
     needs:
     - process_zostavax
     outputs:
@@ -91,12 +86,11 @@ actions:
         txt: output/zostavax/descriptives/2016/*.txt
         csv: output/zostavax/descriptives/2016/*.csv
         png: output/zostavax/descriptives/2016/*.png
-  
 
   ## Define populations 
 
   rd_populations_general:
-    run: r:v2 analysis/zostavax/3_zostavax_rd_populations.R general
+    run: r:v3 analysis/zostavax/3_zostavax_rd_populations.R general
     needs:
     - process_zostavax
     outputs:
@@ -104,7 +98,7 @@ actions:
         population: output/zostavax/populations/dataset_analysis_zostavax_main_general.arrow
 
   rd_populations_aged77_82:
-    run: r:v2 analysis/zostavax/3_zostavax_rd_populations.R aged77_82
+    run: r:v3 analysis/zostavax/3_zostavax_rd_populations.R aged77_82
     needs:
     - process_zostavax
     outputs:
@@ -112,7 +106,7 @@ actions:
         population: output/zostavax/populations/dataset_analysis_zostavax_main_aged77_82.arrow
 
   rd_populations_aged78_81:
-    run: r:v2 analysis/zostavax/3_zostavax_rd_populations.R aged78_81
+    run: r:v3 analysis/zostavax/3_zostavax_rd_populations.R aged78_81
     needs:
     - process_zostavax
     outputs:
@@ -120,7 +114,7 @@ actions:
         population: output/zostavax/populations/dataset_analysis_zostavax_main_aged78_81.arrow
 
   rd_populations_reduced_excl:
-    run: r:v2 analysis/zostavax/3_zostavax_rd_populations.R reduced_excl
+    run: r:v3 analysis/zostavax/3_zostavax_rd_populations.R reduced_excl
     needs:
     - process_zostavax
     outputs:
@@ -128,7 +122,7 @@ actions:
         population: output/zostavax/populations/dataset_analysis_zostavax_main_reduced_excl.arrow
 
   rd_populations_cogimp_no:
-    run: r:v2 analysis/zostavax/3_zostavax_rd_populations.R cogimp_no
+    run: r:v3 analysis/zostavax/3_zostavax_rd_populations.R cogimp_no
     needs:
     - process_zostavax
     outputs:
@@ -136,7 +130,7 @@ actions:
         population: output/zostavax/populations/dataset_analysis_zostavax_main_cogimp_no.arrow
 
   rd_populations_cogimp_yes:
-    run: r:v2 analysis/zostavax/3_zostavax_rd_populations.R cogimp_yes
+    run: r:v3 analysis/zostavax/3_zostavax_rd_populations.R cogimp_yes
     needs:
     - process_zostavax
     outputs:
@@ -144,7 +138,7 @@ actions:
         population: output/zostavax/populations/dataset_analysis_zostavax_main_cogimp_yes.arrow
 
   rd_populations_men:
-    run: r:v2 analysis/zostavax/3_zostavax_rd_populations.R men
+    run: r:v3 analysis/zostavax/3_zostavax_rd_populations.R men
     needs:
     - process_zostavax
     outputs:
@@ -152,7 +146,7 @@ actions:
         population: output/zostavax/populations/dataset_analysis_zostavax_main_men.arrow
 
   rd_populations_women:
-    run: r:v2 analysis/zostavax/3_zostavax_rd_populations.R women
+    run: r:v3 analysis/zostavax/3_zostavax_rd_populations.R women
     needs:
     - process_zostavax
     outputs:
@@ -160,7 +154,7 @@ actions:
         population: output/zostavax/populations/dataset_analysis_zostavax_main_women.arrow
 
   rd_populations_thresholdm_no:
-    run: r:v2 analysis/zostavax/3_zostavax_rd_populations.R thresholdm_no
+    run: r:v3 analysis/zostavax/3_zostavax_rd_populations.R thresholdm_no
     needs:
     - process_zostavax
     outputs:
@@ -170,7 +164,7 @@ actions:
   ## Determine MSE optimal bandwidth 
 
   rd_msebw_zostavax:
-    run: r:v2 analysis/zostavax/4_zostavax_rd_msebw.R
+    run: r:v3 analysis/zostavax/4_zostavax_rd_msebw.R
     needs:
     - rd_populations_general
     outputs:
@@ -180,7 +174,7 @@ actions:
   ## Run RD analyses 
 
   rd_analysis_alt_kernel:
-    run: r:v2 analysis/zostavax/5_zostavax_rd_analysis.R general alt_kernel
+    run: r:v3 analysis/zostavax/5_zostavax_rd_analysis.R general alt_kernel
     needs:
     - rd_populations_general
     - rd_msebw_zostavax
@@ -189,7 +183,7 @@ actions:
         results: output/zostavax/results/rd_results_alt_kernel.csv
 
   rd_analysis_alt_msebw:
-    run: r:v2 analysis/zostavax/5_zostavax_rd_analysis.R general alt_msebw
+    run: r:v3 analysis/zostavax/5_zostavax_rd_analysis.R general alt_msebw
     needs:
     - rd_populations_general
     - rd_msebw_zostavax
@@ -198,7 +192,7 @@ actions:
         results: output/zostavax/results/rd_results_alt_msebw.csv
 
   rd_analysis_alt_outcome:
-    run: r:v2 analysis/zostavax/5_zostavax_rd_analysis.R general alt_outcome
+    run: r:v3 analysis/zostavax/5_zostavax_rd_analysis.R general alt_outcome
     needs:
     - rd_populations_general
     - rd_msebw_zostavax
@@ -207,7 +201,7 @@ actions:
         results: output/zostavax/results/rd_results_alt_outcome.csv
 
   rd_analysis_alt_polynomial:
-    run: r:v2 analysis/zostavax/5_zostavax_rd_analysis.R general alt_polynomial
+    run: r:v3 analysis/zostavax/5_zostavax_rd_analysis.R general alt_polynomial
     needs:
     - rd_populations_general
     - rd_msebw_zostavax
@@ -216,7 +210,7 @@ actions:
         results: output/zostavax/results/rd_results_alt_polynomial.csv
 
   rd_analysis_annual_fup:
-    run: r:v2 analysis/zostavax/5_zostavax_rd_analysis.R general annual_fup
+    run: r:v3 analysis/zostavax/5_zostavax_rd_analysis.R general annual_fup
     needs:
     - rd_populations_general
     - rd_msebw_zostavax
@@ -225,7 +219,7 @@ actions:
         results: output/zostavax/results/rd_results_annual_fup.csv
 
   rd_analysis_fixed_bw_aged77_82:
-    run: r:v2 analysis/zostavax/5_zostavax_rd_analysis.R aged77_82 fixed_bw_aged77_82
+    run: r:v3 analysis/zostavax/5_zostavax_rd_analysis.R aged77_82 fixed_bw_aged77_82
     needs:
     - rd_populations_aged77_82
     - rd_msebw_zostavax
@@ -234,7 +228,7 @@ actions:
         results: output/zostavax/results/rd_results_fixed_bw_aged77_82.csv
 
   rd_analysis_fixed_bw_aged78_81:
-    run: r:v2 analysis/zostavax/5_zostavax_rd_analysis.R aged78_81 fixed_bw_aged78_81
+    run: r:v3 analysis/zostavax/5_zostavax_rd_analysis.R aged78_81 fixed_bw_aged78_81
     needs:
     - rd_populations_aged78_81
     - rd_msebw_zostavax
@@ -243,7 +237,7 @@ actions:
         results: output/zostavax/results/rd_results_fixed_bw_aged78_81.csv
 
   rd_analysis_primary:
-    run: r:v2 analysis/zostavax/5_zostavax_rd_analysis.R general primary
+    run: r:v3 analysis/zostavax/5_zostavax_rd_analysis.R general primary
     needs:
     - rd_populations_general
     - rd_msebw_zostavax
@@ -252,7 +246,7 @@ actions:
         results: output/zostavax/results/rd_results_primary.csv
 
   rd_analysis_reduced_excl:
-    run: r:v2 analysis/zostavax/5_zostavax_rd_analysis.R reduced_excl reduced_excl
+    run: r:v3 analysis/zostavax/5_zostavax_rd_analysis.R reduced_excl reduced_excl
     needs:
     - rd_populations_reduced_excl
     - rd_msebw_zostavax
@@ -261,7 +255,7 @@ actions:
         results: output/zostavax/results/rd_results_reduced_excl.csv
 
   rd_analysis_sub_cogimp_no:
-    run: r:v2 analysis/zostavax/5_zostavax_rd_analysis.R cogimp_no sub_cogimp_no
+    run: r:v3 analysis/zostavax/5_zostavax_rd_analysis.R cogimp_no sub_cogimp_no
     needs:
     - rd_populations_cogimp_no
     - rd_msebw_zostavax
@@ -270,7 +264,7 @@ actions:
         results: output/zostavax/results/rd_results_sub_cogimp_no.csv
 
   rd_analysis_sub_cogimp_yes:
-    run: r:v2 analysis/zostavax/5_zostavax_rd_analysis.R cogimp_yes sub_cogimp_yes
+    run: r:v3 analysis/zostavax/5_zostavax_rd_analysis.R cogimp_yes sub_cogimp_yes
     needs:
     - rd_populations_cogimp_yes
     - rd_msebw_zostavax
@@ -279,7 +273,7 @@ actions:
         results: output/zostavax/results/rd_results_sub_cogimp_yes.csv
 
   rd_analysis_sub_sex_men:
-    run: r:v2 analysis/zostavax/5_zostavax_rd_analysis.R men sub_sex_men
+    run: r:v3 analysis/zostavax/5_zostavax_rd_analysis.R men sub_sex_men
     needs:
     - rd_populations_men
     - rd_msebw_zostavax
@@ -288,7 +282,7 @@ actions:
         results: output/zostavax/results/rd_results_sub_sex_men.csv
 
   rd_analysis_sub_sex_women:
-    run: r:v2 analysis/zostavax/5_zostavax_rd_analysis.R women sub_sex_women
+    run: r:v3 analysis/zostavax/5_zostavax_rd_analysis.R women sub_sex_women
     needs:
     - rd_populations_women
     - rd_msebw_zostavax
@@ -297,7 +291,7 @@ actions:
         results: output/zostavax/results/rd_results_sub_sex_women.csv
 
   rd_analysis_thresholdm_no:
-    run: r:v2 analysis/zostavax/5_zostavax_rd_analysis.R thresholdm_no thresholdm_no
+    run: r:v3 analysis/zostavax/5_zostavax_rd_analysis.R thresholdm_no thresholdm_no
     needs:
     - rd_populations_thresholdm_no
     - rd_msebw_zostavax
@@ -305,10 +299,19 @@ actions:
       moderately_sensitive:
         results: output/zostavax/results/rd_results_thresholdm_no.csv
 
+  rd_analysis_pre_outcome:
+    run: r:v3 analysis/zostavax/5_zostavax_rd_analysis.R general pre_outcome
+    needs:
+    - rd_populations_general
+    - rd_msebw_zostavax
+    outputs:
+      moderately_sensitive:
+        results: output/zostavax/results/rd_results_pre_outcome.csv
+
   ## Make output 
 
   rd_output_zostavax:
-    run: r:v2 analysis/zostavax/6_zostavax_rd_output.R
+    run: r:v3 analysis/zostavax/6_zostavax_rd_output.R
     needs:
     - rd_analysis_alt_kernel
     - rd_analysis_alt_msebw
@@ -324,6 +327,7 @@ actions:
     - rd_analysis_sub_sex_men
     - rd_analysis_sub_sex_women
     - rd_analysis_thresholdm_no
+    - rd_analysis_pre_outcome
     outputs:
       moderately_sensitive:
         output: output/zostavax/output/rd_results.csv
