@@ -177,8 +177,8 @@ table_balance <-
   ) %>%
   table1_summary(
     .by = eligibility,
-    variables = variable_lookup$variable #,
-    #rounding.function = rounding.function
+    variables = variable_lookup$variable,
+    rounding.function = rounding.function
   ) |>
   mutate(
     variable_label = recode_values(
@@ -207,26 +207,24 @@ if (analysis == "main") {
       N = 1L,
     ) %>%
     table1_summary(
-      group = eligibility,
-      label = variable_labels,
-      threshold = sdc.threshold
+      .by = eligibility,
+      variables = variable_lookup$variable,
+      rounding.function = rounding.function
+    ) |>
+    mutate(
+      variable_label = recode_values(
+        variable,
+        from = variable_lookup$variable,
+        to = variable_lookup$label
+      ),
+      .after = variable_level,
+    ) |>
+    filter(
+      !(variable_class == "logical" & variable_level == "FALSE")
     )
-
-  # reformat to wide
-  table_balance_keep_prior_dementia_wide <-
-    table_balance_keep_prior_dementia |>
-    filter(!is.na(group1_level)) |>
-    pivot_wider(
-      id_cols = c(variable, variable_label, variable_level, context),
-      names_from = group1_level,
-      names_sep = "_",
-      values_from = c(n, N, p, mean, sd, p10, p25, median, p75, p90),
-      names_vary = "slowest"
-    )
-
   # save to disk
   write_csv(
-    table_balance_keep_prior_dementia_wide,
+    table_balance_keep_prior_dementia,
     fs::path(output_dir, "table_balance_keep_prior_dementia.csv")
   )
 }
