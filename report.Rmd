@@ -1,0 +1,336 @@
+---
+title: "zostavax-dementia"
+output: pdf_document
+classoption: landscape
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r plots, include=FALSE}
+vaccine_name <- "zostavax"
+source(glue::glue("analysis/specify_paths.R"))
+source(glue::glue("analysis/{vaccine_name}/7_plot_scatter.R"))
+source(glue::glue("analysis/{vaccine_name}/8_plot_annual_fup.R"))
+source(glue::glue("analysis/{vaccine_name}/9_plot_sensitivity.R"))
+source(glue::glue("analysis/{vaccine_name}/10_plot_thresholdyr.R"))
+source(glue::glue("analysis/{vaccine_name}/11_plot_altoutcome.R"))
+source(glue::glue("analysis/{vaccine_name}/12_plot_descriptives.R"))
+```
+
+These results are strictly confidential and can only be shared with project team. 
+
+This report has been generated using data release [01M6ZX7A7Y3BVKF91JSGDYK5XN](https://jobs.opensafely.org/the-effect-of-herpes-zoster-vaccines-on-incident-dementia-in-england/zostavax-dementia/releases/01M6ZX7A7Y3BVKF91JSGDYK5XN/).
+
+This report does not include patient characteristics, which were missing from the release, and the threshold year analyses, which need to be corrected.
+
+## MSE-optimal bandwidth
+
+The MSE-optimal bandwidth was derived using dementia as the outcome and was used in all analyses included in this report, unless otherwise specified. `h` specifies the main bandwidth used to construct the regression discontinuity point estimator, while `b` specifies the bias bandwidth used to construct the bias-correction estimator.
+
+```{r msebw, warning=FALSE, message=FALSE, echo=FALSE}
+df_msebw <- read.csv(glue::glue(
+  release_dir,
+  "{vaccine_name}/setup/rd_msebw.csv"
+))
+
+knitr::kable(
+  df_msebw,
+  digits = 1
+)
+```
+
+\newpage
+
+## Cumulative incidence of zostavax
+``` {r cuminc_zostavax, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_cumulative_events(event_name = "Zostavax by month", time_horizon = 364, group = "month_of_birth_fct")
+```
+
+\newpage
+
+## Annual cumulative incidence of zostavax
+``` {r yrcuminc_zostavax, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_yearly_cumulative_incidence_by_dob(event_name = "Zostavax")
+```
+
+\newpage
+
+## Annual cumulative incidence of shingles
+``` {r yrcuminc_shingles, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_yearly_cumulative_incidence_by_dob(event_name = "Shingles")
+```
+
+\newpage
+
+## Annual cumulative incidence of dementia
+``` {r yrcuminc_dementia, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_yearly_cumulative_incidence_by_dob(event_name = "Dementia")
+```
+
+\newpage
+
+## Annual cumulative incidence of post-herpetic neuralgia
+``` {r yrcuminc_neuralgia, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_yearly_cumulative_incidence_by_dob(event_name = "Neuralgia")
+```
+
+\newpage
+
+## Annual cumulative incidence of all-cause death
+``` {r yrcuminc_death, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_yearly_cumulative_incidence_by_dob(event_name = "All-cause death")
+```
+
+\newpage
+
+## Sharp regression discontinuity analysis of shingles
+```{r shingles_sharp, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_rd(rd = "sharp", outcome = "shingles", time_horizon = 12, ymin = 4, ymax = 12, ytxt = 9)
+```
+
+\newpage
+
+## Sharp regression discontinuity analysis of shingles, annual follow-up
+```{r shingles_sharp_afup, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_annual_fup(rd = "sharp", outcome = "shingles", ymin = -3, ymax = 0.5)
+```
+
+\newpage
+
+## Sharp regression discontinuity analysis of shingles, sensitivity and subgroups
+```{r shingles_sharp_sens, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_sensitivity(rd = "sharp", outcome = "shingles")
+```
+
+\newpage
+
+## Sharp regression discontinuity analysis of shingles, alternative definitions
+```{r shingles_sharp_altout, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_altoutcome(rd = "sharp", outcome_group = "alternative", outcome = "shingles")
+```
+
+\newpage
+
+## Fuzzy regression discontinuity analysis of shingles
+```{r shingles_fuzzy, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7} 
+plot_rd(rd = "fuzzy", outcome = "shingles", time_horizon = 12, ymin = 4, ymax = 12, ytxt = 9)
+```
+
+\newpage
+
+## Fuzzy regression discontinuity analysis of shingles, annual follow-up
+```{r shingles_fuzzy_afup, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_annual_fup(rd = "fuzzy", outcome = "shingles", ymin = -3, ymax = 0.5)
+```
+
+\newpage
+
+## Fuzzy regression discontinuity analysis of shingles, sensitivity and subgroups
+```{r shingles_fuzzy_sens, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_sensitivity(rd = "fuzzy", outcome = "shingles")
+```
+
+\newpage
+
+## Fuzzy regression discontinuity analysis of shingles, alternative definitions
+```{r shingles_fuzzy_altout, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_altoutcome(rd = "fuzzy", outcome_group = "alternative", outcome = "shingles")
+```
+
+\newpage
+
+## Sharp regression discontinuity analysis of dementia
+```{r dementia_sharp, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7} 
+plot_rd(rd = "sharp", outcome = "dementia", time_horizon = 12, ymin = 24, ymax = 50, ytxt = 42)
+```
+
+\newpage
+
+## Sharp regression discontinuity analysis of dementia, annual follow-up
+```{r dementia_sharp_afup, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_annual_fup(rd = "sharp", outcome = "dementia", ymin = -2, ymax = 2)
+```
+
+\newpage
+
+## Sharp regression discontinuity analysis of dementia, sensitivity and subgroups
+```{r dementia_sharp_sens, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_sensitivity(rd = "sharp", outcome = "dementia")
+```
+
+\newpage
+
+## Sharp regression discontinuity analysis of dementia, dementia subtypes
+```{r dementia_sharp_subtypes, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_altoutcome(rd = "sharp", outcome_group = "subtype")
+```
+
+\newpage
+
+## Sharp regression discontinuity analysis of dementia, alternative definitions
+```{r dementia_sharp_altout, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_altoutcome(rd = "sharp", outcome_group = "alternative", outcome = "dementia")
+```
+
+\newpage
+
+## Fuzzy regression discontinuity analysis of dementia
+```{r dementia_fuzzy, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7} 
+plot_rd(rd = "fuzzy", outcome = "dementia", time_horizon = 12, ymin = 24, ymax = 50, ytxt = 42)
+```
+
+\newpage
+
+## Fuzzy regression discontinuity analysis of dementia, annual follow-up
+```{r dementia_fuzzy_afup, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_annual_fup(rd = "fuzzy", outcome = "dementia", ymin = -2, ymax = 2)
+```
+
+\newpage
+
+## Fuzzy regression discontinuity analysis of dementia, sensitivity and subgroups
+```{r dementia_fuzzy_sens, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_sensitivity(rd = "fuzzy", outcome = "dementia")
+```
+
+\newpage
+
+## Fuzzy regression discontinuity analysis of dementia, dementia subtypes
+```{r dementia_fuzzy_subtypes, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_altoutcome(rd = "fuzzy", outcome_group = "subtype")
+```
+
+\newpage
+
+## Fuzzy regression discontinuity analysis of dementia, alternative definitions
+```{r dementia_fuzzy_altout, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_altoutcome(rd = "fuzzy", outcome_group = "alternative", outcome = "dementia")
+```
+
+\newpage
+
+## Sharp regression discontinuity analysis of post-herpetic neuralgia
+```{r neuralgia_sharp, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_rd(rd = "sharp", outcome = "neuralgia", time_horizon = 12, ymin = 0, ymax = 3, ytxt = 1.7)
+```
+
+\newpage
+
+## Sharp regression discontinuity analysis of post-herpetic neuralgia, annual follow-up
+```{r neuralgia_sharp_afup, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_annual_fup(rd = "sharp", outcome = "neuralgia", ymin = -1, ymax = 0.5)
+```
+
+\newpage
+
+## Sharp regression discontinuity analysis of post-herpetic neuralgia, sensitivity and subgroups
+```{r neuralgia_sharp_sens, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_sensitivity(rd = "sharp", outcome = "neuralgia")
+```
+
+\newpage
+
+## Sharp regression discontinuity analysis of post-herpetic neuralgia, alternative definitions
+```{r neuralgia_sharp_altout, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_altoutcome(rd = "sharp", outcome_group = "alternative", outcome = "neuralgia")
+```
+
+\newpage
+
+## Fuzzy regression discontinuity analysis of post-herpetic neuralgia
+```{r neuralgia_fuzzy, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_rd(rd = "fuzzy", outcome = "neuralgia", time_horizon = 12, ymin = 0, ymax = 3, ytxt = 1.7)
+```
+
+\newpage
+
+## Fuzzy regression discontinuity analysis of post-herpetic neuralgia, annual follow-up
+```{r neuralgia_fuzzy_afup, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_annual_fup(rd = "fuzzy", outcome = "neuralgia", ymin = -1, ymax = 0.5)
+```
+
+\newpage
+
+## Fuzzy regression discontinuity analysis of post-herpetic neuralgia, sensitivity and subgroups
+```{r neuralgia_fuzzy_sens, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_sensitivity(rd = "fuzzy", outcome = "neuralgia")
+```
+
+
+## Fuzzy regression discontinuity analysis of post-herpetic neuralgia, alternative definitions
+```{r neuralgia_fuzzy_altout, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_altoutcome(rd = "fuzzy", outcome_group = "alternative", outcome = "neuralgia")
+```
+
+\newpage
+
+## Sharp regression discontinuity analysis of all-cause death
+```{r death_sharp, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_rd(rd = "sharp", outcome = "all-cause death", time_horizon = 12, ymin = 40, ymax = 80, ytxt = 65)
+```
+
+\newpage
+
+## Sharp regression discontinuity analysis of all-cause death, annual follow-up
+```{r death_sharp_afup, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_annual_fup(rd = "sharp", outcome = "all-cause death", ymin = -2.5, ymax = 1.5)
+```
+
+\newpage
+
+## Sharp regression discontinuity analysis of all-cause death, sensitivity and subgroups
+```{r death_sharp_sens, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_sensitivity(rd = "sharp", outcome = "all-cause death")
+```
+
+\newpage
+
+## Sharp regression discontinuity analysis of all-cause death, alternative definitions
+```{r death_sharp_altout, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_altoutcome(rd = "sharp", outcome_group = "alternative", outcome = "death")
+```
+
+\newpage
+
+## Fuzzy regression discontinuity analysis of all-cause death
+```{r death_fuzzy, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_rd(rd = "fuzzy", outcome = "all-cause death", time_horizon = 12, ymin = 40, ymax = 80, ytxt = 65)
+```
+
+\newpage
+
+## Fuzzy regression discontinuity analysis of all-cause death, annual follow-up
+```{r death_fuzzy_afup, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_annual_fup(rd = "fuzzy", outcome = "all-cause death", ymin = -2.5, ymax = 1.5)
+```
+
+\newpage
+
+## Fuzzy regression discontinuity analysis of all-cause death, sensitivity and subgroups
+```{r death_fuzzy_sens, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_sensitivity(rd = "fuzzy", outcome = "all-cause death")
+```
+
+\newpage
+
+## Fuzzy regression discontinuity analysis of all-cause death, alternative definitions
+```{r death_fuzzy_altout, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7}
+plot_altoutcome(rd = "fuzzy", outcome_group = "alternative", outcome = "death")
+```
+
+\newpage
+
+## Sharp regression discontinuity analysis of alternative outcomes
+```{r altoutcomes_sharp, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7} 
+plot_altoutcome(rd = "sharp", outcome_group = "control")
+```
+
+\newpage
+
+## Fuzzy regression discontinuity analysis of alternative outcomes
+```{r altoutcomes_fuzzy, warning=FALSE, message=FALSE, echo=FALSE, fig.width=11, fig.height=7} 
+plot_altoutcome(rd = "fuzzy", outcome_group = "control")
+```

@@ -88,14 +88,14 @@ plot_annual_fup <- function(rd = "fuzzy", vaccine_name = "zostavax", outcome = "
 
 }
 
-# Make plots ----
-
-plot_annual_fup(rd = "sharp", outcome = "shingles", ymin = -2.5, ymax = 0.5)
-plot_annual_fup(rd = "sharp", outcome = "dementia", ymin = -2, ymax = 2)
-plot_annual_fup(rd = "sharp", outcome = "neuralgia", ymin = -1, ymax = 0.5)
-plot_annual_fup(rd = "sharp", outcome = "all-cause death", ymin = -3, ymax = 2)
-
-plot_annual_fup(rd = "fuzzy", outcome = "shingles", ymin = -2.5, ymax = 0.5)
-plot_annual_fup(rd = "fuzzy", outcome = "dementia", ymin = -2, ymax = 2)
-plot_annual_fup(rd = "fuzzy", outcome = "neuralgia", ymin = -1, ymax = 0.5)
-plot_annual_fup(rd = "fuzzy", outcome = "all-cause death", ymin = -3, ymax = 2)
+# # Make plots ----
+# 
+# plot_annual_fup(rd = "sharp", outcome = "shingles", ymin = -2.5, ymax = 0.5)
+# plot_annual_fup(rd = "sharp", outcome = "dementia", ymin = -2, ymax = 2)
+# plot_annual_fup(rd = "sharp", outcome = "neuralgia", ymin = -1, ymax = 0.5)
+# plot_annual_fup(rd = "sharp", outcome = "all-cause death", ymin = -3, ymax = 2)
+# 
+# plot_annual_fup(rd = "fuzzy", outcome = "shingles", ymin = -2.5, ymax = 0.5)
+# plot_annual_fup(rd = "fuzzy", outcome = "dementia", ymin = -2, ymax = 2)
+# plot_annual_fup(rd = "fuzzy", outcome = "neuralgia", ymin = -1, ymax = 0.5)
+# plot_annual_fup(rd = "fuzzy", outcome = "all-cause death", ymin = -3, ymax = 2)

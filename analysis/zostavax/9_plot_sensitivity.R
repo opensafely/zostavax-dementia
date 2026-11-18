@@ -120,14 +120,14 @@ plot_sensitivity <- function(rd = "sharp", vaccine_name = "zostavax", outcome = 
   
 }
 
-# Make plots ----
-
-plot_sensitivity(rd = "sharp", outcome = "shingles")
-plot_sensitivity(rd = "sharp", outcome = "dementia")
-plot_sensitivity(rd = "sharp", outcome = "neuralgia")
-plot_sensitivity(rd = "sharp", outcome = "all-cause death")
-
-plot_sensitivity(rd = "fuzzy", outcome = "shingles")
-plot_sensitivity(rd = "fuzzy", outcome = "dementia")
-plot_sensitivity(rd = "fuzzy", outcome = "neuralgia")
-plot_sensitivity(rd = "fuzzy", outcome = "all-cause death")
+# # Make plots ----
+# 
+# plot_sensitivity(rd = "sharp", outcome = "shingles")
+# plot_sensitivity(rd = "sharp", outcome = "dementia")
+# plot_sensitivity(rd = "sharp", outcome = "neuralgia")
+# plot_sensitivity(rd = "sharp", outcome = "all-cause death")
+# 
+# plot_sensitivity(rd = "fuzzy", outcome = "shingles")
+# plot_sensitivity(rd = "fuzzy", outcome = "dementia")
+# plot_sensitivity(rd = "fuzzy", outcome = "neuralgia")
+# plot_sensitivity(rd = "fuzzy", outcome = "all-cause death")

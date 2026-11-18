@@ -136,13 +136,13 @@ plot_rd <- function(rd = "fuzzy", vaccine_name = "zostavax", outcome = "dementia
       colour = "black"
     ) +
     scale_x_continuous(
-      breaks = seq(-ceiling(bandwidth), ceiling(bandwidth), 6),
+      breaks = seq(-12*15,12*15, 6),
       limits = c(-ceiling(bandwidth), ceiling(bandwidth))
     ) +
     scale_y_continuous(limits = c(ymin, ymax)) +
     labs(
       x = paste0(
-        "Month of birth (relative to ",format(dob_threshold_date, "%e %B %Y"),")"
+        "Month of birth (relative to",format(dob_threshold_date, "%e %B %Y"),")"
       ),
       y = glue::glue(
         "Probability of a new {outcome} diagnosis over a {time_horizon} year follow-up period (%)"
@@ -178,14 +178,14 @@ plot_rd <- function(rd = "fuzzy", vaccine_name = "zostavax", outcome = "dementia
   return(plot)
 }
 
-# Make plots ----
-
-plot_rd(rd = "sharp", outcome = "dementia", ymin = 15, ymax = 30, ytxt = 24)
-plot_rd(rd = "sharp", outcome = "shingles", ymin = 2, ymax = 10, ytxt = 5.5)
-plot_rd(rd = "sharp", outcome = "all-cause death", ymin = 25, ymax = 50, ytxt = 40)
-plot_rd(rd = "sharp", outcome = "neuralgia", ymin = 0, ymax = 3, ytxt = 1)
-
-plot_rd(rd = "fuzzy", outcome = "dementia", ymin = 15, ymax = 30, ytxt = 24)
-plot_rd(rd = "fuzzy", outcome = "shingles", ymin = 2, ymax = 10, ytxt = 5.5)
-plot_rd(rd = "fuzzy", outcome = "all-cause death", ymin = 25, ymax = 50, ytxt = 40)
-plot_rd(rd = "fuzzy", outcome = "neuralgia", ymin = 0, ymax = 3, ytxt = 1)
+# # Make plots ----
+# 
+# plot_rd(rd = "sharp", outcome = "dementia", ymin = 15, ymax = 30, ytxt = 24)
+# plot_rd(rd = "sharp", outcome = "shingles", ymin = 2, ymax = 10, ytxt = 5.5)
+# plot_rd(rd = "sharp", outcome = "all-cause death", ymin = 25, ymax = 50, ytxt = 40)
+# plot_rd(rd = "sharp", outcome = "neuralgia", ymin = 0, ymax = 3, ytxt = 1)
+# 
+# plot_rd(rd = "fuzzy", outcome = "dementia", ymin = 15, ymax = 30, ytxt = 24)
+# plot_rd(rd = "fuzzy", outcome = "shingles", ymin = 2, ymax = 10, ytxt = 5.5)
+# plot_rd(rd = "fuzzy", outcome = "all-cause death", ymin = 25, ymax = 50, ytxt = 40)
+# plot_rd(rd = "fuzzy", outcome = "neuralgia", ymin = 0, ymax = 3, ytxt = 1)

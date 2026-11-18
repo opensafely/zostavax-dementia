@@ -119,18 +119,18 @@ plot_altoutcome <- function(rd = "sharp", vaccine_name = "zostavax", outcome_gro
   
 }
 
-# Make plots ----
-
-plot_altoutcome(rd = "sharp", outcome_group = "control")
-plot_altoutcome(rd = "sharp", outcome_group = "subtype")
-plot_altoutcome(rd = "sharp", outcome_group = "alternative", outcome = "shingles")
-plot_altoutcome(rd = "sharp", outcome_group = "alternative", outcome = "dementia")
-plot_altoutcome(rd = "sharp", outcome_group = "alternative", outcome = "neuralgia")
-plot_altoutcome(rd = "sharp", outcome_group = "alternative", outcome = "death")
-
-plot_altoutcome(rd = "fuzzy", outcome_group = "control")
-plot_altoutcome(rd = "fuzzy", outcome_group = "subtype")
-plot_altoutcome(rd = "fuzzy", outcome_group = "alternative", outcome = "shingles")
-plot_altoutcome(rd = "fuzzy", outcome_group = "alternative", outcome = "dementia")
-plot_altoutcome(rd = "fuzzy", outcome_group = "alternative", outcome = "neuralgia")
-plot_altoutcome(rd = "fuzzy", outcome_group = "alternative", outcome = "death")
+# # Make plots ----
+# 
+# plot_altoutcome(rd = "sharp", outcome_group = "control")
+# plot_altoutcome(rd = "sharp", outcome_group = "subtype")
+# plot_altoutcome(rd = "sharp", outcome_group = "alternative", outcome = "shingles")
+# plot_altoutcome(rd = "sharp", outcome_group = "alternative", outcome = "dementia")
+# plot_altoutcome(rd = "sharp", outcome_group = "alternative", outcome = "neuralgia")
+# plot_altoutcome(rd = "sharp", outcome_group = "alternative", outcome = "death")
+# 
+# plot_altoutcome(rd = "fuzzy", outcome_group = "control")
+# plot_altoutcome(rd = "fuzzy", outcome_group = "subtype")
+# plot_altoutcome(rd = "fuzzy", outcome_group = "alternative", outcome = "shingles")
+# plot_altoutcome(rd = "fuzzy", outcome_group = "alternative", outcome = "dementia")
+# plot_altoutcome(rd = "fuzzy", outcome_group = "alternative", outcome = "neuralgia")
+# plot_altoutcome(rd = "fuzzy", outcome_group = "alternative", outcome = "death")
