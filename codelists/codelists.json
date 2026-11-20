@@ -383,6 +383,54 @@
       "url": "https://www.opencodelists.org/codelist/user/markdrussell/coronary-heart-disease-secondary-care/11159be6/",
       "downloaded_at": "2026-11-13 13:33:06.859468+00:00Z",
       "sha": "6b582a29db957e91c27947957a6e4fe2809a1e58"
+    },
+    "user-elsie_horne-depression_icd10.csv": {
+      "id": "user/elsie_horne/depression_icd10/116935fd",
+      "url": "https://www.opencodelists.org/codelist/user/elsie_horne/depression_icd10/116935fd/",
+      "downloaded_at": "2026-11-18 14:04:01.406312+00:00Z",
+      "sha": "3453d912aa7f2d43a3b58a388c54204eea44daa2"
+    },
+    "openpregnosis-epilepsy-icd10-codes.csv": {
+      "id": "openpregnosis/epilepsy-icd10-codes/503878ac",
+      "url": "https://www.opencodelists.org/codelist/openpregnosis/epilepsy-icd10-codes/503878ac/",
+      "downloaded_at": "2026-11-18 14:07:35.853313+00:00Z",
+      "sha": "702d799ec28251e513b31bc5ef9f0f61cf70988f"
+    },
+    "user-anschaf-hypothyroidism-icd-10.csv": {
+      "id": "user/anschaf/hypothyroidism-icd-10/315299af",
+      "url": "https://www.opencodelists.org/codelist/user/anschaf/hypothyroidism-icd-10/315299af/",
+      "downloaded_at": "2026-11-18 14:12:04.780452+00:00Z",
+      "sha": "80f4054a4432a38fe7402fb5801c2d27e24912c2"
+    },
+    "user-markdrussell-osteoporosis-secondary-care.csv": {
+      "id": "user/markdrussell/osteoporosis-secondary-care/4b4cc232",
+      "url": "https://www.opencodelists.org/codelist/user/markdrussell/osteoporosis-secondary-care/4b4cc232/",
+      "downloaded_at": "2026-11-18 14:13:12.094530+00:00Z",
+      "sha": "59c0f94efafd3ca5a136b9586995262a3d74d508"
+    },
+    "user-anschaf-peripheral-arterial-disease-icd-10.csv": {
+      "id": "user/anschaf/peripheral-arterial-disease-icd-10/7f33b344",
+      "url": "https://www.opencodelists.org/codelist/user/anschaf/peripheral-arterial-disease-icd-10/7f33b344/",
+      "downloaded_at": "2026-11-18 14:35:20.211541+00:00Z",
+      "sha": "ff267f46ed05fb6016a314b7704fa759a6180494"
+    },
+    "user-kurttaylor-schizophrenia_icd10.csv": {
+      "id": "user/kurttaylor/schizophrenia_icd10/3768b6c6",
+      "url": "https://www.opencodelists.org/codelist/user/kurttaylor/schizophrenia_icd10/3768b6c6/",
+      "downloaded_at": "2026-11-18 14:49:47.462323+00:00Z",
+      "sha": "532c3cc57b47d2854a36bba221be2e3ed1372e0f"
+    },
+    "user-kurttaylor-other-psychotic_disorders_icd10.csv": {
+      "id": "user/kurttaylor/other-psychotic_disorders_icd10/69879d30",
+      "url": "https://www.opencodelists.org/codelist/user/kurttaylor/other-psychotic_disorders_icd10/69879d30/",
+      "downloaded_at": "2026-11-18 14:40:51.332482+00:00Z",
+      "sha": "31f303bbe7399676e9b2c56fc93db68ca8be1366"
+    },
+    "user-kurttaylor-bipolar_and_mood_disorders_icd10.csv": {
+      "id": "user/kurttaylor/bipolar_and_mood_disorders_icd10/66d4dd3a",
+      "url": "https://www.opencodelists.org/codelist/user/kurttaylor/bipolar_and_mood_disorders_icd10/66d4dd3a/",
+      "downloaded_at": "2026-11-18 14:41:04.635712+00:00Z",
+      "sha": "8aad947d0f8a0496d5996b7469641526e669c37c"
     }
   }
 }

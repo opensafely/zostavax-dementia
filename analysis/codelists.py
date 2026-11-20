@@ -56,7 +56,9 @@ past_smoker_snomed = codelist_from_csv(
 )
 smoker_snomed = current_smoker_snomed + past_smoker_snomed
 
-# immunosuppression
+###########################################################
+#  immunosuppression
+
 autograft_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-autotransp_cod.csv",
     column = "code"
@@ -113,6 +115,37 @@ immunosupp_snomed_2yrs = (autograft_snomed + allograft_snomed)
 immunosupp_snomed_anytime = (gvhd_snomed + hiv_snomed + aids_snomed + imatrisk1_snomed + lymphoproldis_snomed + epphaemcan_snomed)
 immunosupp_snomed_6mos = (imtrtatrisk1_snomed + imtemp_snomed + radiotherap_snomed + dmards_snomed)
 
+
+##########################################################
+
+shvacgp_snomed = codelist_from_csv(
+    "codelists/nhsd-primary-care-domain-refsets-shvacgp_cod.csv",
+    column = "code"
+)
+
+##########################################################
+
+shingles_snomed = codelist_from_csv(
+    "codelists/opensafely-shingles.csv",
+    column = "code"
+)
+shingles_icd10 = codelist_from_csv(
+    "codelists/opensafely-shingles-icd-10.csv",
+    column = "code"
+)
+
+neuralgia_snomed = codelist_from_csv(
+    "codelists/opensafely-post-herpetic-neuralgia.csv",
+    column = "code"
+)
+neuralgia_icd10 = codelist_from_csv(
+    "codelists/opensafely-post-herpetic-neuralgia-icd-10.csv",
+    column = "code"
+)
+
+##########################################################
+# controls / assumptions
+
 lrti_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-c19flurti_cod.csv",
     column = "code"
@@ -146,7 +179,7 @@ ckd345_snomed = codelist_from_csv(
     column = "code"
 )
 ckd_snomed = ckd12_snomed + ckd345_snomed
-cvd_icd10 = codelist_from_csv(
+ckd_icd10 = codelist_from_csv(
     "codelists/opensafely-chronic-kidney-disease-icd10.csv",
     column = "code"
 )
@@ -154,8 +187,16 @@ depression_snomed = codelist_from_csv(
     "codelists/opensafely-incident-depression.csv",
     column = "code"
 )
+depression_icd10 = codelist_from_csv(
+     "codelists/user-elsie_horne-depression_icd10.csv",
+    column = "code"
+)   
 epilepsy_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-epil_cod.csv",
+    column = "code"
+)
+epilepsy_icd10 = codelist_from_csv(
+    "codelists/openpregnosis-epilepsy-icd10-codes.csv",
     column = "code"
 )
 hf_snomed = codelist_from_csv(
@@ -170,12 +211,34 @@ hypothyroid_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-thy_cod.csv",
     column = "code"
 )
+hypothyroid_icd10 = codelist_from_csv(
+    "codelists/user-anschaf-hypothyroidism-icd-10.csv",
+    column = "code"
+)
 smi_snomed = codelist_from_csv(
     "codelists/opensafely-severe-mental-illness.csv",
     column = "code"
 )
+schizo_icd10 = codelist_from_csv(
+    "codelists/user-kurttaylor-schizophrenia_icd10.csv",
+    column = "code"
+)
+psychosis_icd10 = codelist_from_csv(
+    "codelists/user-kurttaylor-other-psychotic_disorders_icd10.csv",
+    column = "code"
+)
+bipolar_icd10 = codelist_from_csv(
+    "codelists/user-kurttaylor-bipolar_and_mood_disorders_icd10.csv",
+    column = "code"
+)
+smi_icd10 = schizo_icd10 + psychosis_icd10 + bipolar_icd10
+
 osteoporosis_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-osteo_cod.csv",
+    column = "code"
+)
+osteoporosis_icd10 = codelist_from_csv(
+    "codelists/user-markdrussell-osteoporosis-secondary-care.csv",
     column = "code"
 )
 obese_snomed = codelist_from_csv(
@@ -186,12 +249,16 @@ pad_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-pad_cod.csv",
     column = "code"
 )
+pad_icd10 = codelist_from_csv(
+    "codelists/user-anschaf-peripheral-arterial-disease-icd-10.csv",
+    column = "code"
+)
 ra_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-rarth_cod.csv",
     column = "code"
 )
 ra_icd10 = codelist_from_csv(
-    "codelists/user/markdrussell/rheumatoid-arthritis-secondary-care.csv",
+    "codelists/user-markdrussell-rheumatoid-arthritis-secondary-care.csv",
     column = "code"
 )
 stroke_snomed = codelist_from_csv(
@@ -210,42 +277,15 @@ chd_snomed = codelist_from_csv(
     column = "code"
 )
 chd_icd10 = codelist_from_csv(
-    "codelists/user-markdrussell/coronary-heart-disease-secondary-care.csv",
+    "codelists/user-markdrussell-coronary-heart-disease-secondary-care.csv",
     column = "code"
 )
-
-shvacgp_snomed = codelist_from_csv(
-    "codelists/nhsd-primary-care-domain-refsets-shvacgp_cod.csv",
-    column = "code"
-)
-
-##########################################################
-
-shingles_snomed = codelist_from_csv(
-    "codelists/opensafely-shingles.csv",
-    column = "code"
-)
-shingles_icd10 = codelist_from_csv(
-    "codelists/opensafely-shingles-icd-10.csv",
-    column = "code"
-)
-
-neuralgia_snomed = codelist_from_csv(
-    "codelists/opensafely-post-herpetic-neuralgia.csv",
-    column = "code"
-)
-neuralgia_icd10 = codelist_from_csv(
-    "codelists/opensafely-post-herpetic-neuralgia-icd-10.csv",
-    column = "code"
-)
-
-# assumptions
 hypertension_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-hyp_cod.csv",
     column = "code"
 )
-hypertension_snomed = codelist_from_csv(
-    "codelist/reducehf-hypertension-icd10.csv",
+hypertension_icd10 = codelist_from_csv(
+    "codelists/reducehf-hypertension-icd10.csv",
     column = "code"
 )
 t2dm_snomed = codelist_from_csv(

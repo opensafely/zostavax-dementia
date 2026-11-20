@@ -5,25 +5,23 @@ library(fs)
 library(here)
 library(lubridate)
 
+
+source(here::here("analysis", "common_code", "utility.R"))
+
 processing <- function(threshold_date, index_date, vaccine_name, analysis) {
   
-  control_conditions <- c(
+  conditions <- c("dementia", "alzheimers", "vascular",
     "asthma", "afib", "chd", "ckd",
-    "copd", "depression", "t2dm",
-    "epilepsy", "hf", "hypothyroid",
-    "smi", "obese", "osteoporosis",
-    "pad", "ra"
+    "copd", "depression", "t2dm", "epilepsy", "hf", "hypothyroid",
+    "smi", "obese", "osteoporosis", "pad", "ra"
   )
-  control_date_cols <- setNames(
-    paste0(control_conditions, "_gp_first_date_ever"),
-    control_conditions
-  )
-  
+
   df <- read_feather(
     here::here("output", vaccine_name, paste0("dataset_",vaccine_name,"_",analysis,".arrow"))
     )
   
   processed_df <- df %>%
+    
     mutate(
       across(contains("date"), as.Date),
 
@@ -64,12 +62,18 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
         ),
 
       # Earliest date of outcomes
-      dementia_first_date_ever = pmin(
-        dementia_gp_first_date_ever,
-        dementia_hosp_first_date_ever,
-        dementia_ons_date,
-        na.rm = TRUE
-      ),
+      !!!rlang::set_names(
+          lapply(conditions, function(x) first_date_ever(df, x)),
+          paste0(conditions, "_first_date_ever")
+        ),
+
+      # Create flag if first date is before threshold 
+      across(
+        all_of(paste0(conditions, "_first_date_ever")),
+        ~ as.integer(.x < threshold_date),
+        .names = "{sub('_first_date_ever$', '_before_threshold', .col)}"
+        ),
+
       dementia_charlson_first_date_ever = pmin(
         dementia_charlson_gp_first_date_ever,
         dementia_hosp_first_date_ever,
@@ -79,18 +83,6 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
       dementia_exclude_first_date_ever = pmin(
         dementia_exclude_gp_first_date_ever,
         dementia_hosp_first_date_ever,
-        na.rm = TRUE
-      ),
-      alzheimers_first_date_ever = pmin(
-        alzheimers_gp_first_date_ever,
-        alzheimers_hosp_first_date_ever,
-        alzheimers_ons_date,
-        na.rm = TRUE
-      ),
-      vascular_first_date_ever = pmin(
-        vascular_gp_first_date_ever,
-        vascular_hosp_first_date_ever,
-        vascular_ons_date,
         na.rm = TRUE
       ),
       shingles_first_date_after = pmin(
@@ -199,12 +191,6 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
           !exclude_died &
           !exclude_deregister,
         FALSE
-      ),
-      # Control conditions before threshold
-      across(
-        all_of(control_date_cols),
-        ~ coalesce(.x <= threshold_date, FALSE),
-        .names = "{.col}_before_threshold"
       ),
 
       # Vaccinations/prescriptions 5 years before threshold
