@@ -1,5 +1,11 @@
 {
   "files": {
+    "opensafely-transient-ischaemic-attack-secondary-care.csv": {
+      "id": "opensafely/transient-ischaemic-attack-secondary-care/5a928ca8",
+      "url": "https://www.opencodelists.org/codelist/opensafely/transient-ischaemic-attack-secondary-care/5a928ca8/",
+      "downloaded_at": "2026-11-20 17:21:53.869835+00:00Z",
+      "sha": "1aa18493b12be90006f0b39f5202fef5ec00c835"
+    },
     "opensafely-incident-dementia-icd-10.csv": {
       "id": "opensafely/incident-dementia-icd-10/28440de6",
       "url": "https://www.opencodelists.org/codelist/opensafely/incident-dementia-icd-10/28440de6/",

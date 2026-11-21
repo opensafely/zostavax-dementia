@@ -272,6 +272,10 @@ tia_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-tia_cod.csv",
     column = "code"
 )   
+tia_icd10 = codelist_from_csv(
+    "codelists/opensafely-transient-ischaemic-attack-secondary-care.csv",
+    column = "code"
+)
 chd_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-chd_cod.csv",
     column = "code"
