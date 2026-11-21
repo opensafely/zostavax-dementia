@@ -167,10 +167,11 @@ def primary_care_controls_assumptions(threshold_date):
 
 def secondary_care_outcomes(threshold_date):
 
+    # main outcomes
     dataset.dementia_hosp_first_date_ever = first_hosp_event_ever(codelists.dementia_icd10).admission_date
     dataset.alzheimers_hosp_first_date_ever = first_hosp_event_ever(codelists.alzheimers_icd10).admission_date
     dataset.vascular_hosp_first_date_ever = first_hosp_event_ever(codelists.vascular_icd10).admission_date
- 
+
     dataset.neuralgia_hosp_first_date_after = first_hosp_event_after(threshold_date, codelists.neuralgia_icd10).admission_date
     dataset.shingles_hosp_first_date_after = first_hosp_event_after(threshold_date, codelists.shingles_icd10).admission_date
 
@@ -208,7 +209,12 @@ def secondary_care_outcomes(threshold_date):
             f"{name}_ons_date",
             ons_event_ever(codelist),
         )
-    
+
+    dataset.stroke_hosp_first_date_after = first_hosp_event_after(threshold_date, codelists.stroke_icd10).admission_date
+    dataset.tia_hosp_first_date_after = first_hosp_event_after(threshold_date, codelists.tia_icd10).admission_date
+
+    dataset.stroke_hosp_first_date_after = first_hosp_event_after(threshold_date, codelists.shingles_icd10).admission_date
+
     return dataset
 
 def secondary_care_exclusions(threshold_date):
