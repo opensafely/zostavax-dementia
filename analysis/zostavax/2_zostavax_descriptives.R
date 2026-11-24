@@ -28,7 +28,7 @@ if (analysis == "main") {
   end_date <- threshold_date + years(12) - days(1)
 }
 
-if (analysis == "1yr_index") {
+if (analysis == "index_1yr") {
   dob_threshold_date <- as.Date("1933-09-01")
   threshold_date <- as.Date("2013-09-01")
   index_date <- threshold_date + years(1)
@@ -96,7 +96,7 @@ capture.output(
 )
 
 # create core analysis dataset with exclusions applied
-if (analysis %in% c("main", "1yr_index")) {
+if (analysis %in% c("main", "index_1yr")) {
   df_analysis <-
     df_processed |>
     filter(no_common_exclusions)
@@ -326,7 +326,7 @@ df_analysis |>
 # Cumulative incidence of vaccination since index date ----
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-if (analysis %in% c("main", "1yr_index", "2010", "2016")) {
+if (analysis %in% c("main", "index_1yr", "2010", "2016")) {
   # Cumulative uptake of Zostavax by age in months up to one year after the threshold date
   cumulative_events(df_analysis |> filter(between(age, 79, 80)), "month_of_birth_fct", precision=7, start_date = threshold_date, index_date = threshold_date, 52*7, "zostavax_date_1", "Zostavax by month")
 
@@ -355,7 +355,7 @@ cumulative_events(df_analysis, "eligibility", precision=7, start_date = threshol
 cumulative_events(df_analysis, "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "neuralgia_first_date_after", "Neuralgia")
 cumulative_events(df_analysis, "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "neuralgia_gp_first_date_after", "Neuralgia (GP only)")
 
-if (analysis %in% c("main", "1yr_index")) {
+if (analysis %in% c("main", "index_1yr")) {
   cumulative_events(df_analysis |> filter(!dementia_exclude_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "alzheimers_first_date_ever", "Alzheimers dementia")
   cumulative_events(df_analysis |> filter(!dementia_exclude_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "vascular_first_date_ever", "Vascular dementia")
   cumulative_events(df_analysis |> filter(!dementia_exclude_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "dementia_charlson_first_date_ever", "Dementia (Charlson)")
@@ -386,7 +386,7 @@ if (analysis %in% c("main")) {
   cumulative_events(df_analysis |> filter(!obese_before_threshold), "eligibility", precision=7, start_date = threshold_date, index_date = index_date, 365, "obese_gp_first_date_ever", "Obesity")
 }
 
-# Cumulative incidence of outcomes by month of birth, up to 7 years after threshold
+# Cumulative incidence of outcomes by month of birth, up to 12 years after threshold
 
 # zostavax - start follow up immeidately after threshold
 yearly_cumulative_incidence_by_dob(df_analysis, dob_threshold_date, threshold_date, threshold_date, time_horizon_years=12, "zostavax_date_1", "Zostavax")

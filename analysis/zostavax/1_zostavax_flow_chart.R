@@ -11,7 +11,7 @@ exclusion_flow_chart(
 
 exclusion_flow_chart(
   "zostavax",
-  "1yr_index"
+  "index_1yr"
 )
 
 exclusion_flow_chart(

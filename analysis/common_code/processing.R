@@ -20,7 +20,8 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
   )
   
   df <- read_feather(
-    here::here("output", vaccine_name, paste0("dataset_",vaccine_name,"_",analysis,".arrow"))
+    here::here("output", vaccine_name, 
+    paste0("dataset_",vaccine_name,"_",analysis,".arrow"))
     )
   
   processed_df <- df %>%
@@ -152,8 +153,14 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
       ),
 
       # Died / deregistered between threshold and index date
-      exclude_died = coalesce(!is.na(date_of_death) & (date_of_death <= index_date), FALSE),
-      exclude_deregister = coalesce(!is.na(reg_end_date) & (reg_end_date <= index_date), FALSE),
+      exclude_died = coalesce(
+        !is.na(date_of_death) 
+        & (date_of_death <= index_date), 
+        FALSE),
+      exclude_deregister = coalesce(
+        !is.na(reg_end_date) 
+        & (reg_end_date <= index_date), 
+        FALSE),
 
       # Flag for exclusions common to all analyses
       common_exclusions_w_dementia = coalesce(
@@ -201,6 +208,7 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
           !exclude_deregister,
         FALSE
       ),
+      
       # Control conditions before threshold
       across(
         all_of(control_date_cols),
