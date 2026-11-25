@@ -245,6 +245,10 @@ obese_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-bmiobese_cod.csv",
     column = "code"
 )
+obese_icd10 = codelist_from_csv(
+     "codelists/user-elsie_horne-bmi_obesity_icd10.csv",
+    column = "code"
+)   
 pad_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-pad_cod.csv",
     column = "code"

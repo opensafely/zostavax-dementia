@@ -190,6 +190,7 @@ def secondary_care_outcomes(threshold_date):
             "epilepsy": codelists.epilepsy_icd10,
             "hf": codelists.hf_icd10,
             "hypothyroid": codelists.hypothyroid_icd10,
+            "obese": codelists.obese_icd10,
             "osteoporosis": codelists.osteoporosis_icd10,
             "pad": codelists.pad_icd10,
             "ra": codelists.ra_icd10,
@@ -212,8 +213,6 @@ def secondary_care_outcomes(threshold_date):
 
     dataset.stroke_hosp_first_date_after = first_hosp_event_after(threshold_date, codelists.stroke_icd10).admission_date
     dataset.tia_hosp_first_date_after = first_hosp_event_after(threshold_date, codelists.tia_icd10).admission_date
-
-    dataset.stroke_hosp_first_date_after = first_hosp_event_after(threshold_date, codelists.shingles_icd10).admission_date
 
     return dataset
 

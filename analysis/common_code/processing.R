@@ -5,15 +5,14 @@ library(fs)
 library(here)
 library(lubridate)
 
-
 source(here::here("analysis", "common_code", "utility.R"))
 
 processing <- function(threshold_date, index_date, vaccine_name, analysis) {
   
   conditions <- c("dementia", "alzheimers", "vascular",
-    "asthma", "afib", "chd", "ckd",
-    "copd", "depression", "t2dm", "epilepsy", "hf", "hypothyroid",
-    "smi", "obese", "osteoporosis", "pad", "ra"
+    "asthma", "afib", "chd", "ckd", "copd", "depression", 
+    "t2dm", "epilepsy", "hf", "hypothyroid",
+    "smi", "osteoporosis", "pad", "ra", "obese"
   )
 
   df <- read_feather(
@@ -103,6 +102,16 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
       neuralgia_last_date_before = pmax(
         neuralgia_gp_last_date_before,
         neuralgia_hosp_last_date_before,
+        na.rm = TRUE
+      ),
+      stroke_first_date_after = pmin(
+        stroke_gp_first_date_after,
+        stroke_hosp_first_date_after,
+        na.rm = TRUE
+      ),
+      tia_first_date_after = pmin(
+        tia_gp_first_date_after,
+        tia_hosp_first_date_after,
         na.rm = TRUE
       ),
 
