@@ -165,7 +165,7 @@ dag <- empty_dag() +
   node("stroke_last_date_before", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = threshold_date)) +
   node("tia_last_date_before", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = threshold_date)) +
   node("stroke_first_date_after", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = threshold_date, max_date = latest_date)) +
-  node("tia_first_date_after", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = threshold_date, max_date = latest_date)) +
+  node("tia_first_date_after", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = threshold_date, max_date = latest_date)) 
 
 ## simulate from DAG ----
 
