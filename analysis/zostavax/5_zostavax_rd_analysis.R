@@ -101,25 +101,25 @@ for (i in seq_len(nrow(analyses))) {
     df_excl <- df_population |>
       filter(
         case_when(
-          outcome == "asthma_gp_first_date_ever" ~ asthma_before_threshold == 0,
-          outcome == "afib_gp_first_date_ever" ~ afib_before_threshold == 0,
-          outcome == "chd_gp_first_date_ever" ~ chd_before_threshold == 0,
-          outcome == "ckd_gp_first_date_ever" ~ ckd_before_threshold == 0,
-          outcome == "copd_gp_first_date_ever" ~ copd_before_threshold == 0,
-          outcome == "depression_gp_first_date_ever" ~
+          outcome == "asthma_first_date_ever" ~ asthma_before_threshold == 0,
+          outcome == "afib_first_date_ever" ~ afib_before_threshold == 0,
+          outcome == "chd_first_date_ever" ~ chd_before_threshold == 0,
+          outcome == "ckd_first_date_ever" ~ ckd_before_threshold == 0,
+          outcome == "copd_first_date_ever" ~ copd_before_threshold == 0,
+          outcome == "depression_first_date_ever" ~
             depression_before_threshold == 0,
-          outcome == "t2dm_gp_first_date_ever" ~ t2dm_before_threshold == 0,
-          outcome == "epilepsy_gp_first_date_ever" ~
+          outcome == "t2dm_first_date_ever" ~ t2dm_before_threshold == 0,
+          outcome == "epilepsy_first_date_ever" ~
             epilepsy_before_threshold == 0,
-          outcome == "hf_gp_first_date_ever" ~ hf_before_threshold == 0,
-          outcome == "hypothyroid_gp_first_date_ever" ~
+          outcome == "hf_first_date_ever" ~ hf_before_threshold == 0,
+          outcome == "hypothyroid_first_date_ever" ~
             hypothyroid_before_threshold == 0,
-          outcome == "osteoporosis_gp_first_date_ever" ~
+          outcome == "osteoporosis_first_date_ever" ~
             osteoporosis_before_threshold == 0,
-          outcome == "pad_gp_first_date_ever" ~ pad_before_threshold == 0,
-          outcome == "ra_gp_first_date_ever" ~ ra_before_threshold == 0,
-          outcome == "smi_gp_first_date_ever" ~ smi_before_threshold == 0,
-          outcome == "obese_gp_first_date_ever" ~ obese_before_threshold == 0,
+          outcome == "pad_first_date_ever" ~ pad_before_threshold == 0,
+          outcome == "ra_first_date_ever" ~ ra_before_threshold == 0,
+          outcome == "smi_first_date_ever" ~ smi_before_threshold == 0,
+          outcome == "obese_first_date_ever" ~ obese_before_threshold == 0,
     #      outcome == "stroke_gp_first_date_after" ~
     #       stroke_before_threshold == 0,
     #    outcome == "tia_gp_first_date_after" ~ tia_before_threshold == 0,
