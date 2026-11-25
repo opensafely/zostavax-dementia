@@ -8,7 +8,7 @@ library("here")
 data_ehrql <- read_feather(here("output/zostavax/dataset_zostavax_main.arrow"))
 
 # select cohort size
-N <- 500000
+N <- 50000
 
 # bandwidth_size
 bandwidth_days <- 365*3
@@ -139,56 +139,33 @@ dag <- empty_dag() +
   node("shvacgp_first_date_after", type="identity", formula = ~ if_else(shvacgp_first_date_ever >= threshold_date, shvacgp_first_date_ever, as.Date(NA))) +
   
   # health status and health care
-  node("asthma_gp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("afib_gp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("chd_gp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("ckd_gp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("copd_gp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("depression_gp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("t2dm_gp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("epilepsy_gp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("hf_gp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("hypothyroid_gp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("osteoporosis_gp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("pad_gp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("ra_gp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("smi_gp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("obese_gp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("lrti_gp_last_date_before", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = threshold_date)) +
-  node("smoker_gp_last_date_before", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = threshold_date)) +
-  node("past_smoker_gp_last_date_before", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = threshold_date)) +
+  node("asthma_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
+  node("afib_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
+  node("chd_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
+  node("ckd_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
+  node("copd_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
+  node("depression_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
+  node("t2dm_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
+  node("epilepsy_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
+  node("hf_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
+  node("hypothyroid_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
+  node("osteoporosis_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
+  node("pad_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
+  node("ra_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
+  node("smi_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
+  node("obese_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
+  node("lrti_last_date_before", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = threshold_date)) +
+  node("smoker_last_date_before", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = threshold_date)) +
+  node("past_smoker_last_date_before", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = threshold_date)) +
   node("antihypertensives_rx_last_date_before", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = threshold_date)) +
   node("statins_rx_last_date_before", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = threshold_date)) +
   node("fluvax_last_date_before", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = threshold_date)) +
   node("pneumovax_last_date_before", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = threshold_date)) +
   node("cognitive_impair_gp_last_date_before", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = threshold_date)) +
-  node("stroke_gp_last_date_before", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = threshold_date)) +
-  node("tia_gp_last_date_before", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = threshold_date)) +
-  node("stroke_gp_first_date_after", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = threshold_date, max_date = latest_date)) +
-  node("tia_gp_first_date_after", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = threshold_date, max_date = latest_date))
-
-  node("asthma_hosp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("afib_hosp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("chd_hosp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("ckd_hosp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("copd_hosp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("depression_hosp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("t2dm_hosp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("epilepsy_hosp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("hf_hosp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("hypothyroid_hosp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("osteoporosis_hosp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("pad_hosp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("ra_hosp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("smi_hosp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-  node("obese_hosp_first_date_ever", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = latest_date)) +
-
-  node("stroke_hosp_last_date_before", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = threshold_date)) +
-  node("tia_hosp_last_date_before", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = threshold_date)) +
-  node("stroke_hosp_first_date_after", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = threshold_date, max_date = latest_date)) +
-  node("tia_hosp_first_date_after", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = threshold_date, max_date = latest_date))
-
-
+  node("stroke_last_date_before", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = threshold_date)) +
+  node("tia_last_date_before", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = date_of_birth + years(60), max_date = threshold_date)) +
+  node("stroke_first_date_after", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = threshold_date, max_date = latest_date)) +
+  node("tia_first_date_after", type="identity", formula = ~ runif_censored_date(n = N, observed_rate = 0.1, min_date = threshold_date, max_date = latest_date)) +
 
 ## simulate from DAG ----
 
