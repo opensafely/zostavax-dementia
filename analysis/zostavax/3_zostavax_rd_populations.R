@@ -187,7 +187,17 @@ df_analysis <- df_population |>
     smi_before_threshold,
     obese_before_threshold,
     stroke_before_threshold,
-    tia_before_threshold
+    tia_before_threshold,
+
+    # Additional pre-baseline balance characteristics
+    shingles_gp_last_date_before,
+    lrti_gp_last_date_before,
+    smoker_gp_last_date_before,
+    past_smoker_gp_last_date_before,
+    cognitive_impair_gp_last_date_before,
+    stroke_gp_last_date_before,
+    tia_gp_last_date_before,
+    neuralgia_gp_last_date_before
   )
 
 # Save ----

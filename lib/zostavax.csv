@@ -132,6 +132,7 @@ alt_outcome,general,1,2013,,triangular,1,date_of_death_gp
 alt_outcome,general,1,2013,,triangular,1,neuralgia_gp_first_date_after
 alt_outcome,general,1,2013,,triangular,1,shingles_gp_first_date_after
 pre_outcome,general,1,2013,0,triangular,1,shingles_gp_last_date_before
+pre_outcome,general,1,2013,0,triangular,1,asthma_gp_first_date_ever
 pre_outcome,general,1,2013,0,triangular,1,afib_gp_first_date_ever
 pre_outcome,general,1,2013,0,triangular,1,chd_gp_first_date_ever
 pre_outcome,general,1,2013,0,triangular,1,ckd_gp_first_date_ever
@@ -144,6 +145,7 @@ pre_outcome,general,1,2013,0,triangular,1,hypothyroid_gp_first_date_ever
 pre_outcome,general,1,2013,0,triangular,1,osteoporosis_gp_first_date_ever
 pre_outcome,general,1,2013,0,triangular,1,pad_gp_first_date_ever
 pre_outcome,general,1,2013,0,triangular,1,ra_gp_first_date_ever
+pre_outcome,general,1,2013,0,triangular,1,smi_gp_first_date_ever
 pre_outcome,general,1,2013,0,triangular,1,obese_gp_first_date_ever
 pre_outcome,general,1,2013,0,triangular,1,lrti_gp_last_date_before
 pre_outcome,general,1,2013,0,triangular,1,smoker_gp_last_date_before
