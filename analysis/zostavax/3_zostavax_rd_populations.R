@@ -32,10 +32,13 @@ assert_choice(
 vaccine_name <- "zostavax"
 analysis <- "main"
 lcd <- as.Date("2025-09-02")
-if (analysis == "main") {
-  index_date <- as.Date("2013-09-01")
+if (analysis %in% c("main", "index_sens")) {
   dob_threshold_date <- as.Date("1933-09-01")
-}
+} else if (analysis == "2010") {
+  dob_threshold_date <- as.Date("1930-09-01")
+} else if (analysis == "2016") {
+  dob_threshold_date <- as.Date("1936-09-01")
+} 
 
 # Create output directory ----
 output_dir <- here("output", vaccine_name, "populations")
