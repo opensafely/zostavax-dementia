@@ -38,15 +38,6 @@ actions:
       highly_sensitive:
         data: output/zostavax/dataset_zostavax_2016.arrow
 
-  generate_dataset_zostavax_index_sens:
-    run: ehrql:v1 generate-dataset analysis/dataset_definition.py --output output/zostavax/dataset_zostavax_index_sens.arrow
-      --dummy-data-file analysis/dummy_data/dummy_dataset_zostavax.arrow -- --threshold_date
-      2013-09-01 --min_dob 1920-09-01 --max_dob 1948-09-01
-      --vaccine_name zostavax
-    outputs:
-      highly_sensitive:
-        data: output/zostavax/dataset_zostavax_index_sens.arrow
-
   ## Process dataset 
 
   process_zostavax:
@@ -55,7 +46,6 @@ actions:
     - generate_dataset_zostavax_main 
     - generate_dataset_zostavax_2010
     - generate_dataset_zostavax_2016
-    - generate_dataset_zostavax_index_sens
     outputs:
       highly_sensitive:
         processed_data: output/zostavax/processed/dataset_processed_zostavax_*.arrow
