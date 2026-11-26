@@ -22,7 +22,7 @@ df_processed_index_sens <- processing(
   as.Date("2013-09-01"),
   as.Date("2014-09-01"),
   "zostavax",
-  "index_sens"
+  "main"
 )
 
 df_processed_2010 <- processing(
