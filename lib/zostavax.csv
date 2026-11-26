@@ -17,7 +17,7 @@ alt_outcome,general,1,2013,,triangular,1,asthma_first_date_ever
 alt_outcome,general,1,2013,,triangular,1,chd_first_date_ever
 alt_outcome,general,1,2013,,triangular,1,ckd_first_date_ever
 alt_outcome,general,1,2013,,triangular,1,copd_first_date_ever
-alt_outcome,general,1,2013,,triangular,1,dementia_charlson_first_date_ever
+alt_outcome,general,1,2013,,triangular,1,dementia_charlson_gp_first_date_ever
 alt_outcome,general,1,2013,,triangular,1,dementia_first_date_ever
 alt_outcome,general,1,2013,,triangular,1,depression_first_date_ever
 alt_outcome,general,1,2013,,triangular,1,epilepsy_first_date_ever
