@@ -55,6 +55,7 @@ assert_choice(
     "alt_kernel",
     "alt_msebw",
     "alt_polynomial",
+    "alt_index",
     "annual_fup",
     "reduced_excl",
     "fixed_bw_aged78_81",
@@ -146,10 +147,11 @@ for (i in seq_len(nrow(analyses))) {
     format = "%d-%m-%Y"
   )
 
-  index <- as.Date(
-    paste0("01-02-", analyses$threshold_year[i] + 1),
-    format = "%d-%m-%Y"
-  ) 
+  index <- if (analysis == "index_sens") {
+      as.Date("2014-09-01")
+    } else {
+      as.Date(paste0("01-02-", analyses$threshold_year[i] + 1))
+    }
 
   ## Define end date ----
   if (!is.na(analyses$end_date_years[i])) {

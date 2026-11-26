@@ -22,7 +22,7 @@ actions:
     run: ehrql:v1 generate-dataset analysis/dataset_definition.py --output output/zostavax/dataset_zostavax_2010.arrow
       --dummy-data-file analysis/dummy_data/dummy_dataset_zostavax.arrow 
       --
-      --threshold_date 2010-09-01 --min_dob 1920-09-01 --max_dob 1948-09-01
+      --threshold_date 2010-09-01 --min_dob 1917-09-01 --max_dob 1945-09-01
       --vaccine_name zostavax
     outputs:
       highly_sensitive:
@@ -32,7 +32,7 @@ actions:
     run: ehrql:v1 generate-dataset analysis/dataset_definition.py --output output/zostavax/dataset_zostavax_2016.arrow
       --dummy-data-file analysis/dummy_data/dummy_dataset_zostavax.arrow 
       --
-      --threshold_date 2016-09-01 --min_dob 1920-09-01 --max_dob 1948-09-01
+      --threshold_date 2016-09-01 --min_dob 1923-09-01 --max_dob 1951-09-01
       --vaccine_name zostavax
     outputs:
       highly_sensitive:
@@ -72,6 +72,16 @@ actions:
         csv: output/zostavax/descriptives/main/*.csv
         png: output/zostavax/descriptives/main/*.png
   
+  descriptive_analysis_zostavax_index_sens:
+    run: r:v2 analysis/zostavax/2_zostavax_descriptives.R index_sens
+    needs:
+    - process_zostavax
+    outputs:
+      moderately_sensitive:
+        txt: output/zostavax/descriptives/index_sens/*.txt
+        csv: output/zostavax/descriptives/index_sens/*.csv
+        png: output/zostavax/descriptives/index_sens/*.png
+
   descriptive_analysis_zostavax_2010:
     run: r:v2 analysis/zostavax/2_zostavax_descriptives.R 2010
     needs:

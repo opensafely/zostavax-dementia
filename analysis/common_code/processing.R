@@ -5,7 +5,7 @@ library(fs)
 library(here)
 library(lubridate)
 
-processing <- function(threshold_date, index_date, vaccine_name, analysis) {
+processing <- function(threshold_date, index_date, vaccine_name, cohort, analysis) {
   
   control_conditions <- c(
     "asthma", "afib", "chd", "ckd",
@@ -20,7 +20,8 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
   )
   
   df <- read_feather(
-    here::here("output", vaccine_name, paste0("dataset_",vaccine_name,"_",analysis,".arrow"))
+    here::here("output", vaccine_name, 
+    paste0("dataset_",vaccine_name,"_",cohort,".arrow"))
     )
   
   processed_df <- df %>%
@@ -34,6 +35,7 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
         as.Date("1934-09-01")
       ) |
         between(date_of_birth, as.Date("1942-09-02"), as.Date("1943-09-01")),
+
       zostavax_eligibility_20140901 = between(
         date_of_birth,
         as.Date("1934-09-02"),
@@ -62,6 +64,8 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
           as.Date("1942-09-02") + years(3),
           as.Date("1943-09-01") + years(3)
         ),
+
+      zostavax_eligibility_index_sens = zostavax_eligibility_main,
 
       # Earliest date of outcomes
       dementia_first_date_ever = pmin(
@@ -151,8 +155,14 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
       ),
 
       # Died / deregistered between threshold and index date
-      exclude_died = coalesce(!is.na(date_of_death) & (date_of_death <= index_date), FALSE),
-      exclude_deregister = coalesce(!is.na(reg_end_date) & (reg_end_date <= index_date), FALSE),
+      exclude_died = coalesce(
+        !is.na(date_of_death) 
+        & (date_of_death <= index_date), 
+        FALSE),
+      exclude_deregister = coalesce(
+        !is.na(reg_end_date) 
+        & (reg_end_date <= index_date), 
+        FALSE),
 
       # Flag for exclusions common to all analyses
       common_exclusions_w_dementia = coalesce(
@@ -200,6 +210,7 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
           !exclude_deregister,
         FALSE
       ),
+      
       # Control conditions before threshold
       across(
         all_of(control_date_cols),
