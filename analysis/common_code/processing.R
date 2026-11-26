@@ -116,7 +116,10 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
 
       # Missing data
       exclude_not_mf_sex = coalesce(!sex %in% c("male", "female"), FALSE),
-      exclude_missing_imd = coalesce(imd_quintile == "unknown" | is.na(imd_quintile), FALSE),
+      exclude_missing_imd = coalesce(
+        imd_quintile == "unknown" | is.na(imd_quintile),
+        FALSE
+      ),
       exclude_missing_region = coalesce(is.na(region), FALSE),
 
       # Previous immunosuppression / vaccination
@@ -124,21 +127,21 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
       exclude_past_vax = coalesce(
         zostavax_date_1 < threshold_date |
           shingrix_date_1 < threshold_date |
-            shvacgp_first_date_ever < threshold_date,
+          shvacgp_first_date_ever < threshold_date,
         FALSE
       ),
 
       # Outcomes before threshold
       dementia_exclude_before_threshold = coalesce(
         dementia_exclude_first_date_ever <= threshold_date |
-        dementia_hosp_first_date_ever <= threshold_date,
+          dementia_hosp_first_date_ever <= threshold_date,
         FALSE
       ),
       dementia_exclude_bw_threshold_index = coalesce(
-        (dementia_exclude_first_date_ever > threshold_date & 
+        (dementia_exclude_first_date_ever > threshold_date &
           dementia_exclude_first_date_ever <= index_date) |
-        (dementia_hosp_first_date_ever > threshold_date &
-          dementia_hosp_first_date_ever <= index_date),
+          (dementia_hosp_first_date_ever > threshold_date &
+            dementia_hosp_first_date_ever <= index_date),
         FALSE
       ),
       shingles_before_threshold = coalesce(
@@ -151,8 +154,14 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
       ),
 
       # Died / deregistered between threshold and index date
-      exclude_died = coalesce(!is.na(date_of_death) & (date_of_death <= index_date), FALSE),
-      exclude_deregister = coalesce(!is.na(reg_end_date) & (reg_end_date <= index_date), FALSE),
+      exclude_died = coalesce(
+        !is.na(date_of_death) & (date_of_death <= index_date),
+        FALSE
+      ),
+      exclude_deregister = coalesce(
+        !is.na(reg_end_date) & (reg_end_date <= index_date),
+        FALSE
+      ),
 
       # Flag for exclusions common to all analyses
       common_exclusions_w_dementia = coalesce(
@@ -176,7 +185,7 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
           exclude_not_mf_sex |
           exclude_past_vax |
           exclude_deregister |
-          exclude_died, 
+          exclude_died,
         FALSE
       ),
       no_common_exclusions = coalesce(
@@ -193,7 +202,7 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
         FALSE
       ),
       no_exclusions_control = coalesce(
-          !exclude_not_mf_sex &
+        !exclude_not_mf_sex &
           !exclude_missing_imd &
           !exclude_missing_region &
           !exclude_died &
@@ -257,7 +266,6 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
         statins_rx_last_date_before,
         fluvax_last_date_before,
         pneumovax_last_date_before,
-        shingles_gp_last_date_before,
         alzheimers_gp_first_date_ever,
         vascular_gp_first_date_ever,
         alzheimers_hosp_first_date_ever,
@@ -271,13 +279,7 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
         dementia_ons_date,
         alzheimers_ons_date,
         vascular_ons_date,
-        lrti_gp_last_date_before,
-        smoker_gp_last_date_before,
-        past_smoker_gp_last_date_before,
-        cognitive_impair_gp_last_date_before,
-        dementia_exclude_first_date_ever,
-        stroke_gp_last_date_before,
-        tia_gp_last_date_before
+        dementia_exclude_first_date_ever
       )
     )
 
