@@ -9,7 +9,11 @@ library(dplyr)
 # Specify analysis components ----
 vaccine_name <- "zostavax"
 threshold_date <- "2013-09-01"
+threshold_date_minus3 <- "2010-09-01"
+threshold_date_plus3 <- "2016-09-01"
 index_date <- "2014-02-01"
+index_date_minus3 <- "2011-02-01"
+index_date_plus3 <- "2017-02-01"
 min_dob <- "1920-09-01"
 max_dob <- "1948-09-01"
 
@@ -97,7 +101,7 @@ make_population <- function(vax, population) {
     action(
       name = glue("rd_populations_{population}"),
       run = glue(
-        "r:v2 analysis/{vaccine_name}/3_{vaccine_name}_rd_populations.R {population}"
+        "r:v3 analysis/{vaccine_name}/3_{vaccine_name}_rd_populations.R {population}"
       ),
       needs = list(glue("process_{vaccine_name}")),
       highly_sensitive = list(
@@ -119,7 +123,7 @@ run_rd_analysis <- function(vax, population_analysis_group) {
         "rd_analysis_{analysis_group}"
       ),
       run = glue(
-        "r:v2 analysis/{vaccine_name}/5_{vaccine_name}_rd_analysis.R {population} {analysis_group}"
+        "r:v3 analysis/{vaccine_name}/5_{vaccine_name}_rd_analysis.R {population} {analysis_group}"
       ),
       needs = list(
         glue("rd_populations_{population}"),
@@ -148,15 +152,35 @@ actions_list <- splice(
     "# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #"
   ),
 
-  comment("Generate dataset"),
+  comment("Generate datasets"),
 
   action(
     name = glue("generate_dataset_{vaccine_name}_main"),
     run = glue(
-      "ehrql:v1 generate-dataset analysis/dataset_definition.py --output output/{vaccine_name}/dataset_{vaccine_name}_main.arrow --dummy-data-file analysis/dummy_data/dummy_dataset_{vaccine_name}.arrow -- --threshold_date {threshold_date} --index_date {index_date} --min_dob {min_dob} --max_dob {max_dob} --vaccine_name {vaccine_name}"
+      "ehrql:v1 generate-dataset analysis/dataset_definition.py --output output/{vaccine_name}/dataset_{vaccine_name}_main.arrow --dummy-data-file analysis/dummy_data/dummy_dataset_{vaccine_name}.arrow -- --threshold_date {threshold_date} --min_dob {min_dob} --max_dob {max_dob} --vaccine_name {vaccine_name}"
     ),
     highly_sensitive = list(
       data = glue("output/{vaccine_name}/dataset_{vaccine_name}_main.arrow")
+    )
+  ),
+
+  action(
+    name = glue("generate_dataset_{vaccine_name}_2010"),
+    run = glue(
+      "ehrql:v1 generate-dataset analysis/dataset_definition.py --output output/{vaccine_name}/dataset_{vaccine_name}_2010.arrow --dummy-data-file analysis/dummy_data/dummy_dataset_{vaccine_name}.arrow -- --threshold_date {threshold_date_minus3} --min_dob {min_dob} --max_dob {max_dob} --vaccine_name {vaccine_name}"
+    ),
+    highly_sensitive = list(
+      data = glue("output/{vaccine_name}/dataset_{vaccine_name}_2010.arrow")
+    )
+  ),
+
+  action(
+    name = glue("generate_dataset_{vaccine_name}_2016"),
+    run = glue(
+      "ehrql:v1 generate-dataset analysis/dataset_definition.py --output output/{vaccine_name}/dataset_{vaccine_name}_2016.arrow --dummy-data-file analysis/dummy_data/dummy_dataset_{vaccine_name}.arrow -- --threshold_date {threshold_date_plus3} --min_dob {min_dob} --max_dob {max_dob} --vaccine_name {vaccine_name}"
+    ),
+    highly_sensitive = list(
+      data = glue("output/{vaccine_name}/dataset_{vaccine_name}_2016.arrow")
     )
   ),
 
@@ -164,11 +188,15 @@ actions_list <- splice(
 
   action(
     name = glue("process_{vaccine_name}"),
-    run = glue("r:v2 analysis/{vaccine_name}/0_{vaccine_name}_processing.R"),
-    needs = list(glue("generate_dataset_{vaccine_name}_main")),
+    run = glue("r:v3 analysis/{vaccine_name}/0_{vaccine_name}_processing.R"),
+    needs = list(
+      glue("generate_dataset_{vaccine_name}_main"),
+      glue("generate_dataset_{vaccine_name}_2010"),
+      glue("generate_dataset_{vaccine_name}_2016")
+    ),
     highly_sensitive = list(
       processed_data = glue(
-        "output/{vaccine_name}/processed/dataset_processed_{vaccine_name}_main.arrow"
+        "output/{vaccine_name}/processed/dataset_processed_{vaccine_name}_*.arrow"
       )
     )
   ),
@@ -177,11 +205,11 @@ actions_list <- splice(
 
   action(
     name = glue("flow_chart_{vaccine_name}"),
-    run = glue("r:v2 analysis/{vaccine_name}/1_{vaccine_name}_flow_chart.R"),
+    run = glue("r:v3 analysis/{vaccine_name}/1_{vaccine_name}_flow_chart.R"),
     needs = list(glue("process_{vaccine_name}")),
     moderately_sensitive = list(
       flow_chart = glue(
-        "output/{vaccine_name}/processed/flow_chart_{vaccine_name}_main.csv"
+        "output/{vaccine_name}/processed/flow_chart_{vaccine_name}_*.csv"
       )
     )
   ),
@@ -189,13 +217,41 @@ actions_list <- splice(
   comment("Descriptives"),
 
   action(
-    name = glue("descriptives_{vaccine_name}"),
-    run = glue("r:v2 analysis/{vaccine_name}/2_{vaccine_name}_descriptives.R"),
+    name = glue("descriptive_analysis_{vaccine_name}_main"),
+    run = glue(
+      "r:v3 analysis/{vaccine_name}/2_{vaccine_name}_descriptives.R main"
+    ),
     needs = list(glue("process_{vaccine_name}")),
     moderately_sensitive = list(
       txt = glue("output/{vaccine_name}/descriptives/main/*.txt"),
       csv = glue("output/{vaccine_name}/descriptives/main/*.csv"),
       png = glue("output/{vaccine_name}/descriptives/main/*.png")
+    )
+  ),
+
+  action(
+    name = glue("descriptive_analysis_{vaccine_name}_2010"),
+    run = glue(
+      "r:v3 analysis/{vaccine_name}/2_{vaccine_name}_descriptives.R 2010"
+    ),
+    needs = list(glue("process_{vaccine_name}")),
+    moderately_sensitive = list(
+      txt = glue("output/{vaccine_name}/descriptives/2010/*.txt"),
+      csv = glue("output/{vaccine_name}/descriptives/2010/*.csv"),
+      png = glue("output/{vaccine_name}/descriptives/2010/*.png")
+    )
+  ),
+
+  action(
+    name = glue("descriptive_analysis_{vaccine_name}_2016"),
+    run = glue(
+      "r:v3 analysis/{vaccine_name}/2_{vaccine_name}_descriptives.R 2016"
+    ),
+    needs = list(glue("process_{vaccine_name}")),
+    moderately_sensitive = list(
+      txt = glue("output/{vaccine_name}/descriptives/2016/*.txt"),
+      csv = glue("output/{vaccine_name}/descriptives/2016/*.csv"),
+      png = glue("output/{vaccine_name}/descriptives/2016/*.png")
     )
   ),
 
@@ -220,7 +276,7 @@ actions_list <- splice(
 
   action(
     name = glue("rd_msebw_{vaccine_name}"),
-    run = glue("r:v2 analysis/{vaccine_name}/4_{vaccine_name}_rd_msebw.R"),
+    run = glue("r:v3 analysis/{vaccine_name}/4_{vaccine_name}_rd_msebw.R"),
     needs = list("rd_populations_general"),
     moderately_sensitive = list(
       msebw = glue("output/{vaccine_name}/setup/rd_msebw.csv")
@@ -248,7 +304,7 @@ actions_list <- splice(
 
   action(
     name = glue("rd_output_{vaccine_name}"),
-    run = glue("r:v2 analysis/{vaccine_name}/6_{vaccine_name}_rd_output.R"),
+    run = glue("r:v3 analysis/{vaccine_name}/6_{vaccine_name}_rd_output.R"),
     needs = as.list(paste0("rd_analysis_", analysis_groups)),
     moderately_sensitive = list(
       output = glue("output/{vaccine_name}/output/rd_results.csv"),

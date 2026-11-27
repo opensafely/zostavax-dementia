@@ -1,91 +1,186 @@
-library("gtsummary")
+
+## Function to create a tibble that summarises a single vector ----
+## this is later used in the table1_summary function
+
+summarise_vector <- function(x, x_class = c("continuous", "cateogrical")) {
+  # get Ns for total observations, and total missing and non-missing
+  counts_overall <-
+    tibble(
+      N_obs = length(x),
+      N_nonmiss = sum(!is.na(x)),
+      N_miss = sum(is.na(x))
+    )
+
+  if (x_class == "categorical") {
+    # get all possible values for categorical variable
+    if (is.factor(x)) {
+      levels <- levels(x)
+    } else if (is.logical(x)) {
+      levels <- c("FALSE", "TRUE")
+    } else {
+      levels <- sort(unique(as.character(x[!is.na(x)])))
+    }
+
+    # add NA values if any are present
+    if (any(is.na(x))) {
+      levels <- c(levels, NA_character_)
+    }
+
+    # count frequency of each value
+    counts <-
+      tibble(
+        variable_level = as.character(x)
+      ) |>
+      count(variable_level, name = "n")
+
+    # combine all
+    summary <-
+      # one row per possible value (including those not represented)
+      tibble(variable_level = levels) |>
+      # add counts
+      left_join(counts, by = "variable_level") |>
+      # add overall counts
+      bind_cols(counts_overall) |>
+      mutate(
+        n = coalesce(n, 0L),
+        prop_nonmiss = if_else(!is.na(variable_level), n / N_nonmiss, NA_real_),
+        prop_obs = n / N_obs
+      )
+  }
+
+  if (x_class == "continuous") {
+    x <- x[!is.na(x)]
+
+    summary <-
+      tibble(
+        variable_level = NA_character_,
+        mean = mean(x),
+        sd = sd(x),
+        median = median(x),
+        # use type=1 as it plays nicely with dates
+        p10 = unname(quantile(x, .10, type = 1)),
+        p25 = unname(quantile(x, .25, type = 1)),
+        p75 = unname(quantile(x, .75, type = 1)),
+        p90 = unname(quantile(x, .90, type = 1))
+      ) |>
+      # add overall counts
+      bind_cols(counts_overall)
+  }
+
+  if (x_class == "unsupported") {
+    summary <-
+      counts_overall |>
+      mutate(
+        variable_level = NA_character_
+      )
+  }
+
+  summary |>
+    # reorder columns
+    select(
+      variable_level,
+      N_obs,
+      N_nonmiss,
+      N_miss,
+      everything()
+    )
+}
+
+
 
 ## Create table1-style summary of characteristics, with SDC applied ----
 
-table1_summary <- function(.data, group, label, threshold) {
+table1_summary <- function(
+  data,
+  .by,
+  variables,
+  rounding.function
+) {
+  # find out what class each variable is
+  variable_class_lookup <-
+    data |>
+    select(any_of(variables)) |>
+    (\(df) {
+      tibble(
+        variable = names(df),
+        logical = map_lgl(df, is.logical),
+        factor = map_lgl(df, is.factor),
+        character = map_lgl(df, is.character),
+        integer = map_lgl(df, is.integer),
+        numeric = map_lgl(df, is.numeric),
+        Date = map_lgl(df, is.Date),
+      ) |>
+        mutate(
+          categorical = logical | factor | character,
+          continuous = integer | numeric,
+          cat_or_cont = case_when(
+            categorical ~ "categorical",
+            continuous ~ "continuous",
+            .default = "unsupported"
+          ),
+          variable_class = case_when(
+            logical ~ "logical",
+            factor ~ "factor",
+            character ~ "character",
+            integer ~ "integer",
+            numeric ~ "numeric",
+            Date ~ "Date",
+            .default = ""
+          )
+        )
+    })()
 
-  ## this function is highly dependent on the structure of tbl_summary object internals!
-  ## be careful if this package is updated
+  # should we use cateogrical or continuous summaries
+  cat_or_cont <- variable_class_lookup |> pull(cat_or_cont)
 
-  group_quo <- enquo(group)
-
-  ## create a table of baseline characteristics between each treatment group
-  tab_summary <-
-    .data |>
-    select(
-      !!group_quo,
-      any_of(names(label)),
-    ) %>%
-    gtsummary::tbl_summary(
-      by = !!group_quo,
-      label = label[names(label) %in% names(.)],
-      statistic = list(
-        # N ~ "{N}",
-        all_categorical() ~ "{n} ({p}%)",
-        all_continuous() ~ "{mean} ({sd}); ({p10}, {p25}, {median}, {p75}, {p90})"
-      )
+  # loop through all selected variables in the dataset and summarise each one
+  summary_unredacted <-
+    data |>
+    dplyr::group_by({{ .by }}) |>
+    dplyr::group_map(
+      \(group_data, group_keys) {
+        # apply summarise_vector function to each column, for each selected group separately
+        map2(
+          group_data[variables],
+          cat_or_cont,
+          ~ summarise_vector(x = .x, x_class = .y)
+        ) |>
+          # combine the list into a single tibble
+          list_rbind(names_to = "variable") |>
+          mutate(group_keys, .before = 1)
+      },
+      .keep = TRUE
+    ) |>
+    # combine across groups
+    list_rbind() |>
+    # add variable class
+    left_join(
+      variable_class_lookup |> select(variable, variable_class),
+      by = "variable"
     )
 
-  ## extract structured info from tbl_summary object to apply SDC to the counts
-  raw_stats <-
-    tab_summary$cards$tbl_summary |>
-    mutate(
-      variable = factor(variable, levels = names(label)),
-      variable_label = factor(variable, levels = names(label),  labels = label),
-    ) |>
-    filter(!(context %in% c("missing", "attributes", "total_n"))) |>
-    select(-warning, -error, -gts_column) |>
-    pivot_wider(
-      id_cols = c("group1", "group1_level", "variable", "variable_label", "variable_level", "context"),
-      names_from = stat_name,
-      values_from = stat
-    ) |>
-    mutate(
-      across(
-        c(n, N),
-        ~ {
-          map_int(., ~ {
-            if (is.null(.)) NA else as.integer(.)
-          })
-        }
-      ),
-      across(
-        c(p, median, p10, p25, p75, p90, mean, sd),
-        ~ {
-          map_dbl(., ~ {
-            if (is.null(.)) NA else as.numeric(.)
-          })
-        }
-      ),
-      across(
-        c(group1_level, variable_level),
-        ~ {
-          map_chr(., ~ {
-            if (is.null(.)) NA else as.character(.)
-          })
-        }
-      ),
-    ) |>
-    arrange(variable_label, group1, group1_level)
-
-  raw_stats_redacted <-
-    raw_stats |>
-    mutate(
-      n = sdc.rounding(n, threshold),
-      N = sdc.rounding(N, threshold),
-      p = n / N,
-      mean = if_else(n == 0, NA_real_, mean),
-      sd = if_else(n == 0, NA_real_, sd),
-      p10 = if_else(n == 0, NA_real_, p10),
-      p25 = if_else(n == 0, NA_real_, p25),
-      median =  if_else(n == 0, NA_real_, median),
-      p75 = if_else(n == 0, NA_real_, p75),
-      p90 = if_else(n == 0, NA_real_, p90),
-    ) 
-
-  return(raw_stats_redacted)
+  # apply disclosure control if a rounding function is supplied
+  if (!missing(rounding.function)) {
+    summary_unredacted |>
+      mutate(
+        N_obs = rounding.function(N_obs),
+        N_nonmiss = rounding.function(N_nonmiss),
+        N_miss = rounding.function(N_miss),
+        n = rounding.function(n),
+        prop_nonmiss = n / N_nonmiss,
+        prop_obs = n / N_obs,
+        mean = if_else(N_nonmiss == 0, NA_real_, mean),
+        sd = if_else(N_nonmiss == 0, NA_real_, sd),
+        p10 = if_else(N_nonmiss == 0, NA_real_, p10),
+        p25 = if_else(N_nonmiss == 0, NA_real_, p25),
+        median = if_else(N_nonmiss == 0, NA_real_, median),
+        p75 = if_else(N_nonmiss == 0, NA_real_, p75),
+        p90 = if_else(N_nonmiss == 0, NA_real_, p90),
+      )
+  } else {
+    summary_unredacted
+  }
 }
-
 
 
 ## get Kaplan Meier estimate for a specific time horizon quickly without dipping into survival package ----

@@ -110,53 +110,54 @@ capture.output(
 # - [name]_before_threshold - T/F columns which indicates whether an individual had the event/diagnosis before the threshold date (either ever or a set time period, depending on protocol)
 
 # look-up list for nice variable names
-variable_labels <-
-  lst(
+variable_lookup <-
+  tribble(
+    ~variable                            , ~label                                  ,
     # Total numbers
-    N = "Total N",
+    "N"                                  , "Total N"                               ,
 
     # primary exposure
-    eligibility = "Eligibility",
+    "eligibility"                        , "Eligibility"                           ,
 
     # demographics
-    age = "Age",
-    age_fct = "Age (cat)",
-    sex = "Sex",
-    ethnicity6 = "Ethnicity",
-    imd_quintile = "Deprivation (by IMD quintile)",
-    region = "Region",
-    registration_duration = "GP registration duration",
+    "age"                                , "Age"                                   ,
+    "age_fct"                            , "Age (cat)"                             ,
+    "sex"                                , "Sex"                                   ,
+    "ethnicity6"                         , "Ethnicity"                             ,
+    "imd_quintile"                       , "Deprivation (by IMD quintile)"         ,
+    "region"                             , "Region"                                ,
+    "registration_duration"              , "GP registration duration"              ,
 
     #prior outcomes
-    shingles_before_threshold = "Prior Shingles",
-    neuralgia_before_threshold = "Prior Neuralgia",
+    "shingles_before_threshold"          , "Prior Shingles"                        ,
+    "neuralgia_before_threshold"         , "Prior Neuralgia"                       ,
 
     # prior disease
-    dementia_exclude_before_threshold = "Dementia",
-    asthma_before_threshold = "Asthma",
-    afib_before_threshold = "Atrial fibrillation",
-    chd_before_threshold = "Coronary heart disease",
-    ckd_before_threshold = "Chronic kidney disease",
-    copd_before_threshold = "Chronic obstructive pulmonary disease",
-    depression_before_threshold = "Depression",
-    t2dm_before_threshold = "Type 2 diabetes",
-    epilepsy_before_threshold = "Epilepsy",
-    hf_before_threshold = "Heart Failure",
-    hypothyroid_before_threshold = "Hypothyroidism",
-    osteoporosis_before_threshold = "Osteoporosis",
-    pad_before_threshold = "peripheral artery disease",
-    ra_before_threshold = "rheumatoid arthritis",
-    stroke_before_threshold = "Stroke",
-    tia_before_threshold = "Transient ischaemic attack",
-    smi_before_threshold = "Serious mental illness",
-    obese_before_threshold = "Obesity",
-    cognitive_impair_before_threshold = "Cognitive impairment",
+    "dementia_exclude_before_threshold"  , "Dementia"                              ,
+    "asthma_before_threshold"            , "Asthma"                                ,
+    "afib_before_threshold"              , "Atrial fibrillation"                   ,
+    "chd_before_threshold"               , "Coronary heart disease"                ,
+    "ckd_before_threshold"               , "Chronic kidney disease"                ,
+    "copd_before_threshold"              , "Chronic obstructive pulmonary disease" ,
+    "depression_before_threshold"        , "Depression"                            ,
+    "t2dm_before_threshold"              , "Type 2 diabetes"                       ,
+    "epilepsy_before_threshold"          , "Epilepsy"                              ,
+    "hf_before_threshold"                , "Heart Failure"                         ,
+    "hypothyroid_before_threshold"       , "Hypothyroidism"                        ,
+    "osteoporosis_before_threshold"      , "Osteoporosis"                          ,
+    "pad_before_threshold"               , "peripheral artery disease"             ,
+    "ra_before_threshold"                , "rheumatoid arthritis"                  ,
+    "stroke_before_threshold"            , "Stroke"                                ,
+    "tia_before_threshold"               , "Transient ischaemic attack"            ,
+    "smi_before_threshold"               , "Serious mental illness"                ,
+    "obese_before_threshold"             , "Obesity"                               ,
+    "cognitive_impair_before_threshold"  , "Cognitive impairment"                  ,
 
     # prior healthcare
-    statins_before_threshold = "Statin use",
-    pneumovax_before_threshold = "Pneumococcal vaccination",
-    fluvax_before_threshold = "Influenza vaccination",
-    antihypertensives_before_threshold = "Antihypertensive use"
+    "statins_before_threshold"           , "Statin use"                            ,
+    "pneumovax_before_threshold"         , "Pneumococcal vaccination"              ,
+    "fluvax_before_threshold"            , "Influenza vaccination"                 ,
+    "antihypertensives_before_threshold" , "Antihypertensive use"
   )
 
 
@@ -167,31 +168,32 @@ variable_labels <-
 # create a table of baseline differences between exposed / not exposed
 # using existing function based on gtsummary package but which also does redaction
 
+rounding.function <- partial(sdc.rounding, threshold = sdc.threshold)
+
 table_balance <-
   df_analysis |>
   mutate(
     N = 1L,
   ) %>%
   table1_summary(
-    group = eligibility,
-    label = variable_labels,
-    threshold = sdc.threshold
-  )
-
-# reformat to wide
-table_balance_wide <-
-  table_balance |>
-  filter(!is.na(group1_level)) |>
-  pivot_wider(
-    id_cols = c(variable, variable_label, variable_level, context),
-    names_from = group1_level,
-    names_sep = "_",
-    values_from = c(n, N, p, mean, sd, p10, p25, median, p75, p90),
-    names_vary = "slowest"
+    .by = eligibility,
+    variables = variable_lookup$variable,
+    rounding.function = rounding.function
+  ) |>
+  mutate(
+    variable_label = recode_values(
+      variable,
+      from = variable_lookup$variable,
+      to = variable_lookup$label
+    ),
+    .after = variable_level,
+  ) |>
+  filter(
+    !(variable_class == "logical" & variable_level == "FALSE")
   )
 
 # save to disk
-write_csv(table_balance_wide, fs::path(output_dir, "table_balance.csv"))
+write_csv(table_balance, fs::path(output_dir, "table_balance.csv"))
 
 
 if (analysis == "main") {
@@ -205,26 +207,24 @@ if (analysis == "main") {
       N = 1L,
     ) %>%
     table1_summary(
-      group = eligibility,
-      label = variable_labels,
-      threshold = sdc.threshold
+      .by = eligibility,
+      variables = variable_lookup$variable,
+      rounding.function = rounding.function
+    ) |>
+    mutate(
+      variable_label = recode_values(
+        variable,
+        from = variable_lookup$variable,
+        to = variable_lookup$label
+      ),
+      .after = variable_level,
+    ) |>
+    filter(
+      !(variable_class == "logical" & variable_level == "FALSE")
     )
-
-  # reformat to wide
-  table_balance_keep_prior_dementia_wide <-
-    table_balance_keep_prior_dementia |>
-    filter(!is.na(group1_level)) |>
-    pivot_wider(
-      id_cols = c(variable, variable_label, variable_level, context),
-      names_from = group1_level,
-      names_sep = "_",
-      values_from = c(n, N, p, mean, sd, p10, p25, median, p75, p90),
-      names_vary = "slowest"
-    )
-
   # save to disk
   write_csv(
-    table_balance_keep_prior_dementia_wide,
+    table_balance_keep_prior_dementia,
     fs::path(output_dir, "table_balance_keep_prior_dementia.csv")
   )
 }

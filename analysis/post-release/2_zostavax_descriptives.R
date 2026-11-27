@@ -50,6 +50,36 @@ fs::dir_create(output_dir)
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# table 1 style summary ----
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+table_balance <- read_csv(fs::path(input_dir, "table_balance.csv"))
+
+table_balance_wide <-
+  table_balance |>
+  pivot_wider(
+    id_cols = c(variable, variable_label, variable_level, variable_class),
+    names_from = eligibility,
+    names_sep = "_",
+    values_from = c(N_obs, N_nonmiss, n, prop_nonmiss, mean, sd, p10, p25, median, p75, p90),
+    names_vary = "slowest"
+  )
+
+table_balance_keep_prior_dementia <- read_csv(fs::path(input_dir, "table_balance_keep_prior_dementia.csv"))
+
+  # reformat to wide
+  table_balance_keep_prior_dementia_wide <-
+    table_balance_keep_prior_dementia |>
+    filter(!is.na(group1_level)) |>
+    pivot_wider(
+      id_cols = c(variable, variable_label, variable_level, context),
+      names_from = eligibility,
+      names_sep = "_",
+      values_from = c(N_obs, N_nonmiss, n, prop_nonmiss, mean, sd, p10, p25, median, p75, p90),
+      names_vary = "slowest"
+    )
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Cumulative incidence of vaccination since index date ----
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

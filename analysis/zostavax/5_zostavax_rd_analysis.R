@@ -10,7 +10,7 @@ library("lubridate")
 args <- commandArgs(trailingOnly = TRUE)
 if (length(args) == 0) {
   population_arg <- "general"
-  analysis_group_arg <- "alt_outcome"
+  analysis_group_arg <- "pre_outcome"
 } else {
   population_arg <- args[[1]]
   analysis_group_arg <- args[[2]]
@@ -63,7 +63,8 @@ assert_choice(
     "sub_sex_men",
     "sub_cogimp_yes",
     "sub_cogimp_no",
-    "thresholdm_no"
+    "thresholdm_no",
+    "pre_outcome"
   )
 )
 
@@ -137,7 +138,7 @@ for (i in seq_len(nrow(analyses))) {
       pat_end_date,
       month_diff_threshold,
       glue("{vaccine_name}_date_1"),
-      outcome
+      all_of(outcome)
     )
 
   ## Define threshold ----

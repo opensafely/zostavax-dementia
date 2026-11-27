@@ -41,13 +41,20 @@ rd_analysis <- function(
   )
 
   ## Apply end date to dependent variable and make it binary ----
-  data <- data |>
-    dplyr::mutate(
-      dependent_binary = !is.na(.data[[dependent]]) &
-        .data[[dependent]] >= index &
-        .data[[dependent]] <= pmin(pat_end_date, end)
-    )
-
+  if (end == threshold) {
+    data <- data |>
+      dplyr::mutate(
+        dependent_binary = !is.na(.data[[dependent]]) &
+          .data[[dependent]] <= threshold
+      )
+  } else {
+    data <- data |>
+      dplyr::mutate(
+        dependent_binary = !is.na(.data[[dependent]]) &
+          .data[[dependent]] >= index &
+          .data[[dependent]] <= pmin(pat_end_date, end)
+      )
+  }
   ## Make results dataframe ----
   results <- list()
 

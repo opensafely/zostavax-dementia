@@ -1,7 +1,7 @@
 sdc.rounding <- function(x, threshold){
   case_when(
-    x <= 7 ~ 0,
-    x > 7 ~ round(x / threshold) * threshold
+    x < 7.5 ~ 0,
+    x >= 7.5 ~ round(x / threshold) * threshold
   )
 }
 
