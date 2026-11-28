@@ -167,22 +167,63 @@ def primary_care_controls_assumptions(threshold_date):
 
 def secondary_care_outcomes(threshold_date):
 
+    # main outcomes
     dataset.dementia_hosp_first_date_ever = first_hosp_event_ever(codelists.dementia_icd10).admission_date
     dataset.alzheimers_hosp_first_date_ever = first_hosp_event_ever(codelists.alzheimers_icd10).admission_date
     dataset.vascular_hosp_first_date_ever = first_hosp_event_ever(codelists.vascular_icd10).admission_date
- 
+
     dataset.neuralgia_hosp_first_date_after = first_hosp_event_after(threshold_date, codelists.neuralgia_icd10).admission_date
     dataset.shingles_hosp_first_date_after = first_hosp_event_after(threshold_date, codelists.shingles_icd10).admission_date
 
     dataset.dementia_ons_date = ons_event_ever(codelists.dementia_icd10)
     dataset.alzheimers_ons_date = ons_event_ever(codelists.alzheimers_icd10)
     dataset.vascular_ons_date = ons_event_ever(codelists.vascular_icd10)
-    
-    return dataset
 
-def secondary_care_exclusions(threshold_date):
+    negative_controls = {        
+            "asthma": codelists.asthma_icd10,
+            "afib": codelists.afib_icd10,
+            "chd": codelists.chd_icd10,
+            "ckd": codelists.ckd_icd10,
+            "copd": codelists.copd_icd10,
+            "depression": codelists.depression_icd10,
+            "t2dm": codelists.t2dm_icd10,
+            "epilepsy": codelists.epilepsy_icd10,
+            "hf": codelists.hf_icd10,
+            "hypothyroid": codelists.hypothyroid_icd10,
+            "obese": codelists.obese_icd10,
+            "osteoporosis": codelists.osteoporosis_icd10,
+            "pad": codelists.pad_icd10,
+            "ra": codelists.ra_icd10,
+            "smi": codelists.smi_icd10
+        }
+    
+    for name, codelist in negative_controls.items():
+        setattr(
+            dataset,
+            f"{name}_hosp_first_date_ever",
+            first_hosp_event_ever(codelist).admission_date,
+        )
+
+    for name, codelist in negative_controls.items():
+        setattr(
+            dataset,
+            f"{name}_ons_date",
+            ons_event_ever(codelist),
+        )
+
+    dataset.stroke_hosp_first_date_after = first_hosp_event_after(threshold_date, codelists.stroke_icd10).admission_date
+    dataset.tia_hosp_first_date_after = first_hosp_event_after(threshold_date, codelists.tia_icd10).admission_date
+
+    dataset.stroke_hosp_last_date_before = last_hosp_event_before(threshold_date, codelists.stroke_icd10).admission_date
+    dataset.tia_hosp_last_date_before = last_hosp_event_before(threshold_date, codelists.tia_icd10).admission_date
+
+    dataset.stroke_ons_date = ons_event_ever(codelists.stroke_icd10)
+    dataset.tia_ons_date = ons_event_ever(codelists.tia_icd10)
+
+    dataset.cognitive_impair_hosp_last_date_before = last_hosp_event_before(threshold_date, codelists.cognitive_impairment_icd10).admission_date
 
     dataset.shingles_hosp_last_date_before = last_hosp_event_before(threshold_date, codelists.shingles_icd10).admission_date
     dataset.neuralgia_hosp_last_date_before = last_hosp_event_before(threshold_date, codelists.neuralgia_icd10).admission_date
 
     return dataset
+

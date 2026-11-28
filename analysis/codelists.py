@@ -56,7 +56,9 @@ past_smoker_snomed = codelist_from_csv(
 )
 smoker_snomed = current_smoker_snomed + past_smoker_snomed
 
-# immunosuppression
+###########################################################
+#  immunosuppression
+
 autograft_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-autotransp_cod.csv",
     column = "code"
@@ -113,79 +115,8 @@ immunosupp_snomed_2yrs = (autograft_snomed + allograft_snomed)
 immunosupp_snomed_anytime = (gvhd_snomed + hiv_snomed + aids_snomed + imatrisk1_snomed + lymphoproldis_snomed + epphaemcan_snomed)
 immunosupp_snomed_6mos = (imtrtatrisk1_snomed + imtemp_snomed + radiotherap_snomed + dmards_snomed)
 
-lrti_snomed = codelist_from_csv(
-    "codelists/nhsd-primary-care-domain-refsets-c19flurti_cod.csv",
-    column = "code"
-)
-asthma_snomed = codelist_from_csv(
-    "codelists/nhsd-primary-care-domain-refsets-ast_cod.csv",
-    column = "code"
-)
-afib_snomed = codelist_from_csv(
-    "codelists/nhsd-primary-care-domain-refsets-afib_cod.csv",
-    column = "code"
-)
-ckd12_snomed = codelist_from_csv(
-    "codelists/nhsd-primary-care-domain-refsets-ckd1and2_cod.csv",
-    column = "code"
-)
-ckd345_snomed = codelist_from_csv(
-    "codelists/nhsd-primary-care-domain-refsets-ckd_cod.csv",
-    column = "code"
-)
-ckd_snomed = ckd12_snomed + ckd345_snomed
-depression_snomed = codelist_from_csv(
-    "codelists/opensafely-incident-depression.csv",
-    column = "code"
-)
-epilepsy_snomed = codelist_from_csv(
-    "codelists/nhsd-primary-care-domain-refsets-epil_cod.csv",
-    column = "code"
-)
-hf_snomed = codelist_from_csv(
-    "codelists/nhsd-primary-care-domain-refsets-hf_cod.csv",
-    column = "code"
-)
-hypothyroid_snomed = codelist_from_csv(
-    "codelists/nhsd-primary-care-domain-refsets-thy_cod.csv",
-    column = "code"
-)
-smi_snomed = codelist_from_csv(
-    "codelists/opensafely-severe-mental-illness.csv",
-    column = "code"
-)
-osteoporosis_snomed = codelist_from_csv(
-    "codelists/nhsd-primary-care-domain-refsets-osteo_cod.csv",
-    column = "code"
-)
-obese_snomed = codelist_from_csv(
-    "codelists/nhsd-primary-care-domain-refsets-bmiobese_cod.csv",
-    column = "code"
-)
-pad_snomed = codelist_from_csv(
-    "codelists/nhsd-primary-care-domain-refsets-pad_cod.csv",
-    column = "code"
-)
-ra_snomed = codelist_from_csv(
-    "codelists/nhsd-primary-care-domain-refsets-rarth_cod.csv",
-    column = "code"
-)
-stroke_snomed = codelist_from_csv(
-    "codelists/nhsd-primary-care-domain-refsets-strk_cod.csv",
-    column = "code"
-)
-tia_snomed = codelist_from_csv(
-    "codelists/nhsd-primary-care-domain-refsets-tia_cod.csv",
-    column = "code"
-)   
-chd_snomed = codelist_from_csv(
-    "codelists/nhsd-primary-care-domain-refsets-chd_cod.csv",
-    column = "code"
-)
-ihd_snomed = codelist_from_csv(
-    "codelists/opensafely-ischaemic-heart-disease.csv",
-    column = "code"
-)
+
+##########################################################
 
 shvacgp_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-shvacgp_cod.csv",
@@ -212,17 +143,173 @@ neuralgia_icd10 = codelist_from_csv(
     column = "code"
 )
 
-# assumptions
+##########################################################
+# controls / assumptions
+
+lrti_snomed = codelist_from_csv(
+    "codelists/nhsd-primary-care-domain-refsets-c19flurti_cod.csv",
+    column = "code"
+)
+lrti_icd10 = codelist_from_csv(
+    "codelists/opensafely-lower-respiratory-tract-infection-icd10.csv",
+    column = "code"
+)
+asthma_snomed = codelist_from_csv(
+    "codelists/nhsd-primary-care-domain-refsets-ast_cod.csv",
+    column = "code"
+)
+asthma_icd10 = codelist_from_csv(
+    "codelists/bristol-asthma.csv",
+    column = "code"
+)
+afib_snomed = codelist_from_csv(
+    "codelists/nhsd-primary-care-domain-refsets-afib_cod.csv",
+    column = "code"
+)
+afib_icd10 = codelist_from_csv(
+    "codelists/reducehf-atrial-fibrillation-and-flutter-icd10.csv",
+    column = "code"
+)
+ckd12_snomed = codelist_from_csv(
+    "codelists/nhsd-primary-care-domain-refsets-ckd1and2_cod.csv",
+    column = "code"
+)
+ckd345_snomed = codelist_from_csv(
+    "codelists/nhsd-primary-care-domain-refsets-ckd_cod.csv",
+    column = "code"
+)
+ckd_snomed = ckd12_snomed + ckd345_snomed
+ckd_icd10 = codelist_from_csv(
+    "codelists/opensafely-chronic-kidney-disease-icd10.csv",
+    column = "code"
+)
+depression_snomed = codelist_from_csv(
+    "codelists/opensafely-incident-depression.csv",
+    column = "code"
+)
+depression_icd10 = codelist_from_csv(
+     "codelists/user-elsie_horne-depression_icd10.csv",
+    column = "code"
+)   
+epilepsy_snomed = codelist_from_csv(
+    "codelists/nhsd-primary-care-domain-refsets-epil_cod.csv",
+    column = "code"
+)
+epilepsy_icd10 = codelist_from_csv(
+    "codelists/openpregnosis-epilepsy-icd10-codes.csv",
+    column = "code"
+)
+hf_snomed = codelist_from_csv(
+    "codelists/nhsd-primary-care-domain-refsets-hf_cod.csv",
+    column = "code"
+)
+hf_icd10 = codelist_from_csv(
+    "codelists/reducehf-heart-failure-secondary-care.csv",
+    column = "code"
+)
+hypothyroid_snomed = codelist_from_csv(
+    "codelists/nhsd-primary-care-domain-refsets-thy_cod.csv",
+    column = "code"
+)
+hypothyroid_icd10 = codelist_from_csv(
+    "codelists/user-anschaf-hypothyroidism-icd-10.csv",
+    column = "code"
+)
+smi_snomed = codelist_from_csv(
+    "codelists/opensafely-severe-mental-illness.csv",
+    column = "code"
+)
+schizo_icd10 = codelist_from_csv(
+    "codelists/user-kurttaylor-schizophrenia_icd10.csv",
+    column = "code"
+)
+psychosis_icd10 = codelist_from_csv(
+    "codelists/user-kurttaylor-other-psychotic_disorders_icd10.csv",
+    column = "code"
+)
+bipolar_icd10 = codelist_from_csv(
+    "codelists/user-kurttaylor-bipolar_and_mood_disorders_icd10.csv",
+    column = "code"
+)
+smi_icd10 = schizo_icd10 + psychosis_icd10 + bipolar_icd10
+
+osteoporosis_snomed = codelist_from_csv(
+    "codelists/nhsd-primary-care-domain-refsets-osteo_cod.csv",
+    column = "code"
+)
+osteoporosis_icd10 = codelist_from_csv(
+    "codelists/user-markdrussell-osteoporosis-secondary-care.csv",
+    column = "code"
+)
+obese_snomed = codelist_from_csv(
+    "codelists/nhsd-primary-care-domain-refsets-bmiobese_cod.csv",
+    column = "code"
+)
+obese_icd10 = codelist_from_csv(
+     "codelists/user-elsie_horne-bmi_obesity_icd10.csv",
+    column = "code"
+)   
+pad_snomed = codelist_from_csv(
+    "codelists/nhsd-primary-care-domain-refsets-pad_cod.csv",
+    column = "code"
+)
+pad_icd10 = codelist_from_csv(
+    "codelists/user-anschaf-peripheral-arterial-disease-icd-10.csv",
+    column = "code"
+)
+ra_snomed = codelist_from_csv(
+    "codelists/nhsd-primary-care-domain-refsets-rarth_cod.csv",
+    column = "code"
+)
+ra_icd10 = codelist_from_csv(
+    "codelists/user-markdrussell-rheumatoid-arthritis-secondary-care.csv",
+    column = "code"
+)
+stroke_snomed = codelist_from_csv(
+    "codelists/nhsd-primary-care-domain-refsets-strk_cod.csv",
+    column = "code"
+)
+stroke_icd10 = codelist_from_csv(
+    "codelists/opensafely-stroke-excluding-tia-icd10-new.csv",
+    column = "code")
+tia_snomed = codelist_from_csv(
+    "codelists/nhsd-primary-care-domain-refsets-tia_cod.csv",
+    column = "code"
+)   
+tia_icd10 = codelist_from_csv(
+    "codelists/opensafely-transient-ischaemic-attack-secondary-care.csv",
+    column = "code"
+)
+chd_snomed = codelist_from_csv(
+    "codelists/nhsd-primary-care-domain-refsets-chd_cod.csv",
+    column = "code"
+)
+chd_icd10 = codelist_from_csv(
+    "codelists/user-markdrussell-coronary-heart-disease-secondary-care.csv",
+    column = "code"
+)
 hypertension_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-hyp_cod.csv",
+    column = "code"
+)
+hypertension_icd10 = codelist_from_csv(
+    "codelists/reducehf-hypertension-icd10.csv",
     column = "code"
 )
 t2dm_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-dmtype2_cod.csv",
     column = "code"
 )
+t2dm_icd10 = codelist_from_csv(
+    "codelists/reducehf-type-2-diabetes-icd10.csv",
+    column = "code"
+)
 copd_snomed = codelist_from_csv(
     "codelists/nhsd-primary-care-domain-refsets-copd_cod.csv",
+    column = "code"
+)
+copd_icd10 = codelist_from_csv(
+    "codelists/bristol-copd.csv",
     column = "code"
 )
 antihypertensives_dmd = codelist_from_csv(
@@ -239,5 +326,9 @@ bmi_snomed = codelist_from_csv(
 )
 cognitive_impairment_snomed = codelist_from_csv(
     "codelists/opensafely-cognitive-impairment.csv",
+    column = "code"
+)
+cognitive_impairment_icd10 = codelist_from_csv(
+    "codelists/user-anschaf-cognitive-impairment-icd-10.csv",
     column = "code"
 )

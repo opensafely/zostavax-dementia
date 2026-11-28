@@ -13,7 +13,6 @@ dataset = primary_care_outcomes(threshold_date)
 dataset = primary_care_exclusions(threshold_date)
 dataset = primary_care_controls_assumptions(threshold_date)
 dataset = secondary_care_outcomes(threshold_date)
-dataset = secondary_care_exclusions(threshold_date)
 dataset = vaccinations(threshold_date)
 
 # Note - we are extracting a broad population and will apply further exclusions downstream 

@@ -1,0 +1,28 @@
+code,term
+G45,Transient cerebral ischaemic attacks and related syndromes
+G450,Vertebro-basilar artery syndrome
+G451,Carotid artery syndrome (hemispheric)
+G452,Multiple and bilateral precerebral artery syndromes
+G453,Amaurosis fugax
+G454,Transient global amnesia
+G458,Other transient cerebral ischaemic attacks and related syndromes
+G459,"Transient cerebral ischaemic attack, unspecified"
+G46,Vascular syndromes of brain in cerebrovascular diseases
+G460,Middle cerebral artery syndrome
+G461,Anterior cerebral artery syndrome
+G462,Posterior cerebral artery syndrome
+I65,"Occlusion and stenosis of precerebral arteries, not resulting in cerebral infarction"
+I650,Occlusion and stenosis of vertebral artery
+I651,Occlusion and stenosis of basilar artery
+I652,Occlusion and stenosis of carotid artery
+I653,Occlusion and stenosis of multiple and bilateral precerebral arteries
+I658,Occlusion and stenosis of other precerebral artery
+I659,Occlusion and stenosis of unspecified precerebral artery
+I66,"Occlusion and stenosis of cerebral arteries, not resulting in cerebral infarction"
+I660,Occlusion and stenosis of middle cerebral artery
+I661,Occlusion and stenosis of anterior cerebral artery
+I662,Occlusion and stenosis of posterior cerebral artery
+I663,Occlusion and stenosis of cerebellar arteries
+I664,Occlusion and stenosis of multiple and bilateral cerebral arteries
+I668,Occlusion and stenosis of other cerebral artery
+I669,Occlusion and stenosis of unspecified cerebral artery

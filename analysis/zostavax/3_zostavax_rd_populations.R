@@ -143,7 +143,7 @@ df_analysis <- df_population |>
     neuralgia_first_date_after,
     date_of_death,
     # Outcomes: alternative definitions
-    dementia_charlson_gp_first_date_ever,
+    dementia_charlson_first_date_ever,
     # Outcomes: dementia subtypes
     alzheimers_first_date_ever,
     vascular_first_date_ever,
@@ -153,23 +153,23 @@ df_analysis <- df_population |>
     neuralgia_gp_first_date_after,
     date_of_death_gp,
     # Outcomes: control
-    asthma_gp_first_date_ever,
-    afib_gp_first_date_ever,
-    chd_gp_first_date_ever,
-    ckd_gp_first_date_ever,
-    copd_gp_first_date_ever,
-    depression_gp_first_date_ever,
-    t2dm_gp_first_date_ever,
-    epilepsy_gp_first_date_ever,
-    hf_gp_first_date_ever,
-    hypothyroid_gp_first_date_ever,
-    osteoporosis_gp_first_date_ever,
-    pad_gp_first_date_ever,
-    ra_gp_first_date_ever,
-    smi_gp_first_date_ever,
-    obese_gp_first_date_ever,
-    stroke_gp_first_date_after,
-    tia_gp_first_date_after,
+    asthma_first_date_ever,
+    afib_first_date_ever,
+    chd_first_date_ever,
+    ckd_first_date_ever,
+    copd_first_date_ever,
+    depression_first_date_ever,
+    t2dm_first_date_ever,
+    epilepsy_first_date_ever,
+    hf_first_date_ever,
+    hypothyroid_first_date_ever,
+    osteoporosis_first_date_ever,
+    pad_first_date_ever,
+    ra_first_date_ever,
+    smi_first_date_ever,
+    obese_first_date_ever,
+    stroke_first_date_after,
+    tia_first_date_after,
     # Additional exclusions for control outcomes
     asthma_before_threshold,
     afib_before_threshold,
@@ -185,9 +185,7 @@ df_analysis <- df_population |>
     pad_before_threshold,
     ra_before_threshold,
     smi_before_threshold,
-    obese_before_threshold,
-    stroke_before_threshold,
-    tia_before_threshold
+    obese_before_threshold
   )
 
 # Save ----
