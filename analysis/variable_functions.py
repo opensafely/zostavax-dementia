@@ -220,9 +220,7 @@ def secondary_care_outcomes(threshold_date):
     dataset.stroke_ons_date = ons_event_ever(codelists.stroke_icd10)
     dataset.tia_ons_date = ons_event_ever(codelists.tia_icd10)
 
-    return dataset
-
-def secondary_care_exclusions(threshold_date):
+    dataset.cognitive_impair_hosp_last_date_before = last_hosp_event_before(threshold_date, codelists.cognitive_impairment_icd10).admission_date
 
     dataset.shingles_hosp_last_date_before = last_hosp_event_before(threshold_date, codelists.shingles_icd10).admission_date
     dataset.neuralgia_hosp_last_date_before = last_hosp_event_before(threshold_date, codelists.neuralgia_icd10).admission_date
