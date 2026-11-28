@@ -1,17 +1,5 @@
 {
   "files": {
-    "user-elsie_horne-bmi_obesity_icd10.csv": {
-      "id": "user/elsie_horne/bmi_obesity_icd10/6e55767e",
-      "url": "https://www.opencodelists.org/codelist/user/elsie_horne/bmi_obesity_icd10/6e55767e/",
-      "downloaded_at": "2026-11-25 09:32:35.560776+00:00Z",
-      "sha": "9235bab1c2f3b5581dd34431839db55f3d3bdb59"
-    },
-    "opensafely-transient-ischaemic-attack-secondary-care.csv": {
-      "id": "opensafely/transient-ischaemic-attack-secondary-care/5a928ca8",
-      "url": "https://www.opencodelists.org/codelist/opensafely/transient-ischaemic-attack-secondary-care/5a928ca8/",
-      "downloaded_at": "2026-11-20 17:21:53.869835+00:00Z",
-      "sha": "1aa18493b12be90006f0b39f5202fef5ec00c835"
-    },
     "opensafely-incident-dementia-icd-10.csv": {
       "id": "opensafely/incident-dementia-icd-10/28440de6",
       "url": "https://www.opencodelists.org/codelist/opensafely/incident-dementia-icd-10/28440de6/",
@@ -443,6 +431,24 @@
       "url": "https://www.opencodelists.org/codelist/user/kurttaylor/bipolar_and_mood_disorders_icd10/66d4dd3a/",
       "downloaded_at": "2026-11-18 14:41:04.635712+00:00Z",
       "sha": "8aad947d0f8a0496d5996b7469641526e669c37c"
+    },
+    "opensafely-transient-ischaemic-attack-secondary-care.csv": {
+      "id": "opensafely/transient-ischaemic-attack-secondary-care/5a928ca8",
+      "url": "https://www.opencodelists.org/codelist/opensafely/transient-ischaemic-attack-secondary-care/5a928ca8/",
+      "downloaded_at": "2026-11-20 17:21:53.869835+00:00Z",
+      "sha": "1aa18493b12be90006f0b39f5202fef5ec00c835"
+    },
+    "user-elsie_horne-bmi_obesity_icd10.csv": {
+      "id": "user/elsie_horne/bmi_obesity_icd10/6e55767e",
+      "url": "https://www.opencodelists.org/codelist/user/elsie_horne/bmi_obesity_icd10/6e55767e/",
+      "downloaded_at": "2026-11-25 09:32:35.560776+00:00Z",
+      "sha": "9235bab1c2f3b5581dd34431839db55f3d3bdb59"
+    },
+    "user-anschaf-cognitive-impairment-icd-10.csv": {
+      "id": "user/anschaf/cognitive-impairment-icd-10/02451884",
+      "url": "https://www.opencodelists.org/codelist/user/anschaf/cognitive-impairment-icd-10/02451884/",
+      "downloaded_at": "2026-11-28 15:51:28.093975+00:00Z",
+      "sha": "9f426ffdfa3d5e6eddee1d050a7e06d1a0937b64"
     }
   }
 }

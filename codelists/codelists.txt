@@ -73,3 +73,4 @@ user/kurttaylor/bipolar_and_mood_disorders_icd10/66d4dd3a/
 
 opensafely/transient-ischaemic-attack-secondary-care/5a928ca8/
 user/elsie_horne/bmi_obesity_icd10/6e55767e/
+user/anschaf/cognitive-impairment-icd-10/02451884/
