@@ -214,6 +214,12 @@ def secondary_care_outcomes(threshold_date):
     dataset.stroke_hosp_first_date_after = first_hosp_event_after(threshold_date, codelists.stroke_icd10).admission_date
     dataset.tia_hosp_first_date_after = first_hosp_event_after(threshold_date, codelists.tia_icd10).admission_date
 
+    dataset.stroke_hosp_last_date_before = last_hosp_event_before(threshold_date, codelists.stroke_icd10).admission_date
+    dataset.tia_hosp_last_date_before = last_hosp_event_before(threshold_date, codelists.tia_icd10).admission_date
+
+    dataset.stroke_ons_date = ons_event_ever(codelists.stroke_icd10)
+    dataset.tia_ons_date = ons_event_ever(codelists.tia_icd10)
+
     return dataset
 
 def secondary_care_exclusions(threshold_date):
@@ -222,3 +228,4 @@ def secondary_care_exclusions(threshold_date):
     dataset.neuralgia_hosp_last_date_before = last_hosp_event_before(threshold_date, codelists.neuralgia_icd10).admission_date
 
     return dataset
+
