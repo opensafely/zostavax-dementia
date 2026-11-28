@@ -328,3 +328,7 @@ cognitive_impairment_snomed = codelist_from_csv(
     "codelists/opensafely-cognitive-impairment.csv",
     column = "code"
 )
+cognitive_impairment_icd10 = codelist_from_csv(
+    "codelists/user-anschaf-cognitive-impairment-icd-10.csv",
+    column = "code"
+)
