@@ -9,10 +9,15 @@ source(here::here("analysis", "common_code", "utility.R"))
 
 processing <- function(threshold_date, index_date, vaccine_name, analysis) {
   
-  conditions <- c("dementia", "alzheimers", "vascular",
+  chronic_conditions <- c(
+    "dementia", "alzheimers", "vascular", 
     "asthma", "afib", "chd", "ckd", "copd", "depression", 
-    "t2dm", "epilepsy", "hf", "hypothyroid",
+    "t2dm", "epilepsy", "hf", "hypothyroid", 
     "smi", "osteoporosis", "pad", "ra", "obese"
+  )
+
+  recurrent_conditions <- c(
+    "stroke", "tia"
   )
 
   df <- read_feather(
@@ -62,15 +67,33 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
 
       # Earliest date of outcomes
       !!!rlang::set_names(
-          lapply(conditions, function(x) first_date_ever(df, x)),
-          paste0(conditions, "_first_date_ever")
+          lapply(chronic_conditions, function(x) first_date_ever(df, x)),
+          paste0(chronic_conditions, "_first_date_ever")
         ),
 
       # Create flag if first date is before threshold 
       across(
-        all_of(paste0(conditions, "_first_date_ever")),
-        ~ as.integer(.x < threshold_date),
+        all_of(paste0(chronic_conditions, "_first_date_ever")),
+        ~ !is.na(.x) & .x < threshold_date,
         .names = "{sub('_first_date_ever$', '_before_threshold', .col)}"
+        ),
+      
+      # Create flag if first date is before threshold for recurrent conditions
+      !!!rlang::set_names(
+          lapply(recurrent_conditions, function(x) last_date_before(df, x)),
+          paste0(recurrent_conditions, "_last_date_before")
+        ),
+
+      across(
+        all_of(paste0(recurrent_conditions, "_last_date_before")),
+        ~ !is.na(.x) & .x < threshold_date,
+        .names = "{sub('_last_date_before$', '_before_threshold', .col)}"
+        ),
+      
+      # First date after
+      !!!rlang::set_names(
+          lapply(recurrent_conditions, function(x) first_date_after(df, x)),
+          paste0(recurrent_conditions, "_first_date_after")
         ),
 
       dementia_charlson_first_date_ever = pmin(
@@ -94,25 +117,55 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
         shingles_hosp_last_date_before,
         na.rm = TRUE
       ),
+      shingles_before_threshold = coalesce(
+        (shingles_last_date_before <= threshold_date),
+        na.rm = TRUE
+      ),
+      exclude_shingles = coalesce(
+        shingles_last_date_before >= threshold_date - 28,
+        FALSE
+      ),
       neuralgia_first_date_after = pmin(
         neuralgia_gp_first_date_after,
         neuralgia_hosp_first_date_after,
         na.rm = TRUE
       ),
-      neuralgia_last_date_before = pmax(
-        neuralgia_gp_last_date_before,
-        neuralgia_hosp_last_date_before,
+      neuralgia_before_threshold = coalesce(
+        (neuralgia_gp_last_date_before <= threshold_date)
+        | (neuralgia_hosp_last_date_before <= threshold_date),
         na.rm = TRUE
       ),
-      stroke_first_date_after = pmin(
-        stroke_gp_first_date_after,
-        stroke_hosp_first_date_after,
+      cognitive_impair_before_threshold = coalesce(
+        (cognitive_impair_gp_last_date_before <= threshold_date)
+        | (cognitive_impair_hosp_last_date_before <= threshold_date),
         na.rm = TRUE
       ),
-      tia_first_date_after = pmin(
-        tia_gp_first_date_after,
-        tia_hosp_first_date_after,
-        na.rm = TRUE
+
+      # Vaccinations/prescriptions 5 years before threshold
+      fluvax_before_threshold = coalesce(
+        fluvax_last_date_before >= threshold_date - years(5) &
+          fluvax_last_date_before <= threshold_date,
+        FALSE
+      ),
+      pneumovax_before_threshold = coalesce(
+        pneumovax_last_date_before >= threshold_date - years(5) &
+          pneumovax_last_date_before <= threshold_date,
+        FALSE
+      ),
+      statins_before_threshold = coalesce(
+        statins_rx_last_date_before >= threshold_date - years(5) &
+          statins_rx_last_date_before <= threshold_date,
+        FALSE
+      ),
+      antihypertensives_before_threshold = coalesce(
+        antihypertensives_rx_last_date_before >= threshold_date - years(5) &
+          antihypertensives_rx_last_date_before <= threshold_date,
+        FALSE
+      ),
+      smoker_before_threshold = coalesce(
+        smoker_gp_last_date_before <= threshold_date |
+          past_smoker_gp_last_date_before <= threshold_date,
+        FALSE
       ),
 
       # Missing data
@@ -142,14 +195,6 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
           dementia_hosp_first_date_ever <= index_date),
         FALSE
       ),
-      shingles_before_threshold = coalesce(
-        shingles_last_date_before >= threshold_date - 28,
-        FALSE
-      ),
-      neuralgia_before_threshold = coalesce(
-        neuralgia_last_date_before < threshold_date,
-        FALSE
-      ),
 
       # Died / deregistered between threshold and index date
       exclude_died = coalesce(!is.na(date_of_death) & (date_of_death <= index_date), FALSE),
@@ -157,7 +202,7 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
 
       # Flag for exclusions common to all analyses
       common_exclusions_w_dementia = coalesce(
-        shingles_before_threshold |
+        exclude_shingles |
           dementia_exclude_before_threshold |
           dementia_exclude_bw_threshold_index |
           exclude_died |
@@ -170,7 +215,7 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
         FALSE
       ),
       common_exclusions_wo_dementia = coalesce(
-        shingles_before_threshold |
+          exclude_shingles |
           exclude_immunosuppressed |
           exclude_missing_imd |
           exclude_missing_region |
@@ -181,7 +226,7 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
         FALSE
       ),
       no_common_exclusions = coalesce(
-        !shingles_before_threshold &
+        !exclude_shingles &
           !dementia_exclude_before_threshold &
           !dementia_exclude_bw_threshold_index &
           !exclude_not_mf_sex &
@@ -202,48 +247,6 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
         FALSE
       ),
 
-      # Vaccinations/prescriptions 5 years before threshold
-      fluvax_before_threshold = coalesce(
-        fluvax_last_date_before >= threshold_date - years(5) &
-          fluvax_last_date_before <= threshold_date,
-        FALSE
-      ),
-      pneumovax_before_threshold = coalesce(
-        pneumovax_last_date_before >= threshold_date - years(5) &
-          pneumovax_last_date_before <= threshold_date,
-        FALSE
-      ),
-      statins_before_threshold = coalesce(
-        statins_rx_last_date_before >= threshold_date - years(5) &
-          statins_rx_last_date_before <= threshold_date,
-        FALSE
-      ),
-      antihypertensives_before_threshold = coalesce(
-        antihypertensives_rx_last_date_before >= threshold_date - years(5) &
-          antihypertensives_rx_last_date_before <= threshold_date,
-        FALSE
-      ),
-      cognitive_impair_before_threshold = coalesce(
-        cognitive_impair_gp_last_date_before <= threshold_date,
-        FALSE
-      ),
-      smoker_before_threshold = coalesce(
-        smoker_gp_last_date_before <= threshold_date |
-          past_smoker_gp_last_date_before <= threshold_date,
-        FALSE
-      ),
-      lrti_before_threshold = coalesce(
-        lrti_gp_last_date_before <= threshold_date,
-        FALSE
-      ),
-      stroke_before_threshold = coalesce(
-        stroke_gp_last_date_before <= threshold_date,
-        FALSE
-      ),
-      tia_before_threshold = coalesce(
-        tia_gp_last_date_before <= threshold_date,
-        FALSE
-      ),
     ) %>%
     select(
       -c(
@@ -253,28 +256,83 @@ processing <- function(threshold_date, index_date, vaccine_name, analysis) {
         fluvax_last_date_before,
         pneumovax_last_date_before,
         shingles_gp_last_date_before,
+        neuralgia_gp_last_date_before,
         alzheimers_gp_first_date_ever,
-        vascular_gp_first_date_ever,
         alzheimers_hosp_first_date_ever,
+        alzheimers_ons_date,
+        vascular_gp_first_date_ever,
         vascular_hosp_first_date_ever,
+        vascular_ons_date,
         dementia_exclude_gp_first_date_ever,
         dementia_hosp_first_date_ever,
+        dementia_ons_date,
         neuralgia_hosp_first_date_after,
         neuralgia_hosp_last_date_before,
         shingles_hosp_first_date_after,
         shingles_hosp_last_date_before,
-        dementia_ons_date,
-        alzheimers_ons_date,
-        vascular_ons_date,
         lrti_gp_last_date_before,
         smoker_gp_last_date_before,
         past_smoker_gp_last_date_before,
         cognitive_impair_gp_last_date_before,
+        cognitive_impair_hosp_last_date_before,
         dementia_exclude_first_date_ever,
         stroke_gp_last_date_before,
-        tia_gp_last_date_before
+        tia_gp_last_date_before,
+        stroke_hosp_last_date_before,
+        tia_hosp_last_date_before,
+        stroke_gp_first_date_after,
+        tia_gp_first_date_after,
+        stroke_hosp_first_date_after,
+        tia_hosp_first_date_after,
+        stroke_ons_date,
+        tia_ons_date,
+        asthma_gp_first_date_ever,
+        asthma_hosp_first_date_ever,
+        asthma_ons_date,
+        afib_gp_first_date_ever,
+        afib_hosp_first_date_ever,
+        afib_ons_date,
+        chd_gp_first_date_ever,
+        chd_hosp_first_date_ever,
+        chd_ons_date,
+        ckd_gp_first_date_ever,
+        ckd_hosp_first_date_ever,
+        ckd_ons_date,
+        copd_gp_first_date_ever,
+        copd_hosp_first_date_ever,
+        copd_ons_date,
+        depression_gp_first_date_ever,
+        depression_hosp_first_date_ever,
+        depression_ons_date,
+        t2dm_gp_first_date_ever,
+        t2dm_hosp_first_date_ever,
+        t2dm_ons_date,
+        epilepsy_gp_first_date_ever,
+        epilepsy_hosp_first_date_ever,
+        epilepsy_ons_date,
+        hf_gp_first_date_ever,
+        hf_hosp_first_date_ever,
+        hf_ons_date,
+        hypothyroid_gp_first_date_ever,
+        hypothyroid_hosp_first_date_ever,
+        hypothyroid_ons_date,
+        smi_gp_first_date_ever,
+        smi_hosp_first_date_ever,
+        smi_ons_date,
+        osteoporosis_gp_first_date_ever,
+        osteoporosis_hosp_first_date_ever,
+        osteoporosis_ons_date,
+        pad_gp_first_date_ever,
+        pad_hosp_first_date_ever,
+        pad_ons_date,
+        ra_gp_first_date_ever,
+        ra_hosp_first_date_ever,
+        ra_ons_date,
+        obese_gp_first_date_ever,
+        obese_hosp_first_date_ever,
+        obese_ons_date,
       )
-    )
+    ) 
 
   arrow::write_feather(
     processed_df,
