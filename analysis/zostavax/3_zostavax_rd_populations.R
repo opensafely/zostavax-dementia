@@ -143,7 +143,7 @@ df_analysis <- df_population |>
     neuralgia_first_date_after,
     date_of_death,
     # Outcomes: alternative definitions
-    dementia_charlson_gp_first_date_ever,
+    dementia_charlson_first_date_ever,
     # Outcomes: dementia subtypes
     alzheimers_first_date_ever,
     vascular_first_date_ever,
